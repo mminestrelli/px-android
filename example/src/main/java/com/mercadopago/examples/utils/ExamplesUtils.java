@@ -35,7 +35,7 @@ public class ExamplesUtils {
     public static final int CARD_REQUEST_CODE = 13;
 
     // * Merchant public key
-    public static final String DUMMY_MERCHANT_PUBLIC_KEY = "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a";
+    public static final String DUMMY_MERCHANT_PUBLIC_KEY = "TEST-962a648a-959f-457c-a4df-a6fbe3f10c82";
 
     public static final String DUMMY_MERCHANT_PUBLIC_KEY_EXAMPLES_SERVICE = "444a9ef5-8a6b-429f-abdf-587639155d88";
     // DUMMY_MERCHANT_PUBLIC_KEY_AR = "444a9ef5-8a6b-429f-abdf-587639155d88";
@@ -43,6 +43,12 @@ public class ExamplesUtils {
     // DUMMY_MERCHANT_PUBLIC_KEY_MX = "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2";
     // DUMMY_MERCHANT_PUBLIC_KEY_VZ = "2b66598b-8b0f-4588-bd2f-c80ca21c6d18";
     // DUMMY_MERCHANT_PUBLIC_KEY_CO = "aa371283-ad00-4d5d-af5d-ed9f58e139f1";
+    // SANDBOX_PUBLIC_KEY_PE = "TEST-962a648a-959f-457c-a4df-a6fbe3f10c82";
+    // PRODUCTION_PUBLIC_KEY_PE = "APP_USR-d16a4b81-58d3-4167-8067-e12dd16b549a";
+    //CHECKOUT_PREFERENCES_ID_PE = "240954703-ef2357c8-3d30-4b97-b819-872caec0e4fe";
+
+    public static final String DUMMY_MERCHANT_PREFERENCES_ID_PE = "240954703-2db5c2cc-10e5-4008-b540-1b86c30f1e42";
+
 
     // * Merchant server vars
     public static final String DUMMY_MERCHANT_BASE_URL = "https://www.mercadopago.com";
