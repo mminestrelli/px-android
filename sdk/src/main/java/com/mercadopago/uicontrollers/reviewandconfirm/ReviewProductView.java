@@ -65,13 +65,13 @@ public class ReviewProductView implements ReviewProductViewController {
         }
         String pictureUrl = item.getPictureUrl();
         if (pictureUrl == null || pictureUrl.isEmpty()) {
-            mProductImage.setImageResource(R.drawable.review_product_placeholder);
+            mProductImage.setImageResource(R.drawable.mpsdk_review_product_placeholder);
         } else {
             Picasso.with(mContext)
                     .load(pictureUrl)
                     .transform(new CircleTransform())
                     .fit()
-                    .placeholder(R.drawable.review_product_placeholder)
+                    .placeholder(R.drawable.mpsdk_review_product_placeholder)
                     .into(mProductImage);
         }
         if (item.getTitle() == null) {
@@ -96,5 +96,6 @@ public class ReviewProductView implements ReviewProductViewController {
         stringBuilder.append(string);
         Spanned priceText = CurrenciesUtil.formatCurrencyInText(price, currencyId, stringBuilder.toString(), false, true);
         mProductPrice.setText(priceText);
+
     }
 }
