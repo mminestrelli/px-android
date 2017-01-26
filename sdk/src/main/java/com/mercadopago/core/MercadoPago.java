@@ -124,6 +124,7 @@ public class MercadoPago {
                 .build();
     }
 
+//----> F1: SERVICIOS Y MODELO
     public void getPreference(String checkoutPreferenceId, Callback<CheckoutPreference> callback) {
         if (this.mKeyType.equals(KEY_TYPE_PUBLIC)) {
             MPTracker.getInstance().trackEvent("NO_SCREEN", "GET_PREFERENCE", "3", mKey, BuildConfig.VERSION_NAME, mContext);
@@ -304,7 +305,10 @@ public class MercadoPago {
             throw new RuntimeException("Invalid bin: " + BIN_LENGTH + " digits needed, " + bin.length() + " found");
     }
 
+//<---- END F1: SERVICIOS Y MODELO
+
     // * Static methods for StartActivityBuilder implementation
+
 
     private static void startBankDealsActivity(Activity activity, String publicKey, List<BankDeal> bankDeals, DecorationPreference decorationPreference) {
 
@@ -317,6 +321,7 @@ public class MercadoPago {
         activity.startActivityForResult(bankDealsIntent, BANK_DEALS_REQUEST_CODE);
     }
 
+    //--> F3 CHECKOUT
     private static void startCheckoutActivity(Activity activity, String merchantPublicKey, String merchantBaseUrl, String merchantGetCustomerUri, String merchantAccessToken, String checkoutPreferenceId, Boolean showBankDeals, Boolean binaryModeEnabled, Integer congratsDisplay, DecorationPreference decorationPreference) {
 
         Intent checkoutIntent = new Intent(activity, CheckoutActivity.class);
@@ -331,6 +336,7 @@ public class MercadoPago {
         checkoutIntent.putExtra("binaryModeEnabled", binaryModeEnabled);
         activity.startActivityForResult(checkoutIntent, CHECKOUT_REQUEST_CODE);
     }
+    //<--
 
     private static void startPaymentResultActivity(Activity activity, String merchantPublicKey, Payment payment, PaymentMethod paymentMethod, Integer congratsDisplay) {
 
