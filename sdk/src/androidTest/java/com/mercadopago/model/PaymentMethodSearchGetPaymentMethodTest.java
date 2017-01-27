@@ -27,6 +27,7 @@ public class PaymentMethodSearchGetPaymentMethodTest {
                 {"banamex_ticket", "banamex", "ticket"},
                 {"serfin_bank_transfer", "serfin", "bank_transfer"},
                 {"serfin.ticket", "serfin", "ticket"},
+                {"pagoefectivo_atm_pagoefectivo_atm", "pagoefectivo_atm", "pagoefectivo_atm"},
                 {"invalid_item", "invalid_item", ""}
         });
     }

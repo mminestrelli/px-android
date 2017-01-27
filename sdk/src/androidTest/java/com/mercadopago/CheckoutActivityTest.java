@@ -315,7 +315,7 @@ public class CheckoutActivityTest {
             ImageView paymentMethodImage = (ImageView) activity.findViewById(R.id.mpsdkAdapterReviewProductImage);
 
             Bitmap bitmap = ((BitmapDrawable) paymentMethodImage.getDrawable()).getBitmap();
-            Bitmap bitmap2 = ((BitmapDrawable) ContextCompat.getDrawable(activity, R.drawable.review_product_placeholder)).getBitmap();
+            Bitmap bitmap2 = ((BitmapDrawable) ContextCompat.getDrawable(activity, R.drawable.mpsdk_review_product_placeholder)).getBitmap();
 
             assertTrue(bitmap == bitmap2);
         }

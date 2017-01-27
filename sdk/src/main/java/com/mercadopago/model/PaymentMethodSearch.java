@@ -48,7 +48,7 @@ public class PaymentMethodSearch {
     private String getPaymentTypeIdFromItem(PaymentMethodSearchItem item, PaymentMethod paymentMethod) {
         //Remove payment method id from item id and the splitter
         String paymentType;
-        String itemIdWithoutPaymentMethod = item.getId().replace(paymentMethod.getId(), "");
+        String itemIdWithoutPaymentMethod = item.getId().replaceFirst(paymentMethod.getId(), "");
         if (itemIdWithoutPaymentMethod.isEmpty()) {
             paymentType = paymentMethod.getPaymentTypeId();
         } else {

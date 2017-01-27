@@ -17,7 +17,10 @@ public class ReviewUtil {
 
     public static int getPaymentInfoStringForItem(PaymentMethodSearchItem item) {
         int string;
-        switch (item.getId()) {
+
+        String itemId = formatItemId(item.getId());
+
+        switch (itemId) {
             case "pagofacil":
                 string = R.string.mpsdk_review_off_text;
                 break;
@@ -66,6 +69,13 @@ public class ReviewUtil {
             case "bolbradesco":
                 string = R.string.mpsdk_review_off_text_4;
                 break;
+            case "pagoefectivo_atm":
+                string = R.string.mpsdk_review_off_text;
+            break;
+
+            case "pagoefectivo_atm_bank_transfer":
+                string = R.string.mpsdk_review_off_text_3;
+            break;
             default:
                 string = R.string.mpsdk_review_off_text_default;
         }
@@ -74,8 +84,11 @@ public class ReviewUtil {
 
     public static String getPaymentNameForItem(PaymentMethodSearchItem item, PaymentMethod paymentMethod,
                                                Context context) {
+
         String string;
-        switch (item.getId()) {
+        String itemId = formatItemId(item.getId());
+
+        switch (itemId) {
             case "bapropagos":
                 string = "Provincia NET";
                 break;
@@ -121,9 +134,40 @@ public class ReviewUtil {
             case "bolbradesco":
                 string = "boleto";
                 break;
+            case "pagoefectivo_atm":
+                string = context.getResources().getString(R.string.mpsdk_your_atm) + " " + item.getDescription();
+            break;
+            case "pagoefectivo_atm_bank_transfer":
+                string = context.getResources().getString(R.string.mpsdk_homebanking) + " " + item.getDescription();
+            break;
+
             default:
                 string = paymentMethod.getName();
         }
         return string;
+    }
+
+    private static String formatItemId(String itemId){
+
+        String res = itemId;
+
+        if(isAtm(itemId)){
+            if(isBankTransfer(itemId)){
+                res = "pagoefectivo_atm_bank_transfer";
+            }else{
+                res= "pagoefectivo_atm";
+            }
+
+        }
+        return res;
+    }
+
+    private static boolean isAtm(String itemId) {
+
+        return itemId.contains("pagoefectivo_atm");
+    }
+
+    private static boolean isBankTransfer(String itemId){
+        return itemId.contains("bank_transfer");
     }
 }
