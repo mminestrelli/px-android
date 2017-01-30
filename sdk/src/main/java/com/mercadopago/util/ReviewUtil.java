@@ -11,7 +11,7 @@ import com.mercadopago.model.PaymentMethodSearchItem;
  */
 
 public class ReviewUtil {
-    protected ReviewUtil() {
+    private ReviewUtil() {
 
     }
 

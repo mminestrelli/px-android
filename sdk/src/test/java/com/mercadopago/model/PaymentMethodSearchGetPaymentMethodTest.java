@@ -1,7 +1,6 @@
 package com.mercadopago.model;
 
-import com.mercadopago.test.StaticMock;
-import com.mercadopago.util.JsonUtil;
+import com.mercadopago.utils.PaymentMethodsSearch;
 
 import junit.framework.Assert;
 
@@ -64,7 +63,7 @@ public class PaymentMethodSearchGetPaymentMethodTest {
     }
 
     private PaymentMethodSearch getPaymentMethodSearch() {
-        String paymentMethodSearchJson = StaticMock.getPaymentMethodSearchWithoutCustomOptionsAsJson();
-        return JsonUtil.getInstance().fromJson(paymentMethodSearchJson, PaymentMethodSearch.class);
+        PaymentMethodSearch paymentMethodSearch = PaymentMethodsSearch.getPaymentMethodSearchWithoutCustomOptionsAsJson();
+        return paymentMethodSearch;
     }
 }
