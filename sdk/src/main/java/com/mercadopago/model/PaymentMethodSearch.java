@@ -87,7 +87,7 @@ public class PaymentMethodSearch {
             //Case like "bancomer_ticket", with the payment type in the item id
             else if (itemMatchesPaymentMethod(currentItem, paymentMethod)) {
                 //Remove payment method id from item id
-                String potentialPaymentType = currentItem.getId().replace(paymentMethod.getId(), "");
+                String potentialPaymentType = currentItem.getId().replaceFirst(paymentMethod.getId(), "");
                 if (potentialPaymentType.endsWith(paymentMethod.getPaymentTypeId())) {
                     requiredItem = currentItem;
                     break;
