@@ -35,9 +35,9 @@ public class ExamplesUtils {
     public static final int CARD_REQUEST_CODE = 13;
 
     // * Merchant public key
-    public static final String DUMMY_MERCHANT_PUBLIC_KEY = "TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c";
+    public static final String DUMMY_MERCHANT_PUBLIC_KEY = "TEST-b17d8f8e-5039-4d58-a99f-7a66872741ca";
 
-    public static final String DUMMY_MERCHANT_PUBLIC_KEY_EXAMPLES_SERVICE = "TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c";
+    public static final String DUMMY_MERCHANT_PUBLIC_KEY_EXAMPLES_SERVICE = "TEST-b17d8f8e-5039-4d58-a99f-7a66872741ca";
     // DUMMY_MERCHANT_PUBLIC_KEY_AR = "444a9ef5-8a6b-429f-abdf-587639155d88";
     // DUMMY_MERCHANT_PUBLIC_KEY_BR = "APP_USR-f163b2d7-7462-4e7b-9bd5-9eae4a7f99c3";
     // DUMMY_MERCHANT_PUBLIC_KEY_MX = "6c0d81bc-99c1-4de8-9976-c8d1d62cd4f2";
@@ -57,7 +57,7 @@ public class ExamplesUtils {
     // PRODUCTION_PUBLIC_KEY_MLV = "APP_USR-a865216a-a035-4629-8ec4-b1e1908b8b0d"
     //CHECKOUT_PREFERENCES_ID_MLV = "241113185-a2eef4bd-ccb6-42e0-b543-12f6aab885ef";
 
-    public static final String DUMMY_MERCHANT_PREFERENCES_ID_PE = "242617753-07562444-aa61-48b2-b33c-85d7dd6b812c";
+    public static final String DUMMY_MERCHANT_PREFERENCES_ID_PE = "242624092-7c51358c-af8a-4f86-b94c-9b15431218a2";
 
 
     // * Merchant server vars
