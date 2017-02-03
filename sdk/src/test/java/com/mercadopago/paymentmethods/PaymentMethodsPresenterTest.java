@@ -1,13 +1,13 @@
 package com.mercadopago.paymentmethods;
 
 import com.mercadopago.constants.PaymentTypes;
-import com.mercadopago.views.PaymentMethodsView;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.model.PaymentMethod;
 import com.mercadopago.model.PaymentPreference;
 import com.mercadopago.mvp.OnResourcesRetrievedCallback;
 import com.mercadopago.presenters.PaymentMethodsPresenter;
 import com.mercadopago.providers.PaymentMethodsProvider;
+import com.mercadopago.views.PaymentMethodsView;
 
 import junit.framework.Assert;
 
@@ -21,8 +21,9 @@ import java.util.List;
  */
 
 public class PaymentMethodsPresenterTest {
+
     @Test
-    public void whenPaymentMethodsPresenterStartsShowPaymentMethods() throws Exception {
+    public void whenPaymentMethodsPresenterStartsShowPaymentMethods() {
 
 
         MockedView mockedView = new MockedView();
@@ -42,7 +43,7 @@ public class PaymentMethodsPresenterTest {
     }
 
     @Test
-    public void whenPaymentTypeExcludedDoNotShowIt() throws Exception {
+    public void whenPaymentTypeExcludedDoNotShowIt() {
 
         MockedView mockedView = new MockedView();
         MockedResourcesProvider resourcesProvider = new MockedResourcesProvider();

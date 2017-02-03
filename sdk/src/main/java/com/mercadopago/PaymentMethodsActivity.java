@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import com.mercadopago.adapters.PaymentMethodsAdapter;
 import com.mercadopago.core.MercadoPago;
 import com.mercadopago.decorations.DividerItemDecoration;
@@ -35,7 +33,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 
-public class PaymentMethodsActivity extends AppCompatActivity implements PaymentMethodsView {
+public class PaymentMethodsActivity extends MercadoPagoBaseActivity implements PaymentMethodsView {
 
     protected DecorationPreference mDecorationPreference;
     protected String mMerchantPublicKey;
