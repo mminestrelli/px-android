@@ -90,6 +90,8 @@
     <color name="mpsdk_mercadopago_cc">#DCDDD9</color>
     <color name="mpsdk_mercadopagocard">#DCDDD9</color>
     <color name="mpsdk_cmr">#3D7D4E</color>
+    <color name="mpsdk_magna">#666666</color>
+    <color name="mpsdk_presto">#0071b2</color>
 
 
     <color name="mpsdk_pagofacil">#FFFFFF</color>
@@ -122,6 +124,8 @@
     <color name="mpsdk_font_mercadopago_cc">#B3333333</color>
     <color name="mpsdk_font_mercadopagocard">#B3333333</color>
     <color name="mpsdk_font_cmr">#B3FFFFFF</color>
+    <color name="mpsdk_font_magna">#B3FFFFFF</color>
+    <color name="mpsdk_font_presto">#B3FFFFFF</color>
 
     <color name="mpsdk_font_pagofacil">#B3333333</color>
     <color name="mpsdk_font_rapipago">#B3333333</color>
