@@ -108,6 +108,8 @@ public class TermsAndConditionsActivity extends MercadoPagoActivity {
             mTermsAndConditionsWebView.loadUrl("https://www.mercadopago.com.mx/ayuda/terminos-y-condiciones_715");
         } else if ("MLB".equals(mSiteId)) {
             mTermsAndConditionsWebView.loadUrl("https://www.mercadopago.com.br/ajuda/termos-e-condicoes_300");
+        } else if ("MLU".equals(mSiteId)) {
+            mTermsAndConditionsWebView.loadUrl("https://www.mercadopago.com.uy/ayuda/terminos-y-condiciones-uy_2834");
         } else {
             finish();
         }
