@@ -57,7 +57,7 @@ public class ExamplesUtils {
     // PRODUCTION_PUBLIC_KEY_MLV = "APP_USR-a865216a-a035-4629-8ec4-b1e1908b8b0d"
     //CHECKOUT_PREFERENCES_ID_MLV = "241113185-a2eef4bd-ccb6-42e0-b543-12f6aab885ef";
 
-    public static final String DUMMY_MERCHANT_PREFERENCES_ID_PE = "242624092-7c51358c-af8a-4f86-b94c-9b15431218a2";
+    public static final String DUMMY_MERCHANT_PREFERENCES_ID_PE = "242624092-e0d12cfe-779b-4b85-b3b5-2243b45334c3";
 
 
     // * Merchant server vars

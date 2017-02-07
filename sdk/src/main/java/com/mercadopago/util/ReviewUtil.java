@@ -76,6 +76,18 @@ public class ReviewUtil {
             case "pagoefectivo_atm_bank_transfer":
                 string = R.string.mpsdk_review_off_text_3;
             break;
+            case "davivienda":
+                string = R.string.mpsdk_review_off_text;
+            break;
+            case "efecty":
+                string = R.string.mpsdk_review_off_text;
+            break;
+            case "movilred":
+                string = R.string.mpsdk_review_off_text;
+            break;
+            case "viabaloto":
+                string = R.string.mpsdk_review_off_text;
+            break;
             default:
                 string = R.string.mpsdk_review_off_text_default;
         }
@@ -139,6 +151,18 @@ public class ReviewUtil {
             break;
             case "pagoefectivo_atm_bank_transfer":
                 string = context.getResources().getString(R.string.mpsdk_homebanking) + " " + item.getDescription();
+            break;
+            case "davivienda":
+                string = paymentMethod.getName();
+            break;
+            case "efecty":
+                string = paymentMethod.getName();
+            break;
+            case "movilred":
+                string = paymentMethod.getName();
+            break;
+            case "viabaloto":
+                string = paymentMethod.getName();
             break;
 
             default:
