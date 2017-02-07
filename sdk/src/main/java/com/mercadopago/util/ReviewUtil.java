@@ -76,6 +76,12 @@ public class ReviewUtil {
             case "pagoefectivo_atm_bank_transfer":
                 string = R.string.mpsdk_review_off_text_3;
             break;
+            case "redpagos":
+                string = R.string.mpsdk_review_off_text;
+            break;
+            case "abitab":
+                string = R.string.mpsdk_review_off_text;
+            break;
             default:
                 string = R.string.mpsdk_review_off_text_default;
         }
@@ -139,6 +145,14 @@ public class ReviewUtil {
             break;
             case "pagoefectivo_atm_bank_transfer":
                 string = context.getResources().getString(R.string.mpsdk_homebanking) + " " + item.getDescription();
+            break;
+
+            case "redpagos":
+                string = paymentMethod.getName();
+            break;
+
+            case "abitab":
+                string = paymentMethod.getName();
             break;
 
             default:
