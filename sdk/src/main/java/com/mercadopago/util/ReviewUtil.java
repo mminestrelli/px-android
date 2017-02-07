@@ -76,6 +76,15 @@ public class ReviewUtil {
             case "pagoefectivo_atm_bank_transfer":
                 string = R.string.mpsdk_review_off_text_3;
             break;
+            case "mercantil_atm":
+                string = R.string.mpsdk_review_off_text;
+            break;
+            case "mercantil_bank_transfer":
+                string = R.string.mpsdk_review_off_text_3;
+            break;
+            case "provincial":
+                string = R.string.mpsdk_review_off_text;
+            break;
             default:
                 string = R.string.mpsdk_review_off_text_default;
         }
@@ -140,6 +149,16 @@ public class ReviewUtil {
             case "pagoefectivo_atm_bank_transfer":
                 string = context.getResources().getString(R.string.mpsdk_homebanking) + " " + item.getDescription();
             break;
+            case "mercantil_atm":
+                string = context.getResources().getString(R.string.mpsdk_your_atm) + " " + item.getDescription();
+            break;
+            case "provincial":
+                string = paymentMethod.getName();
+            break;
+            case "mercantil_bank_transfer":
+                string = context.getResources().getString(R.string.mpsdk_homebanking) + " " + item.getDescription();
+            break;
+
 
             default:
                 string = paymentMethod.getName();
