@@ -289,7 +289,17 @@ public class MercadoPago {
         if (this.mKeyType.equals(KEY_TYPE_PUBLIC)) {
             MPTracker.getInstance().trackEvent("NO_SCREEN", "GET_PAYMENT_METHOD_SEARCH", "1", mKey, BuildConfig.VERSION_NAME, mContext);
             PayerIntent payerIntent = new PayerIntent(payer);
+
+            /*Retrofit mockedRetrofit = new Retrofit.Builder()
+                    .baseUrl("https://private-e376cb-pxrolloutmco.apiary-mock.com")
+                    .addConverterFactory(GsonConverterFactory.create(JsonUtil.getInstance().getGson()))
+                    .client(HttpClientUtil.getClient(this.mContext, 10, 20, 20))
+                    .addCallAdapterFactory(new ErrorHandlingCallAdapter.ErrorHandlingCallAdapterFactory())
+                    .build();*/
+
             PaymentService service = mRetrofit.create(PaymentService.class);
+            //PaymentService service = mockedRetrofit.create(PaymentService.class);
+
             if (!accountMoneyEnabled) {
                 if (excludedPaymentTypes == null) {
                     excludedPaymentTypes = new ArrayList<>();

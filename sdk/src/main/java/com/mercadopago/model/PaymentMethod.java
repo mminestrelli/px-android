@@ -14,6 +14,7 @@ public class PaymentMethod {
     private String thumbnail;
     private String deferredCapture;
     private List<Setting> settings;
+    private List<Issuer> financialInstitutions;
     private BigDecimal minAllowedAmount;
     private BigDecimal maxAllowedAmount;
     private Integer accreditationTime;
@@ -24,6 +25,14 @@ public class PaymentMethod {
 
     public void setAdditionalInfoNeeded(List<String> additionalInfoNeeded) {
         this.additionalInfoNeeded = additionalInfoNeeded;
+    }
+
+    public List<Issuer> getFinancialInstitutions() {
+        return financialInstitutions;
+    }
+
+    public void setFinancialInstitutions(List<Issuer> financialInstitutions) {
+        this.financialInstitutions = financialInstitutions;
     }
 
     public String getId() {
@@ -78,12 +87,20 @@ public class PaymentMethod {
         }
     }
 
+    public boolean isFinancialInstitutionRequired(){
+        return !financialInstitutions.isEmpty();
+    }
+
     public boolean isIdentificationTypeRequired() {
         return isAdditionalInfoNeeded("cardholder_identification_type");
     }
 
     public boolean isIdentificationNumberRequired() {
         return isAdditionalInfoNeeded("cardholder_identification_number");
+    }
+
+    public boolean isEntityTypeRequired(){
+        return isAdditionalInfoNeeded("entity_type");
     }
 
     private boolean isAdditionalInfoNeeded(String param) {

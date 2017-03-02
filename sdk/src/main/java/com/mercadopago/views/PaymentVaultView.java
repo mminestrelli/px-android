@@ -46,4 +46,6 @@ public interface PaymentVaultView extends MvpView {
     void startDiscountActivity(BigDecimal transactionAmount);
 
     void cleanPaymentMethodOptions();
+
+    void startEntityTypeFlow(PaymentMethod selectedPaymentMethod);
 }

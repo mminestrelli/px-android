@@ -41,6 +41,8 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
     private BigDecimal mAmount;
     private Boolean mAccountMoneyEnabled;
     private Boolean mDiscountEnabled;
+    private Boolean mIdentificationNumberRequired;
+    private PaymentMethod mPaymentMethod;
     private Integer mMaxSavedCards;
 
     public void initialize() {
@@ -342,6 +344,7 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
             showMismatchingPaymentMethodError();
         } else {
             getView().selectPaymentMethod(selectedPaymentMethod);
+            this.mPaymentMethod = selectedPaymentMethod;
         }
     }
 
@@ -468,5 +471,44 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
             limitedItems = customSearchItems;
         }
         return limitedItems;
+    }
+
+
+    public boolean isEntityTypeFlowRequired(){
+     //   return isFinancialInstitutionRequired() && isIdentificationNumberRequired() && isEntityTypeRequired();
+        return true;
+    }
+
+
+    private boolean isEntityTypeRequired(){
+        if(isPaymentMethodSelected()){
+            return mPaymentMethod.isEntityTypeRequired();
+        }
+
+        return false;
+    }
+
+    private boolean isPaymentMethodSelected(){
+        return mPaymentMethod != null;
+    }
+
+    private boolean isIdentificationNumberRequired(){
+        if(isPaymentMethodSelected()){
+            return mPaymentMethod.isIdentificationNumberRequired();
+        }
+
+        return false;
+    }
+
+    private boolean isFinancialInstitutionRequired(){
+        if(isPaymentMethodSelected()){
+            return mPaymentMethod.isFinancialInstitutionRequired();
+        }
+
+        return false;
+    }
+
+    public void startEntityTypeFlow() {
+        getView().startEntityTypeFlow(mPaymentMethod);
     }
 }

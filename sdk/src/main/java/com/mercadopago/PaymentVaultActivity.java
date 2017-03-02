@@ -89,6 +89,7 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
     protected String mMerchantBaseUrl;
     protected String mMerchantGetCustomerUri;
     protected String mMerchantAccessToken;
+    private Site mSite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -359,6 +360,12 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
 
     private void resolvePaymentVaultRequest(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            //TODO interrumpo y agrego pedido de banco, docu y tipo de persona.
+
+            if(mPaymentVaultPresenter.isEntityTypeFlowRequired()){
+                mPaymentVaultPresenter.startEntityTypeFlow();
+            }
+
             setResult(RESULT_OK, data);
             finish();
         } else if (resultCode == RESULT_CANCELED && data != null && data.hasExtra("mpException")) {
@@ -426,6 +433,11 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
     public void cleanPaymentMethodOptions() {
         PaymentMethodSearchItemAdapter adapter = (PaymentMethodSearchItemAdapter) mSearchItemsRecyclerView.getAdapter();
         adapter.clear();
+    }
+
+    @Override
+    public void startEntityTypeFlow(PaymentMethod selectedPaymentMethod) {
+        //TODO
     }
 
     @Override
@@ -634,4 +646,6 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
     public PaymentVaultPresenter getPresenter() {
         return mPaymentVaultPresenter;
     }
+
+
 }
