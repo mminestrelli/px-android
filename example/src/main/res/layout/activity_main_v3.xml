@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        tools:context="com.mercadopago.pxsdkv3.MainActivity">
+    <Button
+            android:text="Wallet con Callbacks"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"
+            android:layout_margin="10dp"
+            android:onClick="onWalletCallbacksClicked"/>
+    <Button
+            android:text="Wallet con Result Codes"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"
+            android:layout_margin="10dp"
+            android:onClick="onWalletResultCodesClicked"/>
+    <Button
+            android:text="Pago en SDK en servidor del Merchant"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"
+            android:layout_margin="10dp"/>
+    <Button
+            android:text="Pago en SDK con pref"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"
+            android:layout_margin="10dp"/>
+    <Button
+            android:text="Flow preference"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"
+            android:layout_margin="10dp"/>
+    <Button
+            android:text="Decoration preference"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"
+            android:layout_margin="10dp"/>
+    <Button
+            android:text="Service preference"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"
+            android:layout_margin="10dp"/>
+    <Button
+            android:text="RyC screen preference"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"/>
+    <Button
+            android:text="Result screen preference"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            style="@style/mpsdk_button_normal"
+            android:layout_margin="10dp"/>
+
+</LinearLayout>
