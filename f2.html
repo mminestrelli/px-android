@@ -785,6 +785,9 @@ protected void onActivityResult(int resultCode, Intent data){
                   <p>
                      Puedes cambiar el color de nuestros componentes, y elegir entre una fuente clara u oscura.
                   </p>
+                  <p>
+                     Puedes iniciar un timer para limitar la duración del flujo.
+                  </p>
                   <p><b>Configuraciones de medios de pago</b></p>
                   <p>
                     Nuestra SDK cuenta con un objeto "PaymentPreference" el cual puede enviarse a cada componente. Este objeto representa tu configuración de cómo quieres customizar la forma de cobrar. Ejemplos:
@@ -847,6 +850,31 @@ new MercadoPago.StartActivityBuilder().
     .setDecorationPreference(decorationPreference) //Optional
     //Inicia el componente
 
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                  </p>
+                  <p><b>Timer</b></p>
+                  <p>
+                    Nuestra SDK cuenta con un objeto "CheckoutTimer" el cual puede iniciarse en cada componente o a lo largo del flujo. Dicho timer puede ser inicializaro de la siguiente manera:
+                  </p>
+                  <p>
+                     <pre class="snippet">
+                        <code class="line-numbers language-java">
+//start timer
+CheckoutTimer.getInstance().start(TIME_IN_SECONDS);
+
+//set on finish timer listener 
+CheckoutTimer.getInstance().setOnFinishListener(new CheckoutTimer.FinishListener() {
+            @Override
+            public void onFinish() {
+
+                //this method finish all MercadoPago checkout activities
+                CheckoutTimer.getInstance().finishCheckout();
+            }
+        });
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">

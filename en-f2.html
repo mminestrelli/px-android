@@ -852,6 +852,31 @@ new MercadoPago.StartActivityBuilder().
                         </button>
                      </pre>
                   </p>
+                  <p><b>Timer</b></p>
+                  <p>
+                    Our SDK has a "CheckoutTimer" object which can be started to our components or along the flow. This timer can be start with next code:
+                  </p>
+                  <p>
+                     <pre class="snippet">
+                        <code class="line-numbers language-java">
+//start timer
+CheckoutTimer.getInstance().start(TIME_IN_SECONDS);
+
+//set on finish timer listener 
+CheckoutTimer.getInstance().setOnFinishListener(new CheckoutTimer.FinishListener() {
+            @Override
+            public void onFinish() {
+
+                //this method finish all MercadoPago checkout activities
+                CheckoutTimer.getInstance().finishCheckout();
+            }
+        });
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                  </p>
                   <div class="doc-example ionic">
                      <img src="./img/phone/payment_results_cards.gif" class="img-phone-case"></img>
                   </div>
