@@ -74,6 +74,7 @@
                                  <li><a href="en-f2.html#f2_payment_methods">Payment methods</a></li>
                                  <li><a href="en-f2.html#f2_card_issuers">Banks</a></li>
                                  <li><a href="en-f2.html#f2_payer_costs">Installments</a></li>
+                                 <li><a href="en-f2.html#f2_discounts">Discounts</a></li>
                                  <li><a href="en-f2.html#f2_bank_deals">Bank deals</a></li>
                                  <li><a href="en-f2.html#f2_create_payment">Payment creation</a></li>
                                  <li><a href="en-f2.html#f2_payment_result">Payment result</a></li>
@@ -470,8 +471,8 @@ Intent data) {
                      <img src="./img/phone/f2_payer_costs.png" class="img-phone-case"></img>
                   </div>
                </section>
-               <section class="docs-section" id="f2_bank_deals">
-                  <h3 class="title">Bank deals</h3>
+               <section class="docs-section" id="f2_discounts">
+                  <h3 class="title">Discounts</h3>
                   <p>
                      We arrange deals with the card brands and the issuers in order to give the best promotions to your users at the moment of paying. We think it's very important that you tell your users about this benefits while it's navigating your app, because it's more likely to choose a convenient payment method and make the payment.
                   </p>
@@ -490,6 +491,85 @@ public void onBankDealsButtonClicked(View view) {
                         </button>
                      </pre>
                   </p>
+                  <div class="doc-example ionic">
+                     <img src="./img/phone/bank_deals.png" class="img-phone-case"></img>
+                  </div>
+               </section>
+               <section class="docs-section" id="f2_discounts">
+                  <h3 class="title">Discounts</h3>
+                  <p>
+                    <br>
+                     ¡Add discounts to your flow!
+                    <br/>
+                    <br>
+                     If you have active discounts campaigns in Mercado Pago, the SDK will comunicate and apply the best discount.
+                     <br/>
+                     <br>
+                     There are two discounts types. Direct discount and discount with code. The direct discount is always applied when you start the SDK. On the other hand, the discount with code requires that the user enter the correct discount code. If the discount code is valid, the SDK will apply the discount.
+                     <br />
+                     <br>
+                     If there are active discounts campaigns, the SDK will apply only one discount. The direct discounts has more priority that the discount with code. We do not cosider accumulative discounts, so the SDK will apply only the best discount.
+                     <br />
+                     <br>
+                     In the SDK you can disable this feature through this code:
+                     <br />
+                     <p>
+                     <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setDirectDiscountEnabled(false)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
+                     <p>
+                      <br>
+                      On the other hand, you can start the SDK with your own Mercado Pago discount. You can do this with this code:
+                      <br />
+                     </p>
+                     <p>
+                      <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setDiscount(DISCOUNT)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
+                     <p>
+                      <br>
+                      Also, the SDK let you set an URL and an URI for you can use your own discount service with this code:
+                      <br />
+                     </p>
+                     <p>
+                      <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setMerchantDiscountUrl("https://example.url.com/")
+                .setMerchantGetDiscountUri("discount/uri")
+                .setDiscountAdditionalInfo(ADDITIONAL_INFO_MAP)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
                   <div class="doc-example ionic">
                      <img src="./img/phone/bank_deals.png" class="img-phone-case"></img>
                   </div>
