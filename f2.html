@@ -74,6 +74,7 @@
                                  <li><a href="f2.html#f2_payment_methods">Medios de pago</a></li>
                                  <li><a href="f2.html#f2_card_issuers">Bancos</a></li>
                                  <li><a href="f2.html#f2_payer_costs">Cuotas</a></li>
+                                 <li><a href="f2.html#f2_discounts">Descuentos</a></li>
                                  <li><a href="f2.html#f2_bank_deals">Promociones</a></li>
                                  <li><a href="f2.html#f2_create_payment">Creación de pago</a></li>
                                  <li><a href="f2.html#f2_payment_result">Resultado de pagos</a></li>
@@ -469,6 +470,85 @@ Intent data) {
                   </p>
                   <div class="doc-example ionic">
                      <img src="./img/phone/f2_payer_costs.png" class="img-phone-case"></img>
+                  </div>
+               </section>
+                <section class="docs-section" id="f2_discounts">
+                  <h3 class="title">Descuentos</h3>
+                  <p>
+                    <br>
+                     ¡Suma descuentos a tu flujo!
+                    <br/>
+                    <br>
+                     En caso de que cuentes con campañas de descuentos activas en Mercado Pago el SDK comunicará y aplicará el descuento aplicable. 
+                     <br/>
+                     <br>
+                     Existen dos tipos de descuentos. Descuento directo y descuento con código. El descuento directo se aplica al iniciar el SDK. Por otro lado, el descuento con código requiere el ingreso, por parte del usuario, de un código de descuento. En caso de que el códgio sea correcto, se aplicará el descuento.
+                     <br />
+                     <br>
+                     En caso de existir varias campañas de descuentos activas, el SDK aplicará un solo descuento, dando prioridad al descuento directo. El SDK no contempla descuentos acumulables, por éste motivo siempre aplicará un solo descuento.
+                     <br />
+                     <br>
+                     El SDK permite inhabilitar este feature mediante el siguiente código:
+                     <br />
+                     <p>
+                     <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setDirectDiscountEnabled(false)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
+                     <p>
+                      <br>
+                      Por otra parte, se puede iniciar el SDK con un descuento de Mercado Pago, de esta menera:
+                      <br />
+                     </p>
+                     <p>
+                      <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setDiscount(DISCOUNT)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
+                     <p>
+                      <br>
+                      También existe la posibilidad de setear en el SDK una URL y una URI para utilizar el servicio de descuentos del merchant. Esto se realiza con el siguient código:
+                      <br />
+                     </p>
+                     <p>
+                      <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setMerchantDiscountUrl("https://example.url.com/")
+                .setMerchantGetDiscountUri("discount/uri")
+                .setDiscountAdditionalInfo(ADDITIONAL_INFO_MAP)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
+                  <div class="doc-example ionic">
+                     <img src="./img/phone/bank_deals.png" class="img-phone-case"></img>
                   </div>
                </section>
                <section class="docs-section" id="f2_bank_deals">
