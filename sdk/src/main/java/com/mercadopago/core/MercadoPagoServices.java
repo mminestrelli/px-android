@@ -10,6 +10,7 @@ import com.mercadopago.model.BankDeal;
 import com.mercadopago.model.Campaign;
 import com.mercadopago.model.CardToken;
 import com.mercadopago.model.Discount;
+import com.mercadopago.model.EncryptedCardToken;
 import com.mercadopago.model.IdentificationType;
 import com.mercadopago.model.Installment;
 import com.mercadopago.model.Issuer;
@@ -53,6 +54,7 @@ public class MercadoPagoServices {
     public static final int BIN_LENGTH = 6;
 
     private static final String MP_API_BASE_URL = "https://api.mercadopago.com";
+    private static final String MP_MOCKED_API_BASE_URL = "http://private-8aca43-prototipocvv.apiary-mock.com";
 
     private static final String PAYMENT_RESULT_API_VERSION = "1.3.x";
     private static final String PAYMENT_METHODS_OPTIONS_API_VERSION = "1.3.x";
@@ -120,12 +122,24 @@ public class MercadoPagoServices {
         }).start();
     }
 
+    public void createToken(final EncryptedCardToken encryptedCardToken, final Callback<Token> callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                encryptedCardToken.setDevice(mContext);
+                GatewayService service = getGatewayRetrofit().create(GatewayService.class);
+                service.getToken(mPublicKey, mPrivateKey, encryptedCardToken).enqueue(callback);
+            }
+        }).start();
+    }
+
     public void createToken(final CardToken cardToken, final Callback<Token> callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 cardToken.setDevice(mContext);
-                GatewayService service = getGatewayRetrofit().create(GatewayService.class);
+//                GatewayService service = getGatewayRetrofit().create(GatewayService.class);
+                GatewayService service = getMockedGatewayRetrofit().create(GatewayService.class);
                 service.getToken(mPublicKey, mPrivateKey, cardToken).enqueue(callback);
             }
         }).start();
@@ -224,6 +238,10 @@ public class MercadoPagoServices {
         return getGatewayRetrofit(DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, DEFAULT_WRITE_TIMEOUT);
     }
 
+    private Retrofit getMockedGatewayRetrofit() {
+        return getMockedGatewayRetrofit(DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, DEFAULT_WRITE_TIMEOUT);
+    }
+
     private Retrofit getGatewayRetrofit(int connectTimeout, int readTimeout, int writeTimeout) {
         String baseUrl;
         if (mServicePreference != null && !TextUtil.isEmpty(mServicePreference.getGatewayBaseURL())) {
@@ -233,6 +251,11 @@ public class MercadoPagoServices {
         } else {
             baseUrl = MP_API_BASE_URL;
         }
+        return getRetrofit(baseUrl, connectTimeout, readTimeout, writeTimeout);
+    }
+
+    private Retrofit getMockedGatewayRetrofit(int connectTimeout, int readTimeout, int writeTimeout) {
+        String baseUrl= MP_MOCKED_API_BASE_URL;
         return getRetrofit(baseUrl, connectTimeout, readTimeout, writeTimeout);
     }
 

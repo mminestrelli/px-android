@@ -11,20 +11,19 @@ public class Token implements CardInformation {
     private String id;
     private String publicKey;
     private String cardId;
-    private String luhnValidation;
-    private String status;
-    private String usedDate;
-    private Integer cardNumberLength;
-    private Date creationDate;
-    private String truncCardNumber;
-    private Integer securityCodeLength;
-    private Integer expirationMonth;
-    private Integer expirationYear;
-    private Date lastModifiedDate;
-    private Date dueDate;
     private String firstSixDigits;
+    private Boolean luhnValidation;
+    private String dateUsed;
+    private String status;
+    private Date dateDue;
+    private Integer cardNumberLength;
+    private Integer securityCodeLength;
+    private Integer expirationYear;
+    private Integer expirationMonth;
+    private Date dateLastUpdated;
     private String lastFourDigits;
     private Cardholder cardholder;
+    private Date dateCreated;
 
     public Integer getSecurityCodeLength() {
         return securityCodeLength;
@@ -50,20 +49,20 @@ public class Token implements CardInformation {
         this.expirationYear = expirationYear;
     }
 
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
+    public Date getDateLastUpdated() {
+        return dateLastUpdated;
     }
 
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
+    public void setDateLastUpdated(Date dateLastUpdated) {
+        this.dateLastUpdated = dateLastUpdated;
     }
 
-    public Date getDueDate() {
-        return dueDate;
+    public Date getDateDue() {
+        return dateDue;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public void setDateDue(Date dateDue) {
+        this.dateDue = dateDue;
     }
 
     public String getCardId() {
@@ -74,11 +73,11 @@ public class Token implements CardInformation {
         this.cardId = cardId;
     }
 
-    public String getLuhnValidation() {
+    public Boolean getLuhnValidation() {
         return luhnValidation;
     }
 
-    public void setLuhnValidation(String luhnValidation) {
+    public void setLuhnValidation(Boolean luhnValidation) {
         this.luhnValidation = luhnValidation;
     }
 
@@ -90,12 +89,12 @@ public class Token implements CardInformation {
         this.status = status;
     }
 
-    public String getUsedDate() {
-        return usedDate;
+    public String getDateUsed() {
+        return dateUsed;
     }
 
-    public void setUsedDate(String usedDate) {
-        this.usedDate = usedDate;
+    public void setDateUsed(String dateUsed) {
+        this.dateUsed = dateUsed;
     }
 
     public Integer getCardNumberLength() {
@@ -106,20 +105,12 @@ public class Token implements CardInformation {
         this.cardNumberLength = cardNumberLength;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public Date getDateCreated() {
+        return dateCreated;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public String getTruncCardNumber() {
-        return truncCardNumber;
-    }
-
-    public void setTruncCardNumber(String truncCardNumber) {
-        this.truncCardNumber = truncCardNumber;
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public String getId() {

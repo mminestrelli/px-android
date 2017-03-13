@@ -713,7 +713,8 @@ public class VaultActivity extends AppCompatActivity {
 
     protected void createSavedCardToken() {
 
-        SavedCardToken savedCardToken = new SavedCardToken(mSelectedCard.getId(), mSecurityCodeText.getText().toString());
+        SavedCardToken savedCardToken = new SavedCardToken(mSelectedCard.getId());
+        savedCardToken.setSecurityCode(mSecurityCodeText.getText().toString());
 
         // Validate CVV
         try {

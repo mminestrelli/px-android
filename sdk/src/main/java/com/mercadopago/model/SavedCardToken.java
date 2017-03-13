@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.mercadopago.R;
+import com.mercadopago.util.TextUtil;
 
 public class SavedCardToken {
 
@@ -35,9 +36,8 @@ public class SavedCardToken {
         this.securityCode = securityCode;
     }
 
-    public SavedCardToken(String cardId, String securityCode) {
+    public SavedCardToken(String cardId) {
         this.cardId = cardId;
-        this.securityCode = securityCode;
     }
 
     public boolean validate() {
@@ -49,7 +49,6 @@ public class SavedCardToken {
     }
 
     public boolean validateSecurityCode() {
-
         return CardToken.validateSecurityCode(securityCode);
     }
 

@@ -110,8 +110,9 @@ public class StaticMock {
     }
 
     public static SavedCardToken getSavedCardToken() {
-
-        return new SavedCardToken(DUMMY_CARD_ID, DUMMY_SECURITY_CODE);
+        SavedCardToken savedCardToken = new SavedCardToken(DUMMY_CARD_ID);
+        savedCardToken.setSecurityCode(DUMMY_SECURITY_CODE);
+        return savedCardToken;
     }
 
     public static PaymentMethod getPaymentMethod(Context context) {

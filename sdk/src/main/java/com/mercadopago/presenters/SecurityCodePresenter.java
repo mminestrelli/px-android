@@ -190,7 +190,8 @@ public class SecurityCodePresenter {
             if (mToken != null && validateSecurityCodeFromToken()) {
                 cloneToken();
             } else if (mCard != null) {
-                SavedCardToken savedCardToken = new SavedCardToken(mCard.getId(), mSecurityCode);
+                SavedCardToken savedCardToken = new SavedCardToken(mCard.getId());
+                savedCardToken.setSecurityCode(mSecurityCode);
                 savedCardToken.validateSecurityCode(mContext, mCard);
                 createToken(savedCardToken);
             }
