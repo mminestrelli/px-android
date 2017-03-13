@@ -331,6 +331,8 @@ public class CardVaultPresenter {
             @Override
             public void success(Token token) {
                 mToken = token;
+                //TODO guardar el cvv
+                saveEncryptedSecurityCode();
                 mView.finishWithResult();
             }
 
@@ -345,5 +347,9 @@ public class CardVaultPresenter {
                 mView.showApiExceptionError(apiException);
             }
         });
+    }
+    
+    private void saveEncryptedSecurityCode() {
+
     }
 }

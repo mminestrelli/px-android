@@ -180,25 +180,41 @@ public class CheckoutExampleActivity extends AppCompatActivity {
                 .setDecorationPreference(decorationPreference)
                 .setFlowPreference(flowPreference)
                 .setPaymentResultScreenPreference(paymentResultScreenPreference)
-                .start(new PaymentDataCallback() {
+                .start(new PaymentCallback() {
                     @Override
-                    public void onSuccess(PaymentData paymentData, boolean paymentMethodChanged) {
-                        Log.d("log", "success");
-                        Log.d("log", paymentData.getPaymentMethod().getId());
-                        Log.d("log", "payment method changed: " + paymentMethodChanged);
-                        startAgain(paymentData);
+                    public void onSuccess(Payment payment) {
+
                     }
 
                     @Override
                     public void onCancel() {
-                        Log.d("log", "cancel");
+
                     }
 
                     @Override
                     public void onFailure(MercadoPagoError error) {
-                        Log.d("log", "failure");
+
                     }
                 });
+//                .start(new PaymentDataCallback() {
+//                    @Override
+//                    public void onSuccess(PaymentData paymentData, boolean paymentMethodChanged) {
+//                        Log.d("log", "success");
+//                        Log.d("log", paymentData.getPaymentMethod().getId());
+//                        Log.d("log", "payment method changed: " + paymentMethodChanged);
+//                        startAgain(paymentData);
+//                    }
+//
+//                    @Override
+//                    public void onCancel() {
+//                        Log.d("log", "cancel");
+//                    }
+//
+//                    @Override
+//                    public void onFailure(MercadoPagoError error) {
+//                        Log.d("log", "failure");
+//                    }
+//                });
 //                .startForPaymentData();
 //        .start(new PaymentCallback() {
 //            @Override

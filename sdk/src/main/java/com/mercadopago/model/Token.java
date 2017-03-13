@@ -24,6 +24,7 @@ public class Token implements CardInformation {
     private String lastFourDigits;
     private Cardholder cardholder;
     private Date dateCreated;
+    private String encryptedCvv;
 
     public Integer getSecurityCodeLength() {
         return securityCodeLength;
@@ -151,6 +152,14 @@ public class Token implements CardInformation {
 
     public void setCardholder(Cardholder cardholder) {
         this.cardholder = cardholder;
+    }
+
+    public String getEncryptedCvv() {
+        return encryptedCvv;
+    }
+
+    public void setEncryptedCvv(String encryptedCvv) {
+        this.encryptedCvv = encryptedCvv;
     }
 
     public static Token parseJson(String json) {
