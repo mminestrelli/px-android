@@ -25,7 +25,8 @@ public class CheckoutPreference {
 
     @SerializedName("payment_methods")
     private PaymentPreference paymentPreference;
-
+    @SerializedName("shipments")
+    private ShippingPreference shippingPreference;
     private Date expirationDateTo;
     private Date expirationDateFrom;
     private String siteId;
@@ -33,6 +34,9 @@ public class CheckoutPreference {
     private Site localPreferenceSite;
 
     public CheckoutPreference(Builder builder) {
+
+        this.id = builder.id;
+
         this.items = builder.items;
         this.expirationDateFrom = builder.expirationDateFrom;
         this.expirationDateTo = builder.expirationDateTo;
@@ -50,8 +54,9 @@ public class CheckoutPreference {
         paymentPreference.setDefaultInstallments(builder.defaultInstallments);
         this.paymentPreference = paymentPreference;
 
-        //TODO borrar
-        this.id = builder.id;
+        ShippingPreference shippingPreference = new ShippingPreference();
+        shippingPreference.setCost(builder.shippingCost);
+        this.shippingPreference = shippingPreference;
     }
 
     public void validate() throws CheckoutPreferenceException {
@@ -254,7 +259,7 @@ public class CheckoutPreference {
         private Site localPreferenceSite;
         private String payerAccessToken;
         private boolean excludeAccountMoney = true;
-        //TODO borrar
+        private BigDecimal shippingCost;
         private String id;
 
         public Builder() {
@@ -340,7 +345,6 @@ public class CheckoutPreference {
             return this;
         }
 
-        //TODO borrar
         public Builder setId(String id) {
             this.id = id;
             return this;
@@ -348,6 +352,11 @@ public class CheckoutPreference {
 
         public Builder enableAccountMoney() {
             this.excludeAccountMoney = false;
+            return this;
+        }
+
+        public Builder setShippingCost(BigDecimal cost) {
+            this.shippingCost = cost;
             return this;
         }
 
