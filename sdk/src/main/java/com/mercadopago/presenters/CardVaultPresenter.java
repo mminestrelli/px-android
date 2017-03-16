@@ -1,6 +1,7 @@
 package com.mercadopago.presenters;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.mercadopago.callbacks.Callback;
 import com.mercadopago.callbacks.FailureRecovery;
@@ -18,6 +19,7 @@ import com.mercadopago.model.PaymentRecovery;
 import com.mercadopago.model.Site;
 import com.mercadopago.model.Token;
 import com.mercadopago.preferences.PaymentPreference;
+import com.mercadopago.util.StorageUtil;
 import com.mercadopago.views.CardVaultActivityView;
 
 import java.math.BigDecimal;
@@ -331,8 +333,9 @@ public class CardVaultPresenter {
             @Override
             public void success(Token token) {
                 mToken = token;
+                Log.d("log", token.getId());
                 //TODO guardar el cvv
-                saveEncryptedSecurityCode();
+                saveEncryptedSecurityCode(token);
                 mView.finishWithResult();
             }
 
@@ -349,7 +352,11 @@ public class CardVaultPresenter {
         });
     }
     
-    private void saveEncryptedSecurityCode() {
-
+    private void saveEncryptedSecurityCode(Token token) {
+        String encryptedCvv = token.getEncryptedCvv();
+        String cardId = token.getCardId();
+        String fileName = StorageUtil.createFileName(mContext);
+        Map<String, String> map = StorageUtil.addToStorageMap(mContext, cardId, encryptedCvv, fileName);
+        StorageUtil.saveInFile(mContext, map, fileName);
     }
 }

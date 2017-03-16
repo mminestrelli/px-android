@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.mercadopago.callbacks.Callback;
 import com.mercadopago.callbacks.CallbackHolder;
@@ -901,6 +902,10 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
 
                 @Override
                 public void failure(ApiException apiException) {
+                    if (apiException != null) {
+                        Log.d("log", apiException.getError());
+                        Log.d("log", apiException.getMessage());
+                    }
                     setFailureRecovery(new FailureRecovery() {
                         @Override
                         public void recover() {

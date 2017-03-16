@@ -115,71 +115,69 @@ public class CheckoutExampleActivity extends AppCompatActivity {
     }
 
     private void startMercadoPagoCheckout() {
-        Map<String, Object> additionalInfo = new HashMap<>();
-        additionalInfo.put("company_id", "movistar");
-        additionalInfo.put("phone_number", "111111");
+//        Map<String, Object> additionalInfo = new HashMap<>();
+//        additionalInfo.put("company_id", "movistar");
+//        additionalInfo.put("phone_number", "111111");
 
-        String languageToLoad  = "pt"; // your language
-        Locale locale = new Locale(languageToLoad);
-        Locale.setDefault(locale);
+//        CellphoneReview cellphoneReview = new CellphoneReview(this, "15111111");
+//
+//        ReviewScreenPreference reviewScreenPreference = new ReviewScreenPreference.Builder()
+//                .setTitle("Confirma tu recarga")
+//                .setConfirmText("Recargar")
+//                .setCancelText("Ir a Actividad")
+//                .setProductDetail("Recarga de celular")
+//                .addReviewable(cellphoneReview)
+//                .build();
 
-        CellphoneReview cellphoneReview = new CellphoneReview(this, "15111111");
-
-        ReviewScreenPreference reviewScreenPreference = new ReviewScreenPreference.Builder()
-                .setTitle("Confirma tu recarga")
-                .setConfirmText("Recargar")
-                .setCancelText("Ir a Actividad")
-                .setProductDetail("Recarga de celular")
-                .addReviewable(cellphoneReview)
-                .build();
-
-        CongratsReview congratsReview = new CongratsReview(this, "Hola!");
+//        CongratsReview congratsReview = new CongratsReview(this, "Hola!");
 
         DecorationPreference decorationPreference = new DecorationPreference.Builder()
 //                .setCustomLightFont("fonts/Pacifico-Light.ttf")
 //                .setCustomRegularFont("fonts/Merriweather-Light.ttf")
+                .setBaseColor("#3D3D3D")
                 .build();
 
-        PaymentResultScreenPreference paymentResultScreenPreference = new PaymentResultScreenPreference.Builder()
-                //.addCongratsReviewable(congratsReview)
-                .setPendingContentTitle("Ahora acredita tu carga y sigue viajando")
-                .disablePendingContentText()
-                .disablePendingContentTitle()
-                .setApprovedSecondaryExitButton("lala", new PaymentResultCallback() {
-                    @Override
-                    public void onResult(PaymentResult paymentResult) {
-                        Log.d("log", "on result");
-                    }
-                })
-                .build();
+//        PaymentResultScreenPreference paymentResultScreenPreference = new PaymentResultScreenPreference.Builder()
+//                //.addCongratsReviewable(congratsReview)
+//                .setPendingContentTitle("Ahora acredita tu carga y sigue viajando")
+//                .disablePendingContentText()
+//                .disablePendingContentTitle()
+//                .setApprovedSecondaryExitButton("lala", new PaymentResultCallback() {
+//                    @Override
+//                    public void onResult(PaymentResult paymentResult) {
+//                        Log.d("log", "on result");
+//                    }
+//                })
+//                .build();
 
-        FlowPreference flowPreference = new FlowPreference.Builder()
-                .disableReviewAndConfirmScreen()
-                .disableDiscount()
-                .disableBankDeals()
-                .build();
+//        FlowPreference flowPreference = new FlowPreference.Builder()
+//                .disableReviewAndConfirmScreen()
+//                .disableDiscount()
+//                .disableBankDeals()
+//                .build();
 
-        mCheckoutPreference = new CheckoutPreference.Builder()
-                .addItem(new Item("Item", BigDecimal.ONE))
+//        mCheckoutPreference = new CheckoutPreference.Builder()
+//                .addItem(new Item("Item", BigDecimal.ONE))
 //                .addItem(new Item("Item", new BigDecimal(1000)))
-                .setSite(Sites.ARGENTINA)
+//                .setSite(Sites.ARGENTINA)
 //                .addExcludedPaymentType(PaymentTypes.ATM)
 //                .addExcludedPaymentType(PaymentTypes.BANK_TRANSFER)
 //                .addExcludedPaymentType(PaymentTypes.CREDIT_CARD)
 //                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
 //                .addExcludedPaymentType(PaymentTypes.TICKET)
-                .enableAccountMoney()
-                .setPayerAccessToken("TEST-7176766875549918-111008-fa5660d2d0aa37532716eb2bf2f9089b__LB_LC__-192992930")
-                .build();
+//                .enableAccountMoney()
+//                .setPayerAccessToken("TEST-7176766875549918-111008-fa5660d2d0aa37532716eb2bf2f9089b__LB_LC__-192992930")
+//                .build();
+
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
-                .setPublicKey(mPublicKey)
+                .setPublicKey("TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7")
                 .setCheckoutPreference(mCheckoutPreference)
-                .setReviewScreenPreference(reviewScreenPreference)
+//                .setReviewScreenPreference(reviewScreenPreference)
                 .setDecorationPreference(decorationPreference)
-                .setFlowPreference(flowPreference)
-                .setPaymentResultScreenPreference(paymentResultScreenPreference)
+//                .setFlowPreference(flowPreference)
+//                .setPaymentResultScreenPreference(paymentResultScreenPreference)
                 .start(new PaymentCallback() {
                     @Override
                     public void onSuccess(Payment payment) {
