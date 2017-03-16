@@ -2,15 +2,16 @@ package com.mercadopago.uicontrollers.discounts;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.mercadopago.R;
-import com.mercadopago.customviews.MPTextView;
 import com.mercadopago.model.Currency;
 import com.mercadopago.model.Discount;
 import com.mercadopago.util.CurrenciesUtil;
@@ -23,9 +24,11 @@ import java.math.BigDecimal;
 
 public class DiscountRowView implements DiscountView {
 
+
     //Local vars
     private String mCurrencyId;
     private BigDecimal mTransactionAmount;
+    private BigDecimal mShippingCost;
     private Context mContext;
     private Discount mDiscount;
     private Boolean mShortRowEnabled;
@@ -35,17 +38,18 @@ public class DiscountRowView implements DiscountView {
 
     //Views
     private View mView;
-    private MPTextView mTotalAmountTextView;
-    private MPTextView mDiscountAmountTextView;
-    private MPTextView mDiscountOffTextView;
+    private TextView mTotalAmountTextView;
+    private TextView mDiscountAmountTextView;
+    private TextView mDiscountOffTextView;
     private ImageView mDiscountArrow;
     private LinearLayout mHighDiscountRow;
     private LinearLayout mHasDiscountLinearLayout;
     private LinearLayout mHasDirectDiscountLinearLayout;
     private LinearLayout mDiscountDetail;
     private View mDiscountSeparator;
+    private TextView mLabel;
 
-    public DiscountRowView(Context context, Discount discount, BigDecimal transactionAmount, String currencyId, Boolean shortRowEnabled,
+    public DiscountRowView(Context context, Discount discount, BigDecimal transactionAmount, BigDecimal shippingCost, String currencyId, Boolean shortRowEnabled,
                            Boolean discountEnabled, Boolean showArrow, Boolean showSeparator) {
         mContext = context;
         mDiscount = discount;
@@ -55,6 +59,7 @@ public class DiscountRowView implements DiscountView {
         mDiscountEnabled = discountEnabled;
         mShowArrow = showArrow;
         mShowSeparator = showSeparator;
+        mShippingCost = shippingCost;
     }
 
     @Override
@@ -78,10 +83,18 @@ public class DiscountRowView implements DiscountView {
 
     private void showHighDefaultRow() {
         if (isAmountValid(mTransactionAmount) && CurrenciesUtil.isValidCurrency(mCurrencyId)) {
-            mTotalAmountTextView.setText(getFormattedAmount(mTransactionAmount, mCurrencyId));
+            if(shouldShowShippingCost()) {
+                mLabel.setText(R.string.mpsdk_product_and_shipping_cost_label);
+            }
+            BigDecimal finalAmount = mShippingCost == null ? mTransactionAmount : mTransactionAmount.add(mShippingCost);
+            mTotalAmountTextView.setText(getFormattedAmount(finalAmount, mCurrencyId));
         } else {
             mHighDiscountRow.setVisibility(View.GONE);
         }
+    }
+
+    private boolean shouldShowShippingCost() {
+        return mShippingCost != null && mShippingCost.compareTo(BigDecimal.ZERO) == 1;
     }
 
     private void showHasDiscountRow() {
@@ -176,11 +189,19 @@ public class DiscountRowView implements DiscountView {
     }
 
     private void setTotalAmountWithDiscount() {
-        mDiscountAmountTextView.setText(getFormattedAmount(mDiscount.getAmountWithDiscount(mTransactionAmount), mDiscount.getCurrencyId()));
+        BigDecimal finalAmount = mShippingCost == null ? mDiscount.getAmountWithDiscount(mTransactionAmount)
+                : mDiscount.getAmountWithDiscount(mTransactionAmount).add(mShippingCost);
+        mDiscountAmountTextView.setText(getFormattedAmount(finalAmount, mDiscount.getCurrencyId()));
     }
 
     private void setTotalAmount() {
-        mTotalAmountTextView.setText(getFormattedAmount(mTransactionAmount, mDiscount.getCurrencyId()));
+
+        BigDecimal amount = mTransactionAmount;
+        if(shouldShowShippingCost()) {
+            mLabel.setText(R.string.mpsdk_product_and_shipping_cost_label);
+            amount = mTransactionAmount.add(mShippingCost);
+        }
+        mTotalAmountTextView.setText(getFormattedAmount(amount, mDiscount.getCurrencyId()));
         mTotalAmountTextView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
@@ -192,14 +213,15 @@ public class DiscountRowView implements DiscountView {
     @Override
     public void initializeControls() {
         mHighDiscountRow = (LinearLayout) mView.findViewById(R.id.mpsdkDiscountRow);
-        mTotalAmountTextView = (MPTextView) mView.findViewById(R.id.mpsdkTotalAmount);
-        mDiscountAmountTextView = (MPTextView) mView.findViewById(R.id.mpsdkDiscountAmount);
-        mDiscountOffTextView = (MPTextView) mView.findViewById(R.id.mpsdkDiscountOff);
+        mTotalAmountTextView = (TextView) mView.findViewById(R.id.mpsdkTotalAmount);
+        mDiscountAmountTextView = (TextView) mView.findViewById(R.id.mpsdkDiscountAmount);
+        mDiscountOffTextView = (TextView) mView.findViewById(R.id.mpsdkDiscountOff);
         mHasDiscountLinearLayout = (LinearLayout) mView.findViewById(R.id.mpsdkHasDiscount);
         mHasDirectDiscountLinearLayout = (LinearLayout) mView.findViewById(R.id.mpsdkHasDirectDiscount);
         mDiscountDetail = (LinearLayout) mView.findViewById(R.id.mpsdkDiscountDetail);
         mDiscountArrow = (ImageView) mView.findViewById(R.id.mpsdkDiscountArrow);
         mDiscountSeparator = mView.findViewById(R.id.mpsdkDiscountSeparator);
+        mLabel = (TextView) mView.findViewById(R.id.mpsdkLabel);
     }
 
     @Override

@@ -41,6 +41,7 @@ import com.mercadopago.observers.TimerObserver;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.preferences.PaymentPreference;
 import com.mercadopago.preferences.ServicePreference;
+import com.mercadopago.preferences.ShippingPreference;
 import com.mercadopago.presenters.PaymentVaultPresenter;
 import com.mercadopago.providers.PaymentVaultProviderImpl;
 import com.mercadopago.uicontrollers.FontCache;
@@ -171,6 +172,10 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
 
         if (getIntent().getStringExtra("paymentPreference") != null) {
             mPaymentVaultPresenter.setPaymentPreference(JsonUtil.getInstance().fromJson(getIntent().getStringExtra("paymentPreference"), PaymentPreference.class));
+        }
+
+        if (getIntent().getStringExtra("shippingPreference") != null) {
+            mPaymentVaultPresenter.setShippingPreference(JsonUtil.getInstance().fromJson(getIntent().getStringExtra("shippingPreference"), ShippingPreference.class));
         }
 
         if (this.getIntent().getStringExtra("selectedSearchItem") != null) {
@@ -551,6 +556,7 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
                 .setInstallmentsReviewEnabled(mPaymentVaultPresenter.getInstallmentsReviewEnabled())
                 .setShowBankDeals(mShowBankDeals)
                 .setAcceptedPaymentMethods(mPaymentVaultPresenter.getPaymentMethodSearch().getPaymentMethods())
+                .setShippingPreference(mPaymentVaultPresenter.getShippingPreference())
                 .startActivity();
         animatePaymentMethodSelection();
     }
@@ -684,18 +690,23 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
         } else {
             mercadoPagoBuilder.setDiscount(mPaymentVaultPresenter.getDiscount());
         }
+        if(mPaymentVaultPresenter.getShippingPreference() != null) {
+            mercadoPagoBuilder.setShippingCost(mPaymentVaultPresenter.getShippingPreference().getShippingCost());
+        }
 
         mercadoPagoBuilder.startActivity();
     }
 
     @Override
     public void showDiscountRow(BigDecimal transactionAmount) {
+        BigDecimal shippingCost = mPaymentVaultPresenter.getShippingPreference() == null ? null : mPaymentVaultPresenter.getShippingPreference().getShippingCost();
         DiscountRowView discountRowView = new MercadoPagoUI.Views.DiscountRowViewBuilder()
                 .setContext(this)
                 .setDiscount(mPaymentVaultPresenter.getDiscount())
                 .setTransactionAmount(transactionAmount)
                 .setCurrencyId(mPaymentVaultPresenter.getSite().getCurrencyId())
                 .setDiscountEnabled(mPaymentVaultPresenter.getDiscountEnabled())
+                .setShippingCost(shippingCost)
                 .build();
 
         discountRowView.inflateInParent(mDiscountFrameLayout, true);

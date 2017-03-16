@@ -230,4 +230,6 @@
     <string name="mpsdk_discount_percent_off">%1$s %%</string>
     <string name="mpsdk_total">Total:</string>
     <string name="mpsdk_something_went_wrong">Oops! Something went wrong…</string>
+    <string name="mpsdk_product_and_shipping_cost_label">Product + shipment:</string>
+    <string name="mpsdk_shipping_label">Shipment:</string>
 </resources>

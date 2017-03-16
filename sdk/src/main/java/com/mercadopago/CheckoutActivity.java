@@ -438,6 +438,7 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
                 .setCards(mSavedCards)
                 .setMaxSavedCards(mMaxSavedCards)
                 .setShowBankDeals(showBankDeals)
+                .setShippingPreference(mCheckoutPreference.getShippingPreference())
                 .startActivity();
     }
 
@@ -1014,17 +1015,18 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
     private void startPaymentResultActivity(PaymentResult paymentResult) {
 
         BigDecimal amount = mCreatedPayment == null ? mCheckoutPreference.getAmount() : mCreatedPayment.getTransactionDetails().getTotalPaidAmount();
-
+        BigDecimal shippingCost = mCheckoutPreference.getShippingPreference() == null ? null : mCheckoutPreference.getShippingPreference().getShippingCost();
         new MercadoPagoComponents.Activities.PaymentResultActivityBuilder()
+                .setDiscount(mDiscount)
                 .setMerchantPublicKey(mMerchantPublicKey)
                 .setActivity(mActivity)
                 .setPaymentResult(paymentResult)
                 .setDiscountEnabled(mDiscountEnabled)
                 .setCongratsDisplay(mCongratsDisplay)
                 .setSite(mCheckoutPreference.getSite())
-                .setAmount(mCheckoutPreference.getAmount())
                 .setPaymentResultScreenPreference(mPaymentResultScreenPreference)
                 .setAmount(amount)
+                .setShippingCost(shippingCost)
                 .startActivity();
     }
 

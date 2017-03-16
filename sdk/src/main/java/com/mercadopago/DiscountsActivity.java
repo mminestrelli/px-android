@@ -64,6 +64,7 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
     protected MPTextView mReviewSummaryProductAmount;
     protected MPTextView mReviewSummaryDiscountAmount;
     protected MPTextView mReviewSummaryTotalAmount;
+    protected View mReviewSummaryShippingLayout;
     protected MPTextView mErrorTextView;
     protected TextView mNextButtonText;
     protected TextView mBackButtonText;
@@ -73,6 +74,7 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
     protected Toolbar mToolbar;
 
     protected DiscountsPresenter mPresenter;
+    protected MPTextView mReviewSummaryShippingCostAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,9 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
         mPresenter.setTransactionAmount(new BigDecimal(this.getIntent().getStringExtra("amount")));
         mPresenter.setDiscount(JsonUtil.getInstance().fromJson(getIntent().getStringExtra("discount"), Discount.class));
         mPresenter.setDirectDiscountEnabled(this.getIntent().getBooleanExtra("directDiscountEnabled", true));
+        if(this.getIntent().getStringExtra("shippingCost") != null) {
+            mPresenter.setShippingCost(new BigDecimal(this.getIntent().getStringExtra("shippingCost")));
+        }
     }
 
     protected void setContentView() {
@@ -142,7 +147,9 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
         mReviewSummaryTitle = (MPTextView) findViewById(R.id.mpsdkReviewSummaryTitle);
         mReviewSummaryProductAmount = (MPTextView) findViewById(R.id.mpsdkReviewSummaryProductsAmount);
         mReviewSummaryDiscountAmount = (MPTextView) findViewById(R.id.mpsdkReviewSummaryDiscountsAmount);
+        mReviewSummaryShippingLayout = findViewById(R.id.mpsdkReviewSummaryShipping);
         mReviewSummaryTotalAmount = (MPTextView) findViewById(R.id.mpsdkReviewSummaryTotalAmount);
+        mReviewSummaryShippingCostAmount = (MPTextView) findViewById(R.id.mpsdkReviewSummaryShippingCost);
 
         //Discount code input
         mDiscountCodeEditText = (MPEditText) findViewById(R.id.mpsdkDiscountCode);
@@ -283,6 +290,7 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
         showSummaryTitle();
         showTransactionRow();
         showDiscountRow();
+        showShippingRow();
         showTotalRow();
         decorateSummary();
     }
@@ -298,7 +306,10 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
 
     private void showTotalRow() {
         if (isAmountValid(mPresenter.getTransactionAmount()) && isDiscountCurrencyIdValid()) {
-            mReviewSummaryTotalAmount.setText(getFormattedAmount(mPresenter.getDiscount().getAmountWithDiscount(mPresenter.getTransactionAmount()), mPresenter.getDiscount().getCurrencyId()));
+            BigDecimal totalAmount = mPresenter.getShippingCost() == null ?
+                    mPresenter.getDiscount().getAmountWithDiscount(mPresenter.getTransactionAmount()) :
+                    mPresenter.getDiscount().getAmountWithDiscount(mPresenter.getTransactionAmount().add(mPresenter.getShippingCost()));
+            mReviewSummaryTotalAmount.setText(getFormattedAmount(totalAmount, mPresenter.getCurrencyId()));
         } else {
             finishWithCancelResult();
         }
@@ -316,6 +327,13 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
             mReviewSummaryDiscountAmount.setText(discountAmount);
         } else {
             finishWithCancelResult();
+        }
+    }
+
+    private void showShippingRow() {
+        if(mPresenter.getShippingCost() != null) {
+            mReviewSummaryShippingLayout.setVisibility(View.VISIBLE);
+            mReviewSummaryShippingCostAmount.setText(getFormattedAmount(mPresenter.getShippingCost(), mPresenter.getCurrencyId()));
         }
     }
 

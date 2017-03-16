@@ -47,6 +47,7 @@ import com.mercadopago.model.PaymentType;
 import com.mercadopago.model.Site;
 import com.mercadopago.preferences.PaymentResultScreenPreference;
 import com.mercadopago.preferences.ReviewScreenPreference;
+import com.mercadopago.preferences.ShippingPreference;
 import com.mercadopago.uicontrollers.discounts.DiscountRowView;
 import com.mercadopago.uicontrollers.reviewandconfirm.ReviewItemsView;
 import com.mercadopago.uicontrollers.reviewandconfirm.ReviewPaymentOffView;
@@ -123,6 +124,7 @@ public class MercadoPagoComponents {
             private String merchantDiscountBaseUrl;
             private String merchantGetDiscountUri;
             private Map<String, String> discountAdditionalInfo;
+            private ShippingPreference shippingPreference;
 
             public PaymentVaultActivityBuilder setActivity(Activity activity) {
                 this.activity = activity;
@@ -239,6 +241,11 @@ public class MercadoPagoComponents {
                 return this;
             }
 
+            public PaymentVaultActivityBuilder setShippingPreference(ShippingPreference shippingPreference) {
+                this.shippingPreference = shippingPreference;
+                return this;
+            }
+
             public void startActivity() {
                 if (this.activity == null) throw new IllegalStateException("activity is null");
                 if (this.merchantPublicKey == null && this.payerAccessToken == null) throw new IllegalStateException("key is null");
@@ -260,6 +267,7 @@ public class MercadoPagoComponents {
                 paymentVaultIntent.putExtra("merchantAccessToken", merchantAccessToken);
                 paymentVaultIntent.putExtra("paymentMethodSearch", JsonUtil.getInstance().toJson(paymentMethodSearch));
                 paymentVaultIntent.putExtra("paymentPreference", JsonUtil.getInstance().toJson(paymentPreference));
+                paymentVaultIntent.putExtra("shippingPreference", JsonUtil.getInstance().toJson(shippingPreference));
 
                 Gson gson = new Gson();
                 paymentVaultIntent.putExtra("cards", gson.toJson(cards));
@@ -492,6 +500,7 @@ public class MercadoPagoComponents {
             private boolean installmentsReviewEnabled;
             private String payerEmail;
             private String payerAccessToken;
+            private ShippingPreference shippingPreference;
 
             public CardVaultActivityBuilder setActivity(Activity activity) {
                 this.activity = activity;
@@ -579,6 +588,11 @@ public class MercadoPagoComponents {
                 return this;
             }
 
+            public CardVaultActivityBuilder setShippingPreference(ShippingPreference shippingPreference) {
+                this.shippingPreference = shippingPreference;
+                return this;
+            }
+
             public void startActivity() {
 
                 if (this.activity == null) throw new IllegalStateException("activity is null");
@@ -610,6 +624,8 @@ public class MercadoPagoComponents {
                 cardVaultIntent.putExtra("payerAccessToken", payerAccessToken);
 
                 cardVaultIntent.putExtra("paymentPreference", JsonUtil.getInstance().toJson(paymentPreference));
+
+                cardVaultIntent.putExtra("shippingPreference", JsonUtil.getInstance().toJson(shippingPreference));
 
                 cardVaultIntent.putExtra("paymentMethodList", JsonUtil.getInstance().toJson(paymentMethodList));
 
@@ -916,6 +932,7 @@ public class MercadoPagoComponents {
             private Boolean installmentsEnabled;
             private Boolean installmentsReviewEnabled;
             private String payerAccessToken;
+            private ShippingPreference shippingPreference;
 
             public InstallmentsActivityBuilder setActivity(Activity activity) {
                 this.activity = activity;
@@ -939,6 +956,11 @@ public class MercadoPagoComponents {
 
             public InstallmentsActivityBuilder setPaymentPreference(PaymentPreference paymentPreference) {
                 this.paymentPreference = paymentPreference;
+                return this;
+            }
+
+            public InstallmentsActivityBuilder setShippingPreference(ShippingPreference shippingPreference) {
+                this.shippingPreference = shippingPreference;
                 return this;
             }
 
@@ -1024,6 +1046,7 @@ public class MercadoPagoComponents {
                 intent.putExtra("site", JsonUtil.getInstance().toJson(site));
                 intent.putExtra("payerCosts", JsonUtil.getInstance().toJson(payerCosts));
                 intent.putExtra("paymentPreference", JsonUtil.getInstance().toJson(paymentPreference));
+                intent.putExtra("shippingPreference", JsonUtil.getInstance().toJson(shippingPreference));
                 intent.putExtra("decorationPreference", JsonUtil.getInstance().toJson(decorationPreference));
                 intent.putExtra("cardInfo", JsonUtil.getInstance().toJson(cardInfo));
                 intent.putExtra("payerEmail", payerEmail);
@@ -1191,6 +1214,7 @@ public class MercadoPagoComponents {
             private Boolean directDiscountEnabled;
             private Discount discount;
             private String payerEmail;
+            private BigDecimal shippingCost;
 
             public DiscountsActivityBuilder setActivity(Activity activity) {
                 this.activity = activity;
@@ -1227,6 +1251,11 @@ public class MercadoPagoComponents {
                 return this;
             }
 
+            public DiscountsActivityBuilder setShippingCost(BigDecimal shippingCost) {
+                this.shippingCost = shippingCost;
+                return this;
+            }
+
             public void startActivity() {
                 if (this.activity == null) throw new IllegalStateException("activity is null");
                 if (this.merchantPublicKey == null) throw new IllegalStateException("key is null");
@@ -1241,6 +1270,9 @@ public class MercadoPagoComponents {
                 discountsIntent.putExtra("amount", amount.toString());
                 discountsIntent.putExtra("directDiscountEnabled", directDiscountEnabled);
                 discountsIntent.putExtra("discount", JsonUtil.getInstance().toJson(discount));
+                if(shippingCost != null) {
+                    discountsIntent.putExtra("shippingCost", shippingCost.toString());
+                }
                 discountsIntent.putExtra("decorationPreference", JsonUtil.getInstance().toJson(decorationPreference));
                 discountsIntent.putExtra("payerEmail", payerEmail);
 
@@ -1258,6 +1290,7 @@ public class MercadoPagoComponents {
             private Site site;
             private BigDecimal amount;
             private PaymentResultScreenPreference paymentResultScreenPreference;
+            private BigDecimal shippingCost;
 
             public PaymentResultActivityBuilder setActivity(Activity activity) {
                 this.activity = activity;
@@ -1304,6 +1337,11 @@ public class MercadoPagoComponents {
                 return this;
             }
 
+            public PaymentResultActivityBuilder setShippingCost(BigDecimal shippingCost) {
+                this.shippingCost = shippingCost;
+                return this;
+            }
+
             public void startActivity() {
                 if (this.activity == null) throw new IllegalStateException("activity is null");
                 if (this.paymentResult == null) throw new IllegalStateException("payment result is null");
@@ -1324,6 +1362,9 @@ public class MercadoPagoComponents {
                 resultIntent.putExtra("paymentResultScreenPreference", JsonUtil.getInstance().toJson(paymentResultScreenPreference));
                 if (amount != null) {
                     resultIntent.putExtra("amount", amount.toString());
+                }
+                if (shippingCost != null) {
+                    resultIntent.putExtra("shippingCost", shippingCost.toString());
                 }
 
                 activity.startActivityForResult(resultIntent, PAYMENT_RESULT_REQUEST_CODE);
@@ -1394,6 +1435,8 @@ public class MercadoPagoComponents {
             private BigDecimal amount;
             private PaymentResultScreenPreference paymentResultScreenPreference;
             private Boolean discountEnabled;
+            private BigDecimal shippingCost;
+            private Discount discount;
 
             public CongratsActivityBuilder setActivity(Activity activity) {
                 this.activity = activity;
@@ -1430,8 +1473,18 @@ public class MercadoPagoComponents {
                 return this;
             }
 
+            public CongratsActivityBuilder setShippingCost(BigDecimal shippingCost) {
+                this.shippingCost = shippingCost;
+                return this;
+            }
+
             public CongratsActivityBuilder setDiscountEnabled(Boolean discountEnabled) {
                 this.discountEnabled = discountEnabled;
+                return this;
+            }
+
+            public CongratsActivityBuilder setDiscount(Discount discount) {
+                this.discount = discount;
                 return this;
             }
 
@@ -1451,9 +1504,13 @@ public class MercadoPagoComponents {
                 congratsIntent.putExtra("paymentResult", JsonUtil.getInstance().toJson(paymentResult));
                 congratsIntent.putExtra("site", JsonUtil.getInstance().toJson(site));
                 congratsIntent.putExtra("paymentResultScreenPreference", JsonUtil.getInstance().toJson(paymentResultScreenPreference));
+                congratsIntent.putExtra("discount", JsonUtil.getInstance().toJson(discount));
                 congratsIntent.putExtra("discountEnabled", discountEnabled);
                 if (amount != null) {
                     congratsIntent.putExtra("amount", amount.toString());
+                }
+                if (shippingCost != null) {
+                    congratsIntent.putExtra("shippingCost", shippingCost.toString());
                 }
 
                 activity.startActivityForResult(congratsIntent, CONGRATS_REQUEST_CODE);
@@ -1785,6 +1842,7 @@ public class MercadoPagoComponents {
             private Boolean discountEnabled;
             private Boolean showArrow;
             private Boolean showSeparator;
+            private BigDecimal shippingCost;
 
             public DiscountRowViewBuilder setContext(Context context) {
                 this.context = context;
@@ -1798,6 +1856,11 @@ public class MercadoPagoComponents {
 
             public DiscountRowViewBuilder setTransactionAmount(BigDecimal transactionAmount) {
                 this.transactionAmount = transactionAmount;
+                return this;
+            }
+
+            public DiscountRowViewBuilder setShippingCost(BigDecimal shippingCost) {
+                this.shippingCost = shippingCost;
                 return this;
             }
 
@@ -1827,7 +1890,7 @@ public class MercadoPagoComponents {
             }
 
             public DiscountRowView build() {
-                return new DiscountRowView(context, discount, transactionAmount, currencyId, shortRowEnabled,
+                return new DiscountRowView(context, discount, transactionAmount, shippingCost, currencyId, shortRowEnabled,
                         discountEnabled, showArrow, showSeparator);
             }
         }

@@ -27,6 +27,7 @@ public class DiscountsPresenter extends MvpPresenter<DiscountsActivityView, Disc
     private BigDecimal mTransactionAmount;
     private Discount mDiscount;
     private Boolean mDirectDiscountEnabled;
+    private BigDecimal shippingCost;
 
     @Override
     public void attachView(DiscountsActivityView discountsView) {
@@ -155,5 +156,13 @@ public class DiscountsPresenter extends MvpPresenter<DiscountsActivityView, Disc
 
     private boolean isEmpty(String discountCode) {
         return discountCode == null || discountCode.isEmpty();
+    }
+
+    public BigDecimal getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(BigDecimal shippingCost) {
+        this.shippingCost = shippingCost;
     }
 }

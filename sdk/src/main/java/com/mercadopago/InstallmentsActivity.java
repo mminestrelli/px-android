@@ -32,6 +32,7 @@ import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.observers.TimerObserver;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.preferences.PaymentPreference;
+import com.mercadopago.preferences.ShippingPreference;
 import com.mercadopago.presenters.InstallmentsPresenter;
 import com.mercadopago.uicontrollers.FontCache;
 import com.mercadopago.uicontrollers.card.CardRepresentationModes;
@@ -125,6 +126,7 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
         String publicKey = getIntent().getStringExtra("merchantPublicKey");
         String payerAccessToken = getIntent().getStringExtra("payerAccessToken");
         PaymentPreference paymentPreference = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("paymentPreference"), PaymentPreference.class);
+        ShippingPreference shippingPreference = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("shippingPreference"), ShippingPreference.class);
         mDecorationPreference = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("decorationPreference"), DecorationPreference.class);
 
         PaymentMethod paymentMethod = JsonUtil.getInstance().fromJson(this.getIntent().getStringExtra("paymentMethod"), PaymentMethod.class);
@@ -162,6 +164,7 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
         mPresenter.setSite(site);
         mPresenter.setPayerCosts(payerCosts);
         mPresenter.setPaymentPreference(paymentPreference);
+        mPresenter.setShippingPreference(shippingPreference);
         mPresenter.setCardInfo(cardInfo);
         mPresenter.setInstallmentsReviewEnabled(installmentsReviewEnabled);
     }
@@ -510,13 +513,16 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
         } else {
             mercadoPagoBuilder.setDiscount(mPresenter.getDiscount());
         }
+        if(mPresenter.getShippingPreference() != null) {
+            mercadoPagoBuilder.setShippingCost(mPresenter.getShippingPreference().getShippingCost());
+        }
 
         mercadoPagoBuilder.startActivity();
     }
 
     @Override
     public void showDiscountRow(BigDecimal transactionAmount) {
-        MercadoPagoUI.Views.DiscountRowViewBuilder discountRowViewBuilder = new MercadoPagoUI.Views.DiscountRowViewBuilder();
+        MercadoPagoComponents.Views.DiscountRowViewBuilder discountRowViewBuilder = new MercadoPagoComponents.Views.DiscountRowViewBuilder();
 
         discountRowViewBuilder.setContext(this)
                 .setDiscount(mPresenter.getDiscount())
@@ -527,6 +533,9 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
             discountRowViewBuilder.setDiscountEnabled(false);
         } else {
             discountRowViewBuilder.setDiscountEnabled(mPresenter.getDiscountEnabled());
+        }
+        if(mPresenter.getShippingPreference() != null) {
+            discountRowViewBuilder.setShippingCost(mPresenter.getShippingPreference().getShippingCost());
         }
 
         DiscountRowView discountRowView = discountRowViewBuilder.build();

@@ -23,6 +23,7 @@ import com.mercadopago.model.Reviewable;
 import com.mercadopago.model.Site;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.preferences.PaymentPreference;
+import com.mercadopago.preferences.ShippingPreference;
 import com.mercadopago.uicontrollers.discounts.DiscountRowView;
 import com.mercadopago.model.Reviewable;
 import com.mercadopago.model.Site;
@@ -391,6 +392,7 @@ public class MercadoPagoUI {
             private Boolean discountEnabled;
             private Boolean showArrow;
             private Boolean showSeparator;
+            private BigDecimal shippingCost;
 
             public DiscountRowViewBuilder setContext(Context context) {
                 this.context = context;
@@ -432,8 +434,13 @@ public class MercadoPagoUI {
                 return this;
             }
 
+            public DiscountRowViewBuilder setShippingCost(BigDecimal shippingCost) {
+                this.shippingCost = shippingCost;
+                return this;
+            }
+
             public DiscountRowView build() {
-                return new DiscountRowView(context, discount, transactionAmount, currencyId, shortRowEnabled,
+                return new DiscountRowView(context, discount, transactionAmount, shippingCost, currencyId, shortRowEnabled,
                                             discountEnabled, showArrow, showSeparator);
             }
         }

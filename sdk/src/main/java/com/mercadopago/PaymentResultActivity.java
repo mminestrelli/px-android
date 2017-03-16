@@ -32,6 +32,7 @@ public class PaymentResultActivity extends Activity {
     protected Site mSite;
     protected BigDecimal mAmount;
     protected PaymentResultScreenPreference mPaymentResultScreenPreference;
+    protected BigDecimal mShippingCost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,9 @@ public class PaymentResultActivity extends Activity {
         mSite = JsonUtil.getInstance().fromJson(getIntent().getExtras().getString("site"), Site.class);
         if (getIntent().getStringExtra("amount") != null) {
             mAmount = new BigDecimal(getIntent().getStringExtra("amount"));
+        }
+        if (getIntent().getStringExtra("shippingCost") != null) {
+            mShippingCost = new BigDecimal(getIntent().getStringExtra("shippingCost"));
         }
     }
 
@@ -116,12 +120,14 @@ public class PaymentResultActivity extends Activity {
         new MercadoPagoComponents.Activities.CongratsActivityBuilder()
                 .setMerchantPublicKey(mMerchantPublicKey)
                 .setActivity(this)
+                .setDiscount(mDiscount)
                 .setDiscountEnabled(mDiscountEnabled)
                 .setCongratsDisplay(mCongratsDisplay)
                 .setPaymentResult(mPaymentResult)
                 .setPaymentResultScreenPreference(mPaymentResultScreenPreference)
                 .setSite(mSite)
                 .setAmount(mAmount)
+                .setShippingCost(mShippingCost)
                 .startActivity();
     }
 

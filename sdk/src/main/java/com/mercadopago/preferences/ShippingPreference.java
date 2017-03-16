@@ -11,4 +11,8 @@ public class ShippingPreference {
     public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
+
+    public BigDecimal getShippingCost() {
+        return cost;
+    }
 }

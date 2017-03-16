@@ -235,6 +235,10 @@ public class CheckoutPreference {
         return paymentPreference;
     }
 
+    public ShippingPreference getShippingPreference() {
+        return shippingPreference;
+    }
+
     public Site getSite() {
         if (localPreferenceSite == null) {
             return Sites.getById(siteId);

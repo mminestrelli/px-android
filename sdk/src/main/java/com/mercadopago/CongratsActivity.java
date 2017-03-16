@@ -89,6 +89,7 @@ public class CongratsActivity extends MercadoPagoBaseActivity implements ReviewS
     private String mPayerEmail;
     private Site mSite;
     private BigDecimal mAmount;
+    private BigDecimal mShippingCost;
     private PaymentResultScreenPreference mPaymentResultScreenPreference;
 
     @Override
@@ -117,6 +118,9 @@ public class CongratsActivity extends MercadoPagoBaseActivity implements ReviewS
         mPaymentResultScreenPreference = JsonUtil.getInstance().fromJson(getIntent().getExtras().getString("paymentResultScreenPreference"), PaymentResultScreenPreference.class);
         if (getIntent().getStringExtra("amount") != null) {
             mAmount = new BigDecimal(getIntent().getStringExtra("amount"));
+        }
+        if (getIntent().getStringExtra("shippingCost") != null) {
+            mShippingCost = new BigDecimal(getIntent().getStringExtra("shippingCost"));
         }
     }
 
@@ -389,15 +393,19 @@ public class CongratsActivity extends MercadoPagoBaseActivity implements ReviewS
     }
 
     public void showDiscountRow(BigDecimal transactionAmount) {
-        DiscountRowView discountRowView = new MercadoPagoComponents.Views.DiscountRowViewBuilder()
+         MercadoPagoComponents.Views.DiscountRowViewBuilder builder = new MercadoPagoComponents.Views.DiscountRowViewBuilder()
                 .setContext(this)
                 .setDiscount(mDiscount)
                 .setTransactionAmount(transactionAmount)
                 .setCurrencyId(mCurrencyId)
                 .setShowArrow(false)
-                .setShowSeparator(false)
-                .build();
+                .setShowSeparator(false);
 
+        if(mShippingCost != null) {
+            builder.setShippingCost(mShippingCost);
+        }
+
+        DiscountRowView discountRowView  = builder.build();
         mDiscountFrameLayout.setVisibility(View.VISIBLE);
         discountRowView.inflateInParent(mDiscountFrameLayout, true);
         discountRowView.initializeControls();
@@ -432,16 +440,20 @@ public class CongratsActivity extends MercadoPagoBaseActivity implements ReviewS
                 setInstallmentsDescription();
                 mAmountDescription.setVisibility(View.GONE);
             } else if (mPaymentTypeId.equals(PaymentTypes.ACCOUNT_MONEY)) {
-                StringBuffer sb = new StringBuffer();
-                sb.append(CurrenciesUtil.formatNumber(mTotalAmount, mCurrencyId));
-                mAmountDescription.setText(CurrenciesUtil.formatCurrencyInText(mTotalAmount,
-                        mCurrencyId, sb.toString(), false, true));
-                mAmountDescription.setVisibility(View.VISIBLE);
                 mInstallmentsDescription.setVisibility(View.GONE);
                 mInterestAmountDescription.setVisibility(View.GONE);
                 mInstallmentsTotalAmountDescription.setVisibility(View.GONE);
+                if((!mDiscountEnabled || mDiscount == null) && mShippingCost == null) {
+                    showSimpleAmountLabel();
+                }
             }
         }
+    }
+
+    private void showSimpleAmountLabel() {
+        mAmountDescription.setText(CurrenciesUtil.formatNumber(mTotalAmount,
+                mCurrencyId, false, true));
+        mAmountDescription.setVisibility(View.VISIBLE);
     }
 
     private void hideAmount() {

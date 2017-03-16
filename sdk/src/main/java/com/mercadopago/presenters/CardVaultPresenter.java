@@ -18,6 +18,7 @@ import com.mercadopago.model.PaymentRecovery;
 import com.mercadopago.model.Site;
 import com.mercadopago.model.Token;
 import com.mercadopago.preferences.PaymentPreference;
+import com.mercadopago.preferences.ShippingPreference;
 import com.mercadopago.views.CardVaultActivityView;
 
 import java.math.BigDecimal;
@@ -67,6 +68,7 @@ public class CardVaultPresenter {
     protected Discount mDiscount;
     protected String mPayerEmail;
     private String mPrivateKey;
+    private ShippingPreference shippingPreference;
 
     public CardVaultPresenter(Context context) {
         this.mContext = context;
@@ -279,6 +281,15 @@ public class CardVaultPresenter {
 
     public Boolean getDirectDiscountEnabled() {
         return this.mDirectDiscountEnabled;
+    }
+
+
+    public void setShippingPreference(ShippingPreference shippingPreference) {
+        this.shippingPreference = shippingPreference;
+    }
+
+    public ShippingPreference getShippingPreference() {
+        return shippingPreference;
     }
 
     public void checkStartInstallmentsActivity() {

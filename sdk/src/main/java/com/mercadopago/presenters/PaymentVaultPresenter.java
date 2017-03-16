@@ -14,6 +14,7 @@ import com.mercadopago.model.Site;
 import com.mercadopago.mvp.MvpPresenter;
 import com.mercadopago.mvp.OnResourcesRetrievedCallback;
 import com.mercadopago.preferences.PaymentPreference;
+import com.mercadopago.preferences.ShippingPreference;
 import com.mercadopago.providers.PaymentVaultProvider;
 import com.mercadopago.util.CurrenciesUtil;
 import com.mercadopago.util.MercadoPagoUtil;
@@ -45,6 +46,7 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
     private Integer mMaxSavedCards;
 
     private boolean mSelectAutomatically;
+    private ShippingPreference mShippingPreference;
 
     public void initialize(boolean selectAutomatically) {
         try {
@@ -101,7 +103,7 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
     }
 
     public void initializeDiscountRow() {
-        if(viewAttached()) {
+        if (viewAttached()) {
             getView().showDiscountRow(mAmount);
         }
     }
@@ -383,32 +385,40 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
         return mSite;
     }
 
-    public void setSite(Site mSite) {
-        this.mSite = mSite;
+    public void setSite(Site site) {
+        this.mSite = site;
     }
 
     public PaymentMethodSearchItem getSelectedSearchItem() {
         return mSelectedSearchItem;
     }
 
-    public void setSelectedSearchItem(PaymentMethodSearchItem mSelectedSearchItem) {
-        this.mSelectedSearchItem = mSelectedSearchItem;
+    public void setSelectedSearchItem(PaymentMethodSearchItem selectedSearchItem) {
+        this.mSelectedSearchItem = selectedSearchItem;
     }
 
     public PaymentMethodSearch getPaymentMethodSearch() {
         return mPaymentMethodSearch;
     }
 
-    public void setPaymentMethodSearch(PaymentMethodSearch mPaymentMethodSearch) {
-        this.mPaymentMethodSearch = mPaymentMethodSearch;
+    public void setPaymentMethodSearch(PaymentMethodSearch paymentMethodSearch) {
+        this.mPaymentMethodSearch = paymentMethodSearch;
     }
 
     public PaymentPreference getPaymentPreference() {
         return mPaymentPreference;
     }
 
-    public void setPaymentPreference(PaymentPreference mPaymentPreference) {
-        this.mPaymentPreference = mPaymentPreference;
+    public void setPaymentPreference(PaymentPreference paymentPreference) {
+        this.mPaymentPreference = paymentPreference;
+    }
+
+    public void setShippingPreference(ShippingPreference shippingPreference) {
+        this.mShippingPreference = shippingPreference;
+    }
+
+    public ShippingPreference getShippingPreference() {
+        return mShippingPreference;
     }
 
     public void setAmount(BigDecimal mAmount) {

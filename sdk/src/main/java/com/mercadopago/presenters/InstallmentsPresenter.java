@@ -17,6 +17,7 @@ import com.mercadopago.model.Issuer;
 import com.mercadopago.model.PayerCost;
 import com.mercadopago.model.PaymentMethod;
 import com.mercadopago.model.Site;
+import com.mercadopago.preferences.ShippingPreference;
 import com.mercadopago.util.TextUtil;
 import com.mercadopago.preferences.PaymentPreference;
 import com.mercadopago.views.InstallmentsActivityView;
@@ -61,6 +62,7 @@ public class InstallmentsPresenter {
     private String mMerchantGetDiscountUri;
     private Map<String, String> mDiscountAdditionalInfo;
     private Boolean mInstallmentsReviewEnabled;
+    private ShippingPreference shippingPreference;
 
 
     public InstallmentsPresenter(Context context) {
@@ -372,6 +374,10 @@ public class InstallmentsPresenter {
         }
     }
 
+    public void setShippingPreference(ShippingPreference shippingPreference) {
+        this.shippingPreference = shippingPreference;
+    }
+
     public void recoverFromFailure() {
         if (mFailureRecovery != null) {
             mFailureRecovery.recover();
@@ -458,5 +464,9 @@ public class InstallmentsPresenter {
         }
 
         return merchantBaseUrl;
+    }
+
+    public ShippingPreference getShippingPreference() {
+        return shippingPreference;
     }
 }

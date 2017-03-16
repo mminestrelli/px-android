@@ -25,6 +25,7 @@ import com.mercadopago.model.Token;
 import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.preferences.PaymentPreference;
+import com.mercadopago.preferences.ShippingPreference;
 import com.mercadopago.presenters.CardVaultPresenter;
 import com.mercadopago.util.ApiUtil;
 import com.mercadopago.util.ErrorUtil;
@@ -129,6 +130,7 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
         String publicKey = getIntent().getStringExtra("merchantPublicKey");
         String payerAccessToken = getIntent().getStringExtra("payerAccessToken");
         PaymentPreference paymentPreference = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("paymentPreference"), PaymentPreference.class);
+        ShippingPreference shippingPreference = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("shippingPreference"), ShippingPreference.class);
         mDecorationPreference = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("decorationPreference"), DecorationPreference.class);
 
         Site site = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("site"), Site.class);
@@ -162,6 +164,7 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
         mPresenter.setAmount(amountValue);
         mPresenter.setPaymentMethodList(paymentMethods);
         mPresenter.setPaymentPreference(paymentPreference);
+        mPresenter.setShippingPreference(shippingPreference);
         mPresenter.setPayerEmail(payerEmail);
         mPresenter.setDiscount(discount);
         mPresenter.setDiscountEnabled(discountEnabled);
@@ -450,6 +453,7 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
                 .setInstallmentsEnabled(mPresenter.getInstallmentsEnabled())
                 .setInstallmentsReviewEnabled(mPresenter.getInstallmentsReviewEnabled())
                 .setCardInfo(mPresenter.getCardInfo())
+                .setShippingPreference(mPresenter.getShippingPreference())
                 .startActivity();
     }
 
