@@ -11,7 +11,9 @@ import com.mercadopago.model.ApiException;
 import com.mercadopago.model.Card;
 import com.mercadopago.model.CardInfo;
 import com.mercadopago.model.CardToken;
+import com.mercadopago.model.Device;
 import com.mercadopago.model.Discount;
+import com.mercadopago.model.EncryptedCardToken;
 import com.mercadopago.model.Issuer;
 import com.mercadopago.model.PayerCost;
 import com.mercadopago.model.PaymentMethod;
@@ -69,6 +71,10 @@ public class CardVaultPresenter {
     protected Discount mDiscount;
     protected String mPayerEmail;
     private String mPrivateKey;
+
+    //Security Code
+    protected String mEncryptedCvv;
+    protected EncryptedCardToken mEncryptedCardToken;
 
     public CardVaultPresenter(Context context) {
         this.mContext = context;
@@ -184,6 +190,14 @@ public class CardVaultPresenter {
 
     public void setCardToken(CardToken mCardToken) {
         this.mCardToken = mCardToken;
+    }
+
+    public void setEncryptedCvv(String mEncryptedCvv) {
+        this.mEncryptedCvv = mEncryptedCvv;
+    }
+
+    public String getEncryptedCvv() {
+        return mEncryptedCvv;
     }
 
     public void setCardInfo(CardInfo cardInfo) {
@@ -350,6 +364,32 @@ public class CardVaultPresenter {
                 mView.showApiExceptionError(apiException);
             }
         });
+    }
+
+    public void createEncryptedToken() {
+        if (mCard != null) {
+            mEncryptedCardToken = new EncryptedCardToken(mCard.getId());
+            mEncryptedCardToken.setEncryptedCvv(mEncryptedCvv);
+            mMercadoPago.createToken(mEncryptedCardToken, new Callback<Token>() {
+                @Override
+                public void success(Token token) {
+                    mToken = token;
+                    Log.d("log", token.getId());
+                    mView.finishWithResult();
+                }
+
+                @Override
+                public void failure(ApiException apiException) {
+                    setFailureRecovery(new FailureRecovery() {
+                        @Override
+                        public void recover() {
+                            createEncryptedToken();
+                        }
+                    });
+                    mView.showApiExceptionError(apiException);
+                }
+            });
+        }
     }
     
     private void saveEncryptedSecurityCode(Token token) {

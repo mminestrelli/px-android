@@ -127,7 +127,8 @@ public class MercadoPagoServices {
             @Override
             public void run() {
                 encryptedCardToken.setDevice(mContext);
-                GatewayService service = getGatewayRetrofit().create(GatewayService.class);
+//                GatewayService service = getGatewayRetrofit().create(GatewayService.class);
+                GatewayService service = getMockedGatewayRetrofit().create(GatewayService.class);
                 service.getToken(mPublicKey, mPrivateKey, encryptedCardToken).enqueue(callback);
             }
         }).start();

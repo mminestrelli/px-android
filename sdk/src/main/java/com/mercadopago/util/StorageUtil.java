@@ -68,4 +68,13 @@ public class StorageUtil {
         return name;
     }
 
+    public static String getValueFromFile(Context context, String fileName, String key) {
+        Map<String, String> map = getStorageMap(context, fileName);
+        if (map.containsKey(key)) {
+            return map.get(key);
+        } else {
+            return null;
+        }
+    }
+
 }

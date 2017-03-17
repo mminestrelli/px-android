@@ -30,6 +30,7 @@ import com.mercadopago.util.ApiUtil;
 import com.mercadopago.util.ErrorUtil;
 import com.mercadopago.util.JsonUtil;
 import com.mercadopago.util.LayoutUtil;
+import com.mercadopago.util.StorageUtil;
 import com.mercadopago.views.CardVaultActivityView;
 
 import java.lang.reflect.Type;
@@ -183,7 +184,8 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
             mPresenter.setCardInfo(new CardInfo(mPresenter.getPaymentRecovery().getToken()));
             mPresenter.setPaymentMethod(mPresenter.getPaymentRecovery().getPaymentMethod());
             mPresenter.setToken(mPresenter.getPaymentRecovery().getToken());
-            startSecurityCodeActivity();
+//            startSecurityCodeActivity();
+            checkStartSecurityCodeActivity();
 
         } else if (savedCardAvailable()) {
             mPresenter.setDiscount(mPresenter.getDiscount());
@@ -193,7 +195,8 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
             if (mPresenter.installmentsRequired()) {
                 startInstallmentsActivity();
             } else {
-                startSecurityCodeActivity();
+//                startSecurityCodeActivity();
+                checkStartSecurityCodeActivity();
             }
             overrideTransitionSlideOutIn();
 
@@ -219,6 +222,34 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
 
     private void initializeViews() {
         LayoutUtil.showProgressLayout(this);
+    }
+
+    private void checkStartSecurityCodeActivity() {
+        if (savedCardAvailable() && isSecurityCodeSaved()) {
+            getEncryptedToken();
+        } else {
+            startSecurityCodeActivity();
+        }
+    }
+
+    private boolean isSecurityCodeSaved() {
+        if (mPresenter.getEncryptedCvv() != null) {
+            return true;
+        } else {
+            Card savedCard = mPresenter.getCard();
+            if (savedCard == null) {
+                return false;
+            }
+            String cardId = savedCard.getId();
+            String fileName = StorageUtil.createFileName(mActivity);
+            String value = StorageUtil.getValueFromFile(mActivity, fileName, cardId);
+            mPresenter.setEncryptedCvv(value);
+            return value != null;
+        }
+    }
+
+    private void getEncryptedToken() {
+        mPresenter.createEncryptedToken();
     }
 
     private void startSecurityCodeActivity() {
@@ -358,7 +389,8 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
             mPresenter.setDiscount(discount);
 
             if (savedCardAvailable()) {
-                startSecurityCodeActivity();
+                checkStartSecurityCodeActivity();
+//                startSecurityCodeActivity();
             } else {
                 mPresenter.createToken();
             }

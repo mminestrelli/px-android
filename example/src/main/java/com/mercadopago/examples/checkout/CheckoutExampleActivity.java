@@ -156,24 +156,32 @@ public class CheckoutExampleActivity extends AppCompatActivity {
 //                .disableBankDeals()
 //                .build();
 
-//        mCheckoutPreference = new CheckoutPreference.Builder()
+        mCheckoutPreference = new CheckoutPreference.Builder()
 //                .addItem(new Item("Item", BigDecimal.ONE))
-//                .addItem(new Item("Item", new BigDecimal(1000)))
-//                .setSite(Sites.ARGENTINA)
+                .setId("243966003-be90ec6e-7c34-4e2d-9f08-a8bb5fa13e13")
+//                .setId("247223140-8ef99db0-40fd-4d77-af07-27ceab35e1ab")
+                .addItem(new Item("Item", new BigDecimal(1000)))
+                .setSite(Sites.ARGENTINA)
 //                .addExcludedPaymentType(PaymentTypes.ATM)
 //                .addExcludedPaymentType(PaymentTypes.BANK_TRANSFER)
 //                .addExcludedPaymentType(PaymentTypes.CREDIT_CARD)
 //                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
 //                .addExcludedPaymentType(PaymentTypes.TICKET)
-//                .enableAccountMoney()
-//                .setPayerAccessToken("TEST-7176766875549918-111008-fa5660d2d0aa37532716eb2bf2f9089b__LB_LC__-192992930")
-//                .build();
+                .enableAccountMoney()
+                .setPayerAccessToken("APP_USR-6270211732691649-021716-4aec8ed3fcb7b21be635eb54646c871e__LD_LB__-159840830")
+                .build();
 
+        Map<String, String> additionalInfo = new HashMap<>();
+        additionalInfo.put("merchant_access_token", ExamplesUtils.DUMMY_MERCHANT_ACCESS_TOKEN);
+        ServicePreference servicePreference = new ServicePreference.Builder()
+                .setGetCustomerURL(ExamplesUtils.DUMMY_MERCHANT_BASE_URL, ExamplesUtils.DUMMY_MERCHANT_GET_CUSTOMER_URI, additionalInfo)
+                .build();
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
                 .setPublicKey("TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7")
                 .setCheckoutPreference(mCheckoutPreference)
+                .setServicePreference(servicePreference)
 //                .setReviewScreenPreference(reviewScreenPreference)
                 .setDecorationPreference(decorationPreference)
 //                .setFlowPreference(flowPreference)
