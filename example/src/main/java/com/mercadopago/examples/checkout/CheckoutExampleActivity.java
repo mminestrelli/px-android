@@ -74,16 +74,9 @@ public class CheckoutExampleActivity extends AppCompatActivity {
     }
 
     private void startMercadoPagoCheckout() {
-        Map<String, Object> additionalInfo = new HashMap<>();
-        additionalInfo.put("company_id", "movistar");
-        additionalInfo.put("phone_number", "111111");
-
-        String languageToLoad  = "pt"; // your language
-        Locale locale = new Locale(languageToLoad);
-        Locale.setDefault(locale);
 
         FlowPreference flowPreference = new FlowPreference.Builder()
-//                .disableReviewAndConfirmScreen()
+                .disableReviewAndConfirmScreen()
                 .disableDiscount()
                 .disableBankDeals()
                 .disableInstallmentsReviewScreen()
@@ -91,9 +84,10 @@ public class CheckoutExampleActivity extends AppCompatActivity {
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
-                .setPublicKey(mPublicKey)
+                .setPublicKey("TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c")
                 .setCheckoutPreference(getCheckoutPreference())
                 .setFlowPreference(flowPreference)
+//                .startForPayment();
                 .startForPaymentData();
     }
 
@@ -119,7 +113,7 @@ public class CheckoutExampleActivity extends AppCompatActivity {
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
                 .setReviewScreenPreference(reviewScreenPreference)
-                .setPublicKey(mPublicKey)
+                .setPublicKey("TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c")
                 .setCheckoutPreference(getCheckoutPreference())
                 .setFlowPreference(flowPreference)
                 .setPaymentData(paymentData)
@@ -129,14 +123,14 @@ public class CheckoutExampleActivity extends AppCompatActivity {
     private CheckoutPreference getCheckoutPreference() {
         return new CheckoutPreference.Builder()
                 .addItem(new Item("Item", BigDecimal.TEN.multiply(BigDecimal.TEN)))
-                .setSite(Sites.ARGENTINA)
-                .addExcludedPaymentType(PaymentTypes.ATM)
-                .addExcludedPaymentType(PaymentTypes.BANK_TRANSFER)
-                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
-                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
-                .addExcludedPaymentType(PaymentTypes.TICKET)
-                .enableAccountMoney()
-                .setPayerAccessToken("APP_USR-6077407713835188-120612-9c010367e2aba8808865b227526f4ccc__LB_LD__-232134231")
+                .setSite(Sites.PERU)
+//                .addExcludedPaymentType(PaymentTypes.ATM)
+//                .addExcludedPaymentType(PaymentTypes.BANK_TRANSFER)
+//                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
+//                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
+//                .addExcludedPaymentType(PaymentTypes.TICKET)
+//                .enableAccountMoney()
+//                .setPayerAccessToken("APP_USR-6077407713835188-120612-9c010367e2aba8808865b227526f4ccc__LB_LD__-232134231")
                 .build();
     }
 
@@ -171,7 +165,7 @@ public class CheckoutExampleActivity extends AppCompatActivity {
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
-                .setPublicKey(mPublicKey)
+                .setPublicKey("TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c")
                 .setCheckoutPreference(getCheckoutPreference())
                 .setPaymentResult(paymentResult)
                 .setPaymentResultScreenPreference(paymentResultScreenPreference)
