@@ -10,7 +10,8 @@ import com.mercadopago.model.PaymentMethod;
  */
 
 public class ReviewUtil {
-    protected ReviewUtil() {
+
+    private ReviewUtil() {
 
     }
 
