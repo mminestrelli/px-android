@@ -75,20 +75,20 @@ public class CheckoutExampleActivity extends AppCompatActivity {
 
     private void startMercadoPagoCheckout() {
 
-//        FlowPreference flowPreference = new FlowPreference.Builder()
-//                .disableReviewAndConfirmScreen()
-//                .disableDiscount()
-//                .disableBankDeals()
-//                .disableInstallmentsReviewScreen()
-//                .build();
+        FlowPreference flowPreference = new FlowPreference.Builder()
+                .disableReviewAndConfirmScreen()
+                .disableDiscount()
+                .disableBankDeals()
+                .disableInstallmentsReviewScreen()
+                .build();
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
-                .setPublicKey("TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c")
+                .setPublicKey(mPublicKey)
                 .setCheckoutPreference(getCheckoutPreference())
-//                .setFlowPreference(flowPreference)
-                .startForPayment();
-//                .startForPaymentData();
+                .setFlowPreference(flowPreference)
+//                .startForPayment();
+                .startForPaymentData();
     }
 
     private void startRyC(PaymentData paymentData) {
@@ -103,36 +103,34 @@ public class CheckoutExampleActivity extends AppCompatActivity {
                 .addReviewable(cellphoneReview)
                 .build();
 
-//        FlowPreference flowPreference = new FlowPreference.Builder()
-//                .disableReviewAndConfirmScreen()
-//                .disableBankDeals()
-//                .disableDiscount()
-//                .disableInstallmentsReviewScreen()
-//                .build();
-
-        Map<String, String> additionalInfo = new HashMap<>();
-        additionalInfo.put("merchant_access_token", ExamplesUtils.DUMMY_MERCHANT_ACCESS_TOKEN);
-        ServicePreference servicePreference = new ServicePreference.Builder()
-//                .setGetCustomerURL(ExamplesUtils.DUMMY_MERCHANT_BASE_URL, ExamplesUtils.DUMMY_MERCHANT_GET_CUSTOMER_URI, additionalInfo)
+        FlowPreference flowPreference = new FlowPreference.Builder()
+                .disableReviewAndConfirmScreen()
+                .disableBankDeals()
+                .disableDiscount()
+                .disableInstallmentsReviewScreen()
                 .build();
+
+//        Map<String, String> additionalInfo = new HashMap<>();
+//        additionalInfo.put("merchant_access_token", ExamplesUtils.DUMMY_MERCHANT_ACCESS_TOKEN);
+//        ServicePreference servicePreference = new ServicePreference.Builder()
+//                .setGetCustomerURL(ExamplesUtils.DUMMY_MERCHANT_BASE_URL, ExamplesUtils.DUMMY_MERCHANT_GET_CUSTOMER_URI, additionalInfo)
+//                .build();
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
                 .setReviewScreenPreference(reviewScreenPreference)
-                .setPublicKey("TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c")
+                .setPublicKey(mPublicKey)
                 .setCheckoutPreference(getCheckoutPreference())
 //                .setServicePreference(servicePreference)
-//                .setFlowPreference(flowPreference)
+                .setFlowPreference(flowPreference)
                 .setPaymentData(paymentData)
-                .startForPayment();
-//                .startForPaymentData();
+                .startForPaymentData();
     }
 
     private CheckoutPreference getCheckoutPreference() {
         return new CheckoutPreference.Builder()
                 .addItem(new Item("Item", BigDecimal.TEN.multiply(BigDecimal.TEN)))
-                .setSite(Sites.PERU)
-                .setId("242617753-07562444-aa61-48b2-b33c-85d7dd6b812c")
+                .setSite(Sites.ARGENTINA)
 //                .addExcludedPaymentType(PaymentTypes.ATM)
 //                .addExcludedPaymentType(PaymentTypes.BANK_TRANSFER)
 //                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
