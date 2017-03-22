@@ -58,20 +58,20 @@ public class CheckoutExampleActivity extends AppCompatActivity {
 
     private void startMercadoPagoCheckout() {
 
-//        FlowPreference flowPreference = new FlowPreference.Builder()
-//                .disableReviewAndConfirmScreen()
-//                .disableDiscount()
-//                .disableBankDeals()
-//                .disableInstallmentsReviewScreen()
-//                .build();
+        FlowPreference flowPreference = new FlowPreference.Builder()
+                .disableReviewAndConfirmScreen()
+                .disableDiscount()
+                .disableBankDeals()
+                .disableInstallmentsReviewScreen()
+                .build();
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
-                .setPublicKey("TEST-e4bdd1cf-bcb2-43f7-b565-ed4c9ea25be7")
+                .setPublicKey(mPublicKey)
                 .setCheckoutPreference(getCheckoutPreference())
-//                .setFlowPreference(flowPreference)
-                .startForPayment();
-//                .startForPaymentData();
+                .setFlowPreference(flowPreference)
+//                .startForPayment();
+                .startForPaymentData();
     }
 
     private void startRyC(PaymentData paymentData) {
@@ -114,7 +114,6 @@ public class CheckoutExampleActivity extends AppCompatActivity {
         return new CheckoutPreference.Builder()
                 .addItem(new Item("Item", BigDecimal.TEN.multiply(BigDecimal.TEN)))
                 .setSite(Sites.ARGENTINA)
-                .setId("243966003-be90ec6e-7c34-4e2d-9f08-a8bb5fa13e13")
 //                .addExcludedPaymentType(PaymentTypes.ATM)
 //                .addExcludedPaymentType(PaymentTypes.BANK_TRANSFER)
 //                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
