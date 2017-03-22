@@ -155,7 +155,7 @@ public class CheckoutExampleActivity extends AppCompatActivity {
 
         new MercadoPagoCheckout.Builder()
                 .setActivity(this)
-                .setPublicKey("TEST-bdd07ce7-a827-45e7-802f-72f0162b9c8c")
+                .setPublicKey(mPublicKey)
                 .setCheckoutPreference(getCheckoutPreference())
                 .setPaymentResult(paymentResult)
                 .setPaymentResultScreenPreference(paymentResultScreenPreference)
