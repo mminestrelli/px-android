@@ -552,7 +552,9 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MercadoPagoComponents.Activities.PAYMENT_VAULT_REQUEST_CODE) {
+        if (data !=null && data.getStringExtra(ErrorUtil.ERROR_EXTRA_KEY) != null) {
+            resolveErrorRequest(resultCode, data);
+        } else if (requestCode == MercadoPagoComponents.Activities.PAYMENT_VAULT_REQUEST_CODE) {
             resolvePaymentVaultRequest(resultCode, data);
         } else if (requestCode == MercadoPagoComponents.Activities.PAYMENT_RESULT_REQUEST_CODE) {
             resolvePaymentResultRequest(resultCode, data);
@@ -560,8 +562,6 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
             resolveCardVaultRequest(resultCode, data);
         } else if (requestCode == MercadoPagoComponents.Activities.REVIEW_AND_CONFIRM_REQUEST_CODE) {
             resolveReviewAndConfirmRequest(resultCode, data);
-        } else {
-            resolveErrorRequest(resultCode, data);
         }
     }
 
@@ -672,12 +672,13 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
     }
 
     private void showReviewAndConfirm() {
-        MPTracker.getInstance().trackScreen("REVIEW_AND_CONFIRM", "3", mMerchantPublicKey, mCheckoutPreference.getSite().getId(), BuildConfig.VERSION_NAME, this);
 
         mPaymentMethodEditionRequested = false;
 
         MercadoPagoComponents.Activities.ReviewAndConfirmBuilder builder = new MercadoPagoComponents.Activities.ReviewAndConfirmBuilder()
                 .setActivity(this)
+                .setMerchantPublicKey(mMerchantPublicKey)
+                .setSite(mCheckoutPreference.getSite())
                 .setReviewScreenPreference(mReviewScreenPreference)
                 .setPaymentMethod(mSelectedPaymentMethod)
                 .setPayerCost(mSelectedPayerCost)
@@ -988,6 +989,15 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
 
             if (!isEmpty(paymentData.getDiscount().getCouponCode())) {
                 paymentIntent.setCouponCode(paymentData.getDiscount().getCouponCode());
+            }
+        }
+
+        if (mDiscountEnabled && isDiscountValid()) {
+            paymentIntent.setCampaignId(mDiscount.getId().intValue());
+            paymentIntent.setCouponAmount(mDiscount.getCouponAmount().floatValue());
+
+            if (!isEmpty(mDiscount.getCouponCode())) {
+                paymentIntent.setCouponCode(mDiscount.getCouponCode());
             }
         }
 

@@ -49,7 +49,6 @@ public class ReviewPaymentOffView extends Reviewable {
     private Site mSite;
     private OnReviewChange mOnReviewChange;
     private Boolean mEditionEnabled;
-    private Boolean mIsUniquePaymentMethod;
     private DecorationPreference mDecorationPreference;
     private ViewGroup mPaymentMethodExtraInfo;
 

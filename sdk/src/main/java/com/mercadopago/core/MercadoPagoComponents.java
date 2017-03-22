@@ -298,9 +298,15 @@ public class MercadoPagoComponents {
             private ReviewScreenPreference reviewScreenPreference;
             private Boolean termsAndConditionsEnabled;
             private Boolean discountEnabled;
+            private String merchantPublicKey;
 
             public ReviewAndConfirmBuilder setActivity(Activity activity) {
                 this.activity = activity;
+                return this;
+            }
+
+            public ReviewAndConfirmBuilder setMerchantPublicKey(String merchantPublicKey) {
+                this.merchantPublicKey = merchantPublicKey;
                 return this;
             }
 
@@ -390,6 +396,7 @@ public class MercadoPagoComponents {
 
             private void startReviewAndConfirmActivity() {
                 Intent intent = new Intent(activity, ReviewAndConfirmActivity.class);
+                intent.putExtra("merchantPublicKey", merchantPublicKey);
                 intent.putExtra("editionEnabled", editionEnabled);
                 intent.putExtra("amount", amount.toString());
                 intent.putExtra("site", JsonUtil.getInstance().toJson(site));
