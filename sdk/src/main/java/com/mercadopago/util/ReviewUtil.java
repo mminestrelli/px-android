@@ -50,6 +50,14 @@ public class ReviewUtil {
             resource = R.string.mpsdk_review_off_text_3;
         } else if (key.startsWith("bolbradesco")) {
             resource = R.string.mpsdk_review_off_text_4;
+        } else if (key.startsWith("davivienda")) {
+            resource = R.string.mpsdk_review_off_text;
+        } else if (key.startsWith("efecty")) {
+            resource = R.string.mpsdk_review_off_text;
+        } else if (key.startsWith("movilred")) {
+            resource = R.string.mpsdk_review_off_text;
+        } else if (key.startsWith("viabaloto")) {
+            resource = R.string.mpsdk_review_off_text;
         } else if (key.startsWith("account_money")) {
             resource = R.string.mpsdk_review_off_text_4;
         } else if (key.startsWith("pagoefectivo_atm") && !(key.contains("bank_transfer"))) {
@@ -114,19 +122,23 @@ public class ReviewUtil {
                 break;
             case "pagoefectivo_atm":
                 string = context.getResources().getString(R.string.mpsdk_your_atm) + " ";
-                if (description == null) {
-                    string += paymentMethod.getName();
-                } else {
-                    string += description;
-                }
+                string += (description == null ? paymentMethod.getName() : description);
                 break;
             case "pagoefectivo_atm_bank_transfer":
                 string = context.getResources().getString(R.string.mpsdk_homebanking) + " ";
-                if (description == null) {
-                    string += paymentMethod.getName();
-                } else {
-                    string += description;
-                }
+                string += (description == null ? paymentMethod.getName() : description);
+                break;
+            case "davivienda":
+                string = paymentMethod.getName();
+                break;
+            case "efecty":
+                string = paymentMethod.getName();
+                break;
+            case "movilred":
+                string = paymentMethod.getName();
+                break;
+            case "viabaloto":
+                string = paymentMethod.getName();
                 break;
             default:
                 string = paymentMethod.getName();
