@@ -348,7 +348,7 @@ public class CardVaultPresenter {
             public void success(Token token) {
                 mToken = token;
                 Log.d("log", token.getId());
-                //TODO guardar el cvv
+                //save encrypted cvv
                 saveEncryptedSecurityCode(token);
                 mView.finishWithResult();
             }
@@ -375,6 +375,8 @@ public class CardVaultPresenter {
                 public void success(Token token) {
                     mToken = token;
                     Log.d("log", token.getId());
+                    //update the encrypted cvv with this new token
+                    saveEncryptedSecurityCode(token);
                     mView.finishWithResult();
                 }
 

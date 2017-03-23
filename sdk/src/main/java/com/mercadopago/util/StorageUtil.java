@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
+import com.mercadopago.model.Payment;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -40,7 +42,17 @@ public class StorageUtil {
 
     public static Map<String, String> addToStorageMap(Context context, String key, String value, String fileName) {
         Map<String, String> map = StorageUtil.getStorageMap(context, fileName);
-        map.put(key, value);
+        if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(value)) {
+            map.put(key, value);
+        }
+        return map;
+    }
+
+    public static Map<String, String> deleteOfStorageMap(Context context, String key, String fileName) {
+        Map<String, String> map = StorageUtil.getStorageMap(context, fileName);
+        if (!TextUtils.isEmpty(key) && map.containsKey(key)) {
+            map.remove(key);
+        }
         return map;
     }
 
@@ -75,6 +87,13 @@ public class StorageUtil {
         } else {
             return null;
         }
+    }
+
+    public static boolean hasToEraseEncryptedCvv(String paymentStatus, String paymentStatusDetail) {
+        return paymentStatus.equals(Payment.StatusCodes.STATUS_REJECTED) &&
+                !paymentStatusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_DUPLICATED_PAYMENT) &&
+                !paymentStatusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_INSUFFICIENT_AMOUNT) &&
+                !paymentStatusDetail.equals(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_CARD_DISABLED);
     }
 
 }

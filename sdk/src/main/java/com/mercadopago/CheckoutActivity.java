@@ -54,6 +54,7 @@ import com.mercadopago.util.ErrorUtil;
 import com.mercadopago.util.JsonUtil;
 import com.mercadopago.util.LayoutUtil;
 import com.mercadopago.util.MercadoPagoUtil;
+import com.mercadopago.util.StorageUtil;
 import com.mercadopago.util.TextUtil;
 
 import java.lang.reflect.Type;
@@ -873,6 +874,12 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
                 @Override
                 public void success(Payment payment) {
                     mCreatedPayment = payment;
+                    //TODO borrar
+                    payment.setStatus(Payment.StatusCodes.STATUS_REJECTED);
+                    payment.setStatusDetail(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_BAD_FILLED_CARD_NUMBER);
+                    //delete encrypted cvv when necessary
+                    checkSavedInfoForCard(payment);
+
                     PaymentResult paymentResult = createPaymentResult(payment, paymentData);
                     checkStartPaymentResultActivity(paymentResult);
                     cleanTransactionId();
@@ -895,6 +902,13 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
                 @Override
                 public void success(Payment payment) {
                     mCreatedPayment = payment;
+
+                    //TODO cambiar a apiary para que devuelva un pago
+                    payment.setStatus(Payment.StatusCodes.STATUS_REJECTED);
+                    payment.setStatusDetail(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_BAD_FILLED_CARD_NUMBER);
+                    //delete encrypted cvv when necessary
+                    checkSavedInfoForCard(payment);
+
                     PaymentResult paymentResult = createPaymentResult(payment, paymentData);
                     checkStartPaymentResultActivity(paymentResult);
                     cleanTransactionId();
@@ -917,6 +931,19 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
             });
         }
     }
+
+    private void checkSavedInfoForCard(Payment payment) {
+        if (MercadoPagoUtil.isCard(payment.getPaymentTypeId()) && payment.getStatusDetail() != null &&
+                payment.getCard() != null && !TextUtils.isEmpty(payment.getCard().getId())) {
+            if (StorageUtil.hasToEraseEncryptedCvv(payment.getStatus(), payment.getStatusDetail())) {
+                String cardId = payment.getCard().getId();
+                String fileName = StorageUtil.createFileName(this);
+                Map<String, String> map = StorageUtil.deleteOfStorageMap(this, cardId, fileName);
+                StorageUtil.saveInFile(this, map, fileName);
+            }
+        }
+    }
+
 
     private PaymentResult createPaymentResult(Payment payment, PaymentData paymentData) {
         return new PaymentResult.Builder()
