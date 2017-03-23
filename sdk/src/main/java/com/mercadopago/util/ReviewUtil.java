@@ -58,6 +58,10 @@ public class ReviewUtil {
             resource = R.string.mpsdk_review_off_text;
         } else if (key.startsWith("viabaloto")) {
             resource = R.string.mpsdk_review_off_text;
+        } else if (key.startsWith("servipag")) {
+            resource = R.string.mpsdk_review_off_text;
+        } else if (key.startsWith("webpay")) {
+            resource = R.string.mpsdk_review_off_text;
         } else if (key.startsWith("account_money")) {
             resource = R.string.mpsdk_review_off_text_4;
         } else if (key.startsWith("pagoefectivo_atm") && !(key.contains("bank_transfer"))) {
@@ -139,6 +143,12 @@ public class ReviewUtil {
                 break;
             case "viabaloto":
                 string = paymentMethod.getName();
+                break;
+            case "servipag":
+                string = paymentMethod.getName();
+                break;
+            case "webpay":
+                string = context.getResources().getString(R.string.mpsdk_debit) + " " + paymentMethod.getName();
                 break;
             case "account_money_account_money":
                 string = context.getString(R.string.mpsdk_ryc_account_money_description);

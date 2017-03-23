@@ -77,10 +77,6 @@ public class CustomReviewablesHandler {
         return congratsReviewables.get(location);
     }
 
-    public boolean hasCongratsReviewables(ContentLocation location) {
-        return congratsReviewables.containsKey(location);
-    }
-
     public List<Reviewable> getPendingReviewables() {
         return pendingReviewables;
     }
