@@ -62,6 +62,12 @@ public class ReviewUtil {
             resource = R.string.mpsdk_review_off_text;
         } else if (key.startsWith("webpay")) {
             resource = R.string.mpsdk_review_off_text;
+        } else if (key.startsWith("mercantil_atm")) {
+            resource = R.string.mpsdk_review_off_text;
+        } else if (key.startsWith("mercantil_bank_transfer")) {
+            resource = R.string.mpsdk_review_off_text_3;
+        } else if (key.startsWith("provincial")) {
+            resource = R.string.mpsdk_review_off_text;
         } else if (key.startsWith("account_money")) {
             resource = R.string.mpsdk_review_off_text_4;
         } else if (key.startsWith("pagoefectivo_atm") && !(key.contains("bank_transfer"))) {
@@ -149,6 +155,17 @@ public class ReviewUtil {
                 break;
             case "webpay":
                 string = context.getResources().getString(R.string.mpsdk_debit) + " " + paymentMethod.getName();
+                break;
+            case "mercantil_atm":
+                string = context.getResources().getString(R.string.mpsdk_your_atm) + " ";
+                string += (description == null ? paymentMethod.getName() : description);
+                break;
+            case "mercantil_bank_transfer":
+                string = context.getResources().getString(R.string.mpsdk_homebanking) + " ";
+                string += (description == null ? paymentMethod.getName() : description);
+                break;
+            case "provincial":
+                string = paymentMethod.getName();
                 break;
             case "account_money_account_money":
                 string = context.getString(R.string.mpsdk_ryc_account_money_description);
