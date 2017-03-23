@@ -140,6 +140,9 @@ public class ReviewUtil {
             case "viabaloto":
                 string = paymentMethod.getName();
                 break;
+            case "account_money_account_money":
+                string = context.getString(R.string.mpsdk_ryc_account_money_description);
+                break;
             default:
                 string = paymentMethod.getName();
                 break;
