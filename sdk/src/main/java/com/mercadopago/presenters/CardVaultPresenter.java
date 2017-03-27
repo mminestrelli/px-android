@@ -397,8 +397,10 @@ public class CardVaultPresenter {
     private void saveEncryptedSecurityCode(Token token) {
         String encryptedCvv = token.getEncryptedCvv();
         String cardId = token.getCardId();
-        String fileName = StorageUtil.createFileName(mContext);
-        Map<String, String> map = StorageUtil.addToStorageMap(mContext, cardId, encryptedCvv, fileName);
-        StorageUtil.saveInFile(mContext, map, fileName);
+        if (encryptedCvv != null && cardId != null) {
+            String fileName = StorageUtil.createFileName(mContext);
+            Map<String, String> map = StorageUtil.addToStorageMap(mContext, cardId, encryptedCvv, fileName);
+            StorageUtil.saveInFile(mContext, map, fileName);
+        }
     }
 }

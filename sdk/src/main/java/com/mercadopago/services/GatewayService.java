@@ -18,7 +18,7 @@ public interface GatewayService {
     @POST("/v1/card_tokens")
     MPCall<Token> getToken(@Query("public_key") String publicKey, @Query("access_token") String privateKey, @Body CardToken cardToken);
 
-    @POST("/v1/card_tokens")
+    @POST("/v1/saved_card_tokens")
     MPCall<Token> getToken(@Query("public_key") String publicKey, @Query("access_token") String privateKey, @Body SavedCardToken savedCardToken);
 
     @POST("/v1/encrypted_card_tokens")

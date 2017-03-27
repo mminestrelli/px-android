@@ -292,10 +292,12 @@ public class SecurityCodePresenter {
 
     private void saveEncryptedSecurityCode(Token token) {
         //TODO hacer que traiga el encrypted cvv
-//        String encryptedCvv = token.getEncryptedCvv();
-//        String cardId = token.getCardId();
-//        String fileName = StorageUtil.createFileName(mContext);
-//        Map<String, String> map = StorageUtil.addToStorageMap(mContext, cardId, encryptedCvv, fileName);
-//        StorageUtil.saveInFile(mContext, map, fileName);
+        String encryptedCvv = token.getEncryptedCvv();
+        String cardId = token.getCardId();
+        if (encryptedCvv != null && cardId != null) {
+            String fileName = StorageUtil.createFileName(mContext);
+            Map<String, String> map = StorageUtil.addToStorageMap(mContext, cardId, encryptedCvv, fileName);
+            StorageUtil.saveInFile(mContext, map, fileName);
+        }
     }
 }

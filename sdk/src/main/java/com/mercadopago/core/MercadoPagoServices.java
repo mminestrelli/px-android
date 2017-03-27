@@ -107,7 +107,8 @@ public class MercadoPagoServices {
 
     public void createPayment(final PaymentBody paymentBody, final Callback<Payment> callback) {
         MPTracker.getInstance().trackEvent("NO_SCREEN", "CREATE_PAYMENT", "1", mPublicKey, BuildConfig.VERSION_NAME, mContext);
-        CheckoutService service = getDefaultRetrofit(DEFAULT_PAYMENT_CONNECT_TIMEOUT, DEFAULT_PAYMENT_READ_TIMEOUT, DEFAULT_PAYMENT_WRITE_TIMEOUT).create(CheckoutService.class);
+//        CheckoutService service = getDefaultRetrofit(DEFAULT_PAYMENT_CONNECT_TIMEOUT, DEFAULT_PAYMENT_READ_TIMEOUT, DEFAULT_PAYMENT_WRITE_TIMEOUT).create(CheckoutService.class);
+        CheckoutService service = getMockedRetrofit().create(CheckoutService.class);
         service.createPayment(paymentBody.getTransactionId(), paymentBody).enqueue(callback);
     }
 
@@ -116,7 +117,8 @@ public class MercadoPagoServices {
             @Override
             public void run() {
                 savedCardToken.setDevice(mContext);
-                GatewayService service = getGatewayRetrofit().create(GatewayService.class);
+//                GatewayService service = getGatewayRetrofit().create(GatewayService.class);
+                GatewayService service = getMockedGatewayRetrofit().create(GatewayService.class);
                 service.getToken(mPublicKey, mPrivateKey, savedCardToken).enqueue(callback);
             }
         }).start();
@@ -240,6 +242,10 @@ public class MercadoPagoServices {
     }
 
     private Retrofit getMockedGatewayRetrofit() {
+        return getMockedGatewayRetrofit(DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, DEFAULT_WRITE_TIMEOUT);
+    }
+
+    private Retrofit getMockedRetrofit() {
         return getMockedGatewayRetrofit(DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, DEFAULT_WRITE_TIMEOUT);
     }
 
