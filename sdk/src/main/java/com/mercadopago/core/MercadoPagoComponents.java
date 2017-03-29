@@ -1531,6 +1531,7 @@ public class MercadoPagoComponents {
             private String merchantPublicKey;
             private PaymentResult paymentResult;
             private Site site;
+            private PaymentResultScreenPreference paymentResultScreenPreference;
 
             public CallForAuthorizeActivityBuilder setActivity(Activity activity) {
                 this.activity = activity;
@@ -1552,6 +1553,11 @@ public class MercadoPagoComponents {
                 return this;
             }
 
+            public CallForAuthorizeActivityBuilder setPaymentResultScreenPreference(PaymentResultScreenPreference paymentResultScreenPreference) {
+                this.paymentResultScreenPreference = paymentResultScreenPreference;
+                return this;
+            }
+
             public void startActivity() {
                 if (this.activity == null) throw new IllegalStateException("activity is null");
                 if (this.paymentResult == null)
@@ -1569,6 +1575,7 @@ public class MercadoPagoComponents {
                 callForAuthorizeIntent.putExtra("merchantPublicKey", merchantPublicKey);
                 callForAuthorizeIntent.putExtra("paymentResult", JsonUtil.getInstance().toJson(paymentResult));
                 callForAuthorizeIntent.putExtra("site", JsonUtil.getInstance().toJson(site));
+                callForAuthorizeIntent.putExtra("paymentResultScreenPreference", JsonUtil.getInstance().toJson(paymentResultScreenPreference));
 
                 activity.startActivityForResult(callForAuthorizeIntent, CALL_FOR_AUTHORIZE_REQUEST_CODE);
             }
