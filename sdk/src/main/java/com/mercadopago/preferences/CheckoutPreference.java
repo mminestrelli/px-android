@@ -231,11 +231,15 @@ public class CheckoutPreference {
     }
 
     public Site getSite() {
+        Site site = null;
         if (localPreferenceSite == null) {
-            return Sites.getById(siteId);
+
+            site = Sites.getById(siteId);
+
         } else {
-            return localPreferenceSite;
+            site = localPreferenceSite;
         }
+        return site;
     }
 
     public boolean hasId() {

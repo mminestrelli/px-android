@@ -9,6 +9,7 @@ import com.mercadopago.controllers.CustomReviewablesHandler;
 import com.mercadopago.core.MercadoPagoComponents;
 import com.mercadopago.model.CardInfo;
 import com.mercadopago.model.Discount;
+import com.mercadopago.model.Issuer;
 import com.mercadopago.model.Item;
 import com.mercadopago.model.PayerCost;
 import com.mercadopago.model.PaymentMethod;
@@ -34,7 +35,7 @@ public class ReviewAndConfirmProviderImpl implements ReviewAndConfirmProvider {
     }
 
     @Override
-    public Reviewable getSummaryReviewable(PaymentMethod paymentMethod, PayerCost payerCost, BigDecimal amount, Discount discount, Site site, DecorationPreference decorationPreference, OnConfirmPaymentCallback onConfirmPaymentCallback) {
+    public Reviewable getSummaryReviewable(PaymentMethod paymentMethod, PayerCost payerCost, BigDecimal amount, Discount discount, Site site, Issuer issuer, DecorationPreference decorationPreference, OnConfirmPaymentCallback onConfirmPaymentCallback) {
         String confirmationMessage;
         if (this.reviewScreenPreference != null && !TextUtil.isEmpty(this.reviewScreenPreference.getConfirmText())) {
             confirmationMessage = reviewScreenPreference.getConfirmText();
@@ -62,12 +63,14 @@ public class ReviewAndConfirmProviderImpl implements ReviewAndConfirmProvider {
                 .setCustomTextColor(customTextColor)
                 .setDecorationPreference(decorationPreference)
                 .setConfirmPaymentCallback(onConfirmPaymentCallback)
+                .setIssuer(issuer)
+                .setSite(site)
                 .build();
     }
 
     @Override
     public Reviewable getItemsReviewable(String currency, List<Item> items) {
-        if(CustomReviewablesHandler.getInstance().hasCustomItemsReviewable()) {
+        if (CustomReviewablesHandler.getInstance().hasCustomItemsReviewable()) {
             return CustomReviewablesHandler.getInstance().getItemsReviewable();
         } else {
             return new MercadoPagoComponents.Views.ReviewItemsViewBuilder()
@@ -148,7 +151,7 @@ public class ReviewAndConfirmProviderImpl implements ReviewAndConfirmProvider {
         String discountDetail = "";
         if (this.reviewScreenPreference != null && !TextUtil.isEmpty(this.reviewScreenPreference.getDiscountDetail())) {
             discountDetail = reviewScreenPreference.getDiscountDetail();
-        } else if(discount != null){
+        } else if (discount != null) {
             if (discount.hasPercentOff()) {
                 discountDetail = context.getResources().getString(R.string.mpsdk_review_summary_discount_with_percent_off,
                         String.valueOf(discount.getPercentOff()));
