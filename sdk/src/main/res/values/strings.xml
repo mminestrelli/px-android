@@ -238,4 +238,6 @@
     <string name="mpsdk_percent">%</string>
     <string name="mpsdk_total">Total:</string>
     <string name="mpsdk_something_went_wrong">¡Uy! Algo salió mal…</string>
+
+    <string name="mpsdk_interest_label">No incluye intereses bancarios</string>
 </resources>
