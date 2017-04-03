@@ -1,5 +1,7 @@
 package com.mercadopago.util;
 
+import android.annotation.TargetApi;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
@@ -26,7 +28,7 @@ import javax.crypto.SecretKey;
 
 public class ProtectionManager {
 
-    private ProtectionManager instance;
+    private static ProtectionManager instance;
     private KeyStore keyStore;
     private KeyGenerator keyGenerator;
     private Cipher cipher;
@@ -35,7 +37,7 @@ public class ProtectionManager {
 
     }
 
-    public ProtectionManager getInstance() {
+    public static ProtectionManager getInstance() {
         if (instance == null) {
             instance = new ProtectionManager();
         }
@@ -43,7 +45,7 @@ public class ProtectionManager {
     }
 
     //Create the generateKey method that we’ll use to gain access to the Android keystore and generate the encryption key//
-
+    @TargetApi(Build.VERSION_CODES.M)
     public void generateKey(String keyName) throws FingerprintException {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
@@ -86,6 +88,7 @@ public class ProtectionManager {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     public boolean initCipher(String keyName) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
@@ -120,7 +123,15 @@ public class ProtectionManager {
         }
     }
 
-    private class FingerprintException extends Exception {
+    @TargetApi(Build.VERSION_CODES.M)
+    public FingerprintManager.CryptoObject createCryptoObject() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return new FingerprintManager.CryptoObject(cipher);
+        }
+        return null;
+    }
+
+    public class FingerprintException extends Exception {
 
         public FingerprintException(Exception e) {
             super(e);

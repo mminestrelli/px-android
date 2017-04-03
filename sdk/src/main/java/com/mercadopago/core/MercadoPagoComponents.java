@@ -97,6 +97,7 @@ public class MercadoPagoComponents {
         public static final int SECURITY_CODE_REQUEST_CODE = 18;
         public static final int DISCOUNTS_REQUEST_CODE = 19;
         public static final int REVIEW_AND_CONFIRM_REQUEST_CODE = 20;
+        public static final int FINGERPRINT_REQUEST_CODE = 21;
 
         public static class PaymentVaultActivityBuilder {
 

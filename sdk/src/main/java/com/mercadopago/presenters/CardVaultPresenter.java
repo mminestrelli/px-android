@@ -1,8 +1,10 @@
 package com.mercadopago.presenters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+import com.mercadopago.FingerprintActivity;
 import com.mercadopago.callbacks.Callback;
 import com.mercadopago.callbacks.FailureRecovery;
 import com.mercadopago.controllers.PaymentMethodGuessingController;

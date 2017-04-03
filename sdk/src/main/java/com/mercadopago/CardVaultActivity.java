@@ -249,7 +249,20 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
     }
 
     private void getEncryptedToken() {
-        mPresenter.createEncryptedToken();
+        checkAuthenticationForEncryptedToken();
+    }
+
+    public void checkAuthenticationForEncryptedToken() {
+        Intent intent = new Intent(this, FingerprintActivity.class);
+        startActivityForResult(intent, MercadoPagoComponents.Activities.FINGERPRINT_REQUEST_CODE);
+        //mPresenter.createEncryptedToken();
+    }
+
+    private void resolveFingerprintRequest(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            mPresenter.createEncryptedToken();
+        }
+        //TODO hacer los casos de error
     }
 
     private void startSecurityCodeActivity() {
@@ -302,6 +315,8 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultAct
             resolveSecurityCodeRequest(resultCode, data);
         } else if (requestCode == ErrorUtil.ERROR_REQUEST_CODE) {
             resolveErrorRequest(resultCode, data);
+        } else if (requestCode == MercadoPagoComponents.Activities.FINGERPRINT_REQUEST_CODE) {
+            resolveFingerprintRequest(resultCode, data);
         }
     }
 

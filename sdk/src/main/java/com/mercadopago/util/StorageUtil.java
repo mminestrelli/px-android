@@ -82,6 +82,9 @@ public class StorageUtil {
 
     public static String getValueFromFile(Context context, String fileName, String key) {
         Map<String, String> map = getStorageMap(context, fileName);
+        //TODO sacar
+        key = "132797406";
+
         if (map.containsKey(key)) {
             return map.get(key);
         } else {
