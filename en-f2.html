@@ -474,21 +474,20 @@ Intent data) {
                <section class="docs-section" id="f2_discounts">
                   <h3 class="title">Discounts</h3>
                   <p>
-                    <br>
                      ¡Add discounts to your flow!
-                    <br/>
-                    <br>
+                     </p>
+                     <p>
                      If you have active discounts campaigns in Mercado Pago, the SDK will comunicate and apply the best discount.
-                     <br/>
-                     <br>
+                     </p>
+                     <p>
                      There are two discounts types: direct discount and discount with code. The direct discount is always applied when you start the SDK. On the other hand, the discount with code requires that the user enter the correct discount code. If the discount code is valid, the SDK will apply the discount.
-                     <br />
-                     <br>
+                     </p>
+                     <p>
                      If there are active discounts campaigns, the SDK will apply only one discount. The direct discounts has more priority that the discount with code. We do not cosider accumulative discounts, so the SDK will apply only the best discount.
-                     <br />
-                     <br>
+                     </p>
+                     <p>
                      In the SDK you can disable this feature through this code:
-                     <br />
+                     </p>
                      <p>
                      <pre class="snippet">
                         <code class="line-numbers language-java">
@@ -505,9 +504,7 @@ new MercadoPago.StartActivityBuilder()
                      </pre>
                      </p>
                      <p>
-                      <br>
                       On the other hand, you can start the SDK with your own Mercado Pago discount. You can do this with this code:
-                      <br />
                      </p>
                      <p>
                       <pre class="snippet">
@@ -525,9 +522,7 @@ new MercadoPago.StartActivityBuilder()
                      </pre>
                      </p>
                      <p>
-                      <br>
-                      Also, the SDK let you set an URL and an URI for you can use your own discount service with this code:
-                      <br />
+                      If the possibility exist to get discounts of Mercado Pago from a particular server instead of the SDK get them from our API's, you can set this service for the SDK get the discounts in this way:
                      </p>
                      <p>
                       <pre class="snippet">
