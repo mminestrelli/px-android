@@ -471,30 +471,6 @@ Intent data) {
                      <img src="./img/phone/f2_payer_costs.png" class="img-phone-case"></img>
                   </div>
                </section>
-               <section class="docs-section" id="f2_bank_deals">
-                  <h3 class="title">Bank deals</h3>
-                  <p>
-                     We arrange deals with the card brands and the issuers in order to give the best promotions to your users at the moment of paying. We think it's very important that you tell your users about this benefits while it's navigating your app, because it's more likely to choose a convenient payment method and make the payment.
-                  </p>
-                  <p>
-                     <pre class="snippet">
-                        <code class="line-numbers language-java">
-public void onBankDealsButtonClicked(View view) {
-  new MercadoPago.StartActivityBuilder()
-    .setActivity(this)
-    .setPublicKey(YOUR_PUBLIC_KEY)
-    .startBankDealsActivity();
-}
-                        </code>
-                        <button class="copy-button">
-                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
-                        </button>
-                     </pre>
-                  </p>
-                  <div class="doc-example ionic">
-                     <img src="./img/phone/bank_deals.png" class="img-phone-case"></img>
-                  </div>
-               </section>
                <section class="docs-section" id="f2_discounts">
                   <h3 class="title">Discounts</h3>
                   <p>
@@ -570,6 +546,30 @@ new MercadoPago.StartActivityBuilder()
                         </button>
                      </pre>
                      </p>
+                  <div class="doc-example ionic">
+                     <img src="./img/phone/bank_deals.png" class="img-phone-case"></img>
+                  </div>
+               </section>
+               <section class="docs-section" id="f2_bank_deals">
+                  <h3 class="title">Bank deals</h3>
+                  <p>
+                     We arrange deals with the card brands and the issuers in order to give the best promotions to your users at the moment of paying. We think it's very important that you tell your users about this benefits while it's navigating your app, because it's more likely to choose a convenient payment method and make the payment.
+                  </p>
+                  <p>
+                     <pre class="snippet">
+                        <code class="line-numbers language-java">
+public void onBankDealsButtonClicked(View view) {
+  new MercadoPago.StartActivityBuilder()
+    .setActivity(this)
+    .setPublicKey(YOUR_PUBLIC_KEY)
+    .startBankDealsActivity();
+}
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                  </p>
                   <div class="doc-example ionic">
                      <img src="./img/phone/bank_deals.png" class="img-phone-case"></img>
                   </div>
