@@ -74,6 +74,7 @@
                                  <li><a href="en-f2.html#f2_payment_methods">Payment methods</a></li>
                                  <li><a href="en-f2.html#f2_card_issuers">Banks</a></li>
                                  <li><a href="en-f2.html#f2_payer_costs">Installments</a></li>
+                                 <li><a href="en-f2.html#f2_discounts">Discounts</a></li>
                                  <li><a href="en-f2.html#f2_bank_deals">Bank deals</a></li>
                                  <li><a href="en-f2.html#f2_create_payment">Payment creation</a></li>
                                  <li><a href="en-f2.html#f2_payment_result">Payment result</a></li>
@@ -470,6 +471,80 @@ Intent data) {
                      <img src="./img/phone/f2_payer_costs.png" class="img-phone-case"></img>
                   </div>
                </section>
+               <section class="docs-section" id="f2_discounts">
+                  <h3 class="title">Discounts</h3>
+                  <p>
+                     ¡Add discounts to your flow!
+                     </p>
+                     <p>
+                     If you have active discounts campaigns in Mercado Pago, the SDK will comunicate and apply the best discount.
+                     </p>
+                     <p>
+                     There are two discounts types: direct discount and discount with code. The direct discount is always applied when you start the SDK. On the other hand, the discount with code requires that the user enter the correct discount code. If the discount code is valid, the SDK will apply the discount.
+                     </p>
+                     <p>
+                     If there are active discounts campaigns, the SDK will apply only one discount. The direct discounts has more priority that the discount with code. We do not cosider accumulative discounts, so the SDK will apply only the best discount.
+                     </p>
+                     <p>
+                     In the SDK you can disable this feature through this code:
+                     </p>
+                     <p>
+                     <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setDirectDiscountEnabled(false)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
+                     <p>
+                      On the other hand, you can start the SDK with your own Mercado Pago discount. You can do this with this code:
+                     </p>
+                     <p>
+                      <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setDiscount(DISCOUNT)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
+                     <p>
+                      If there's need of retrieving the discount's data from a particular server instead of letting the SDK get it directly from Mercado Pago's API, configure where should the SDK get this information from, starting it this way:
+                     </p>
+                     <p>
+                      <pre class="snippet">
+                        <code class="line-numbers language-java">
+new MercadoPago.StartActivityBuilder()
+                .setActivity(this)
+                .setPublicKey(PUBLIC_KEY)
+                .setMerchantDiscountUrl("https://example.url.com/")
+                .setMerchantGetDiscountUri("discount/uri")
+                .setDiscountAdditionalInfo(ADDITIONAL_INFO_MAP)
+                .setCheckoutPreferenceId(PREFERENCE_ID)
+                .startCheckoutActivity();
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                     </p>
+                  <div class="doc-example ionic">
+                     <img src="./img/phone/bank_deals.png" class="img-phone-case"></img>
+                  </div>
+               </section>
                <section class="docs-section" id="f2_bank_deals">
                   <h3 class="title">Bank deals</h3>
                   <p>
@@ -766,6 +841,31 @@ new MercadoPago.StartActivityBuilder().
     .setDecorationPreference(decorationPreference) //Optional
     // Start the component
 
+                        </code>
+                        <button class="copy-button">
+                           <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
+                        </button>
+                     </pre>
+                  </p>
+                  <p><b>Timer</b></p>
+                  <p>
+                    Our SDK has a "CheckoutTimer" object which can be started to our components or along the flow. This timer can be start with next code:
+                  </p>
+                  <p>
+                     <pre class="snippet">
+                        <code class="line-numbers language-java">
+//start timer
+CheckoutTimer.getInstance().start(TIME_IN_SECONDS);
+
+//set on finish timer listener 
+CheckoutTimer.getInstance().setOnFinishListener(new CheckoutTimer.FinishListener() {
+            @Override
+            public void onFinish() {
+
+                //this method finish all MercadoPago checkout activities
+                CheckoutTimer.getInstance().finishCheckout();
+            }
+        });
                         </code>
                         <button class="copy-button">
                            <img src="./img/clippy.svg" width="13" alt="Copy to clipboard">
