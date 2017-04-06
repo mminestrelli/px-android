@@ -45,6 +45,7 @@ import com.mercadopago.util.ColorsUtil;
 import com.mercadopago.util.ErrorUtil;
 import com.mercadopago.util.JsonUtil;
 import com.mercadopago.util.LayoutUtil;
+import com.mercadopago.util.InstallmentsUtil;
 import com.mercadopago.util.ScaleUtil;
 import com.mercadopago.views.InstallmentsActivityView;
 
@@ -85,6 +86,7 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
     protected String mMerchantDiscountBaseURL;
     protected String mMerchantGetDiscountURI;
     protected Map<String, String> mDiscountAdditionalInfo;
+    private MPTextView mNoInstallmentsRate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,6 +104,7 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
         setMerchantInfo();
         setContentView();
         mPresenter.validateActivityParameters();
+
     }
 
     private boolean isCustomColorSet() {
@@ -257,6 +260,14 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
             mCardContainer = (FrameLayout) findViewById(R.id.mpsdkActivityCardContainer);
             mNormalToolbar = (Toolbar) findViewById(R.id.mpsdkRegularToolbar);
             mNormalToolbar.setVisibility(View.VISIBLE);
+
+            if (InstallmentsUtil.showNoInstallmentRate(mPresenter.getSite())) {
+                mNoInstallmentsRate = (MPTextView) findViewById(R.id.mpsdkNoInstallmentsRateTextView);
+                mNoInstallmentsRate.setVisibility(View.VISIBLE);
+                mNoInstallmentsRate.setText(R.string.mpsdk_interest_label);
+            }
+
+
         }
 
         mDiscountFrameLayout = (FrameLayout) findViewById(R.id.mpsdkDiscount);
@@ -372,7 +383,7 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
     }
 
     private void initializeAdapter() {
-        mPayerCostsAdapter = new PayerCostsAdapter(this, mPresenter.getSite().getCurrencyId(), getDpadSelectionCallback());
+        mPayerCostsAdapter = new PayerCostsAdapter(this, mPresenter.getSite(), getDpadSelectionCallback());
         initializeAdapterListener(mPayerCostsAdapter, mInstallmentsRecyclerView);
     }
 

@@ -11,6 +11,7 @@
 
     <include layout="@layout/mpsdk_view_progress_bar_small"/>
 
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/mpsdkInstallmentesAppBar"
         android:layout_width="match_parent"
@@ -19,7 +20,10 @@
         android:background="@color/mpsdk_background_blue"
         android:fitsSystemWindows="true">
 
-        <include layout="@layout/mpsdk_scrolling_toolbar"/>
+        <include layout="@layout/mpsdk_scrolling_toolbar" />
+
+
+
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
