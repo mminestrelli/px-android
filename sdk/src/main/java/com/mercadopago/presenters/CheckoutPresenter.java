@@ -745,5 +745,4 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     public Boolean getShowBankDeals() {
         return mFlowPreference == null || mFlowPreference.isBankDealsEnabled();
     }
-
 }

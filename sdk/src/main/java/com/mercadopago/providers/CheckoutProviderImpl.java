@@ -34,14 +34,9 @@ import com.mercadopago.util.TextUtils;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-/**
- * Created by vaserber on 2/2/17.
- */
 
 public class CheckoutProviderImpl implements CheckoutProvider {
 
