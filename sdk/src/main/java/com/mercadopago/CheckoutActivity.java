@@ -1,6 +1,5 @@
 package com.mercadopago;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -52,11 +51,10 @@ public class CheckoutActivity extends MercadoPagoBaseActivity implements Checkou
     //Local vars
     protected CheckoutPresenter mCheckoutPresenter;
 
-    protected Activity mActivity;
     protected DecorationPreference mDecorationPreference;
     protected ServicePreference mServicePreference;
     protected Integer mRequestedResultCode;
-    private Intent mCustomDataBundle;
+    protected Intent mCustomDataBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +66,6 @@ public class CheckoutActivity extends MercadoPagoBaseActivity implements Checkou
             setContentView(R.layout.mpsdk_activity_checkout);
             decorate();
             mCheckoutPresenter.initialize();
-            mActivity = this;
         }
     }
 
@@ -306,7 +303,7 @@ public class CheckoutActivity extends MercadoPagoBaseActivity implements Checkou
 
         new MercadoPagoComponents.Activities.PaymentResultActivityBuilder()
                 .setMerchantPublicKey(mMerchantPublicKey)
-                .setActivity(mActivity)
+                .setActivity(this)
                 .setPaymentResult(paymentResult)
                 .setDiscount(mCheckoutPresenter.getDiscount())
                 .setDiscountEnabled(mCheckoutPresenter.isDiscountEnabled())
@@ -460,7 +457,7 @@ public class CheckoutActivity extends MercadoPagoBaseActivity implements Checkou
 
     @Override
     public void showError(MercadoPagoError error) {
-        ErrorUtil.startErrorActivity(mActivity, error);
+        ErrorUtil.startErrorActivity(this, error);
     }
 
     @Override

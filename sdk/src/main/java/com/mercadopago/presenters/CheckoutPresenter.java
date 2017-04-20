@@ -69,6 +69,11 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
 
     private transient FailureRecovery failureRecovery;
 
+    public CheckoutPresenter() {
+        mFlowPreference = new FlowPreference.Builder()
+                .build();
+    }
+
     public void initialize() {
         getView().showProgress();
         try {
@@ -151,6 +156,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
             @Override
             public void onFailure(MercadoPagoError error) {
                 if (isViewAttached()) {
+                    mFlowPreference.disableDiscount();
                     getPaymentMethodSearchAsync();
                 }
             }
@@ -679,7 +685,9 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     public void setFlowPreference(FlowPreference flowPreference) {
-        this.mFlowPreference = flowPreference;
+        if(flowPreference != null) {
+            this.mFlowPreference = flowPreference;
+        }
     }
 
     public void setCongratsDisplay(Integer congratsDisplay) {
