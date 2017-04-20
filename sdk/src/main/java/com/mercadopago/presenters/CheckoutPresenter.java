@@ -79,7 +79,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
         try {
             validateParameters();
             if (mCheckoutPreference.getId() != null) {
-                getCheckoutPreferenceAsync();
+                retrieveCheckoutPreference();
             } else {
                 startCheckoutForPreference();
             }
@@ -116,7 +116,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
         if (shouldGetDiscounts) {
             getDiscountCampaigns();
         } else {
-            getPaymentMethodSearchAsync();
+            retrievePaymentMethodSearch();
         }
     }
 
@@ -157,7 +157,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
             public void onFailure(MercadoPagoError error) {
                 if (isViewAttached()) {
                     mFlowPreference.disableDiscount();
-                    getPaymentMethodSearchAsync();
+                    retrievePaymentMethodSearch();
                 }
             }
         };
@@ -166,24 +166,28 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     private void analyzeCampaigns(List<Campaign> campaigns) {
         boolean directDiscountFound = false;
         boolean couponDiscountFound = false;
-
-        for (Campaign campaign : campaigns) {
-            if (campaign.isDirectDiscountCampaign()) {
-                directDiscountFound = true;
-            } else if (campaign.isCodeDiscountCampaign()) {
-                couponDiscountFound = true;
-            }
-        }
-
-        if (directDiscountFound) {
-            getDirectDiscount(couponDiscountFound);
+        if (campaigns == null) {
+            mFlowPreference.disableDiscount();
+            retrievePaymentMethodSearch();
         } else {
-            if (couponDiscountFound) {
-                mDirectDiscountEnabled = false;
-            } else {
-                mFlowPreference.disableDiscount();
+            for (Campaign campaign : campaigns) {
+                if (campaign.isDirectDiscountCampaign()) {
+                    directDiscountFound = true;
+                } else if (campaign.isCodeDiscountCampaign()) {
+                    couponDiscountFound = true;
+                }
             }
-            getPaymentMethodSearchAsync();
+
+            if (directDiscountFound) {
+                getDirectDiscount(couponDiscountFound);
+            } else {
+                if (couponDiscountFound) {
+                    mDirectDiscountEnabled = false;
+                } else {
+                    mFlowPreference.disableDiscount();
+                }
+                retrievePaymentMethodSearch();
+            }
         }
     }
 
@@ -194,7 +198,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
             public void onSuccess(Discount discount) {
                 if (isViewAttached()) {
                     mDiscount = discount;
-                    getPaymentMethodSearchAsync();
+                    retrievePaymentMethodSearch();
                 }
             }
 
@@ -203,19 +207,18 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
                 if (isViewAttached()) {
                     mDirectDiscountEnabled = false;
                     if (couponDiscountFount) {
-                        getPaymentMethodSearchAsync();
+                        retrievePaymentMethodSearch();
                     } else {
                         mFlowPreference.disableDiscount();
-                        getPaymentMethodSearchAsync();
+                        retrievePaymentMethodSearch();
                     }
                 }
             }
         });
     }
 
-    private void getPaymentMethodSearchAsync() {
+    private void retrievePaymentMethodSearch() {
         getView().showProgress();
-
         getResourcesProvider().getPaymentMethodSearch(mCheckoutPreference.getAmount(), mCheckoutPreference.getExcludedPaymentTypes(), mCheckoutPreference.getExcludedPaymentMethods(), mCheckoutPreference.getPayer(), mCheckoutPreference.getSite(), onPaymentMethodSearchRetrieved(), onCustomerRetrieved());
     }
 
@@ -278,7 +281,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     private boolean hasToSkipPaymentResultScreen(PaymentResult paymentResult) {
-        return mCongratsDisplay == 0 && (paymentResult != null) && (!isEmpty(paymentResult.getPaymentStatus())) &&
+        return mCongratsDisplay != null && mCongratsDisplay == 0 && (paymentResult != null) && (!isEmpty(paymentResult.getPaymentStatus())) &&
                 (paymentResult.getPaymentStatus().equals(Payment.StatusCodes.STATUS_APPROVED));
     }
 
@@ -294,7 +297,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
         return mFlowPreference != null && mFlowPreference.isInstallmentsReviewScreenEnabled();
     }
 
-    private void getCheckoutPreferenceAsync() {
+    private void retrieveCheckoutPreference() {
         getView().showProgress();
         getResourcesProvider().getCheckoutPreference(mCheckoutPreference.getId(), new OnResourcesRetrievedCallback<CheckoutPreference>() {
 
@@ -310,7 +313,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
                 setFailureRecovery(new FailureRecovery() {
                     @Override
                     public void recover() {
-                        getCheckoutPreferenceAsync();
+                        retrieveCheckoutPreference();
                     }
                 });
             }
@@ -394,7 +397,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
             resolveProcessingPaymentStatus();
         } else if (isInternalServerError(mercadoPagoError)) {
             resolveInternalServerError(mercadoPagoError);
-        } else if (isBadRequestError(mercadoPagoError)){
+        } else if (isBadRequestError(mercadoPagoError)) {
             resolveBadRequestError(mercadoPagoError);
         } else {
             getView().showError(mercadoPagoError);
@@ -402,21 +405,21 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     private boolean isBadRequestError(MercadoPagoError mercadoPagoError) {
-        return  mercadoPagoError != null && mercadoPagoError.getApiException() != null
+        return mercadoPagoError != null && mercadoPagoError.getApiException() != null
                 && mercadoPagoError.getApiException().getStatus() != null
-                &&  mercadoPagoError.getApiException().getStatus().equals(ApiUtil.StatusCodes.BAD_REQUEST);
+                && mercadoPagoError.getApiException().getStatus().equals(ApiUtil.StatusCodes.BAD_REQUEST);
     }
 
     private boolean isInternalServerError(MercadoPagoError mercadoPagoError) {
-        return  mercadoPagoError != null && mercadoPagoError.getApiException() != null
+        return mercadoPagoError != null && mercadoPagoError.getApiException() != null
                 && mercadoPagoError.getApiException().getStatus() != null
-                &&  String.valueOf(mercadoPagoError.getApiException().getStatus()).startsWith(INTERNAL_SERVER_ERROR_FIRST_DIGIT);
+                && String.valueOf(mercadoPagoError.getApiException().getStatus()).startsWith(INTERNAL_SERVER_ERROR_FIRST_DIGIT);
     }
 
     private boolean isPaymentProcessing(MercadoPagoError mercadoPagoError) {
-        return  mercadoPagoError != null && mercadoPagoError.getApiException() != null
+        return mercadoPagoError != null && mercadoPagoError.getApiException() != null
                 && mercadoPagoError.getApiException().getStatus() != null
-                &&  mercadoPagoError.getApiException().getStatus() == ApiUtil.StatusCodes.PROCESSING;
+                && mercadoPagoError.getApiException().getStatus() == ApiUtil.StatusCodes.PROCESSING;
     }
 
     private void resolveInternalServerError(MercadoPagoError mercadoPagoError) {
@@ -685,7 +688,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     public void setFlowPreference(FlowPreference flowPreference) {
-        if(flowPreference != null) {
+        if (flowPreference != null) {
             this.mFlowPreference = flowPreference;
         }
     }
