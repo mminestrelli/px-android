@@ -16,7 +16,7 @@ public class FlowPreference {
     private boolean bankDealsEnabled;
     private boolean installmentsReviewScreenEnabled;
     private boolean discountEnabled;
-    private int congratsDisplayTime;
+    private Integer congratsDisplayTime;
     private int checkoutTimer;
     private CheckoutTimer.FinishListener checkoutTimerFinishListener;
 
@@ -35,7 +35,7 @@ public class FlowPreference {
         this.checkoutTimerFinishListener = builder.checkoutTimerFinishListener;
     }
 
-    public int getCongratsDisplayTime() {
+    public Integer getCongratsDisplayTime() {
         return this.congratsDisplayTime;
     }
 
@@ -98,7 +98,7 @@ public class FlowPreference {
         private boolean paymentPendingScreenEnabled = true;
         private boolean installmentsReviewScreenEnabled = true;
         private boolean discountEnabled = true;
-        private int congratsDisplayTime;
+        private Integer congratsDisplayTime;
         private int checkoutTimer;
         private CheckoutTimer.FinishListener checkoutTimerFinishListener;
 

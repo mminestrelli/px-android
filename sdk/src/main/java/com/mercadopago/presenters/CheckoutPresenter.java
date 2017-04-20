@@ -43,7 +43,6 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     private PaymentResultScreenPreference mPaymentResultScreenPreference;
     private ReviewScreenPreference mReviewScreenPreference;
     private FlowPreference mFlowPreference;
-    private Integer mCongratsDisplay;
     private Boolean mBinaryMode;
     private Integer mMaxSavedCards;
     private Discount mDiscount;
@@ -281,8 +280,16 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     private boolean hasToSkipPaymentResultScreen(PaymentResult paymentResult) {
-        return mCongratsDisplay != null && mCongratsDisplay == 0 && (paymentResult != null) && (!isEmpty(paymentResult.getPaymentStatus())) &&
-                (paymentResult.getPaymentStatus().equals(Payment.StatusCodes.STATUS_APPROVED));
+        String status = paymentResult == null ? "" : paymentResult.getPaymentStatus();
+        return shouldSkipResult(status);
+    }
+
+    private boolean shouldSkipResult(String paymentStatus) {
+        return !mFlowPreference.isPaymentResultScreenEnabled()
+                || (mFlowPreference.getCongratsDisplayTime() != null && mFlowPreference.getCongratsDisplayTime() == 0 && Payment.StatusCodes.STATUS_APPROVED.equals(paymentStatus))
+                || Payment.StatusCodes.STATUS_APPROVED.equals(paymentStatus) && !mFlowPreference.isPaymentApprovedScreenEnabled()
+                || Payment.StatusCodes.STATUS_REJECTED.equals(paymentStatus) && !mFlowPreference.isPaymentRejectedScreenEnabled()
+                || Payment.StatusCodes.STATUS_PENDING.equals(paymentStatus) && !mFlowPreference.isPaymentPendingScreenEnabled();
     }
 
     private boolean isReviewAndConfirmEnabled() {
@@ -672,7 +679,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     public Integer getCongratsDisplay() {
-        return mCongratsDisplay;
+        return mFlowPreference.getCongratsDisplayTime();
     }
 
     public void setCheckoutPreference(CheckoutPreference checkoutPreference) {
@@ -691,10 +698,6 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
         if (flowPreference != null) {
             this.mFlowPreference = flowPreference;
         }
-    }
-
-    public void setCongratsDisplay(Integer congratsDisplay) {
-        this.mCongratsDisplay = congratsDisplay;
     }
 
     public void setBinaryMode(Boolean binaryMode) {

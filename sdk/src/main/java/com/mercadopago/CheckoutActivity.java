@@ -92,7 +92,6 @@ public class CheckoutActivity extends MercadoPagoBaseActivity implements Checkou
         ReviewScreenPreference reviewScreenPreference = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("reviewScreenPreference"), ReviewScreenPreference.class);
         FlowPreference flowPreference = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("flowPreference"), FlowPreference.class);
 
-        Integer congratsDisplay = this.getIntent().getIntExtra("congratsDisplay", -1);
         Boolean binaryMode = this.getIntent().getBooleanExtra("binaryMode", false);
         Integer maxSavedCards = this.getIntent().getIntExtra("maxSavedCards", 0);
 
@@ -113,7 +112,6 @@ public class CheckoutActivity extends MercadoPagoBaseActivity implements Checkou
         mCheckoutPresenter.setPaymentResultScreenPreference(paymentResultScreenPreference);
         mCheckoutPresenter.setReviewScreenPreference(reviewScreenPreference);
         mCheckoutPresenter.setFlowPreference(flowPreference);
-        mCheckoutPresenter.setCongratsDisplay(congratsDisplay);
         mCheckoutPresenter.setBinaryMode(binaryMode);
         mCheckoutPresenter.setMaxSavedCards(maxSavedCards);
         mCheckoutPresenter.setDiscount(discount);

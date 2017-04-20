@@ -9,4 +9,14 @@ public class Payments {
         String json = ResourcesUtil.getStringResource("approved_payment.json");
         return JsonUtil.getInstance().fromJson(json, Payment.class);
     }
+
+    public static Payment getRejectedPayment() {
+        String json = ResourcesUtil.getStringResource("rejected_payment.json");
+        return JsonUtil.getInstance().fromJson(json, Payment.class);
+    }
+
+    public static Payment getPendingPayment() {
+        String json = ResourcesUtil.getStringResource("pending_payment.json");
+        return JsonUtil.getInstance().fromJson(json, Payment.class);
+    }
 }
