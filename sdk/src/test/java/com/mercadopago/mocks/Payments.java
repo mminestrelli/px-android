@@ -19,4 +19,9 @@ public class Payments {
         String json = ResourcesUtil.getStringResource("pending_payment.json");
         return JsonUtil.getInstance().fromJson(json, Payment.class);
     }
+
+    public static Payment getCallForAuthPayment() {
+        String json = ResourcesUtil.getStringResource("call_for_auth_payment.json");
+        return JsonUtil.getInstance().fromJson(json, Payment.class);
+    }
 }

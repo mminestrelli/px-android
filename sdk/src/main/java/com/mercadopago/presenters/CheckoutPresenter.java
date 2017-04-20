@@ -27,13 +27,12 @@ import com.mercadopago.preferences.ReviewScreenPreference;
 import com.mercadopago.providers.CheckoutProvider;
 import com.mercadopago.util.ApiUtil;
 import com.mercadopago.util.CurrenciesUtil;
+import com.mercadopago.util.TextUtils;
 import com.mercadopago.views.CheckoutView;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
-
-import static android.text.TextUtils.isEmpty;
 
 public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvider> {
 
@@ -498,7 +497,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     public void onPaymentResultCancel(String nextAction) {
-        if (!isEmpty(nextAction)) {
+        if (!TextUtils.isEmpty(nextAction)) {
             if (nextAction.equals(PaymentResultAction.SELECT_OTHER_PAYMENT_METHOD)) {
                 mPaymentMethodEdited = true;
                 getView().backToPaymentMethodSelection();

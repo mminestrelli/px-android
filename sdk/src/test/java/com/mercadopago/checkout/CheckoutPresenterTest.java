@@ -23,6 +23,7 @@ import com.mercadopago.model.PaymentMethod;
 import com.mercadopago.model.PaymentMethodSearch;
 import com.mercadopago.model.PaymentRecovery;
 import com.mercadopago.model.PaymentResult;
+import com.mercadopago.model.PaymentResultAction;
 import com.mercadopago.model.Site;
 import com.mercadopago.model.Token;
 import com.mercadopago.mvp.OnResourcesRetrievedCallback;
@@ -856,6 +857,45 @@ public class CheckoutPresenterTest {
         assertTrue(view.finishedCheckoutWithoutPayment);
     }
 
+    // Payment recovery flow
+    @Test
+    public void ifPaymentRecoveryRequiredThenStartPaymentRecoveryFlow() {
+        MockedProvider provider = new MockedProvider();
+        MockedView view = new MockedView();
+
+        CheckoutPresenter presenter = new CheckoutPresenter();
+        presenter.attachResourcesProvider(provider);
+        presenter.attachView(view);
+
+        //Real preference, without items
+        CheckoutPreference preference = new CheckoutPreference.Builder()
+                .setId("Dummy")
+                .addItem(new Item("id", BigDecimal.TEN))
+                .setSite(Sites.ARGENTINA)
+                .build();
+
+        provider.setCheckoutPreferenceResponse(preference);
+        provider.setPaymentMethodSearchResponse(PaymentMethodSearchs.getCompletePaymentMethodSearchMLA());
+        provider.setPaymentResponse(Payments.getCallForAuthPayment());
+
+        presenter.setRequestedResult(MercadoPagoCheckout.PAYMENT_RESULT_CODE);
+        presenter.setCheckoutPreference(preference);
+        presenter.initialize();
+
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        Issuer issuer = Issuers.getIssuers().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
+        Token token = Tokens.getVisaToken();
+
+        presenter.onPaymentMethodSelectionResponse(paymentMethod, issuer, payerCost, token, null);
+        assertTrue(view.reviewAndConfirmShown);
+        presenter.onPaymentConfirmation();
+        assertTrue(view.paymentResultShown);
+        presenter.onPaymentResultCancel(PaymentResultAction.RECOVER_PAYMENT);
+        assertTrue(view.paymentRecoveryFlowShown);
+        assertEquals(view.paymentRecoveryRequested.getPaymentMethod().getId(), paymentMethod.getId());
+    }
+
     private class MockedView implements CheckoutView {
 
         private MercadoPagoError errorShown;
@@ -867,6 +907,8 @@ public class CheckoutPresenterTest {
         private boolean checkoutCanceled = false;
         private Payment paymentFinalResponse;
         public boolean finishedCheckoutWithoutPayment = false;
+        public boolean paymentRecoveryFlowShown = false;
+        private PaymentRecovery paymentRecoveryRequested;
 
         @Override
         public void showError(MercadoPagoError error) {
@@ -946,7 +988,8 @@ public class CheckoutPresenterTest {
 
         @Override
         public void startPaymentRecoveryFlow(PaymentRecovery paymentRecovery) {
-
+            this.paymentRecoveryRequested = paymentRecovery;
+            this.paymentRecoveryFlowShown = true;
         }
     }
 
