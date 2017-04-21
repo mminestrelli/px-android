@@ -50,8 +50,6 @@ public class CheckoutPreference {
         paymentPreference.setMaxAcceptedInstallments(builder.maxInstallments);
         paymentPreference.setDefaultInstallments(builder.defaultInstallments);
         this.paymentPreference = paymentPreference;
-
-        //TODO borrar
         this.id = builder.id;
     }
 

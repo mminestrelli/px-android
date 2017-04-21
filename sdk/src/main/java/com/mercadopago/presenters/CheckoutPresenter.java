@@ -292,15 +292,15 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     private boolean isReviewAndConfirmEnabled() {
-        return mFlowPreference == null || mFlowPreference.isReviewAndConfirmScreenEnabled();
+        return mFlowPreference.isReviewAndConfirmScreenEnabled();
     }
 
     public boolean isDiscountEnabled() {
-        return mFlowPreference == null || mFlowPreference.isDiscountEnabled();
+        return mFlowPreference.isDiscountEnabled();
     }
 
     public boolean isInstallmentsReviewScreenEnabled() {
-        return mFlowPreference != null && mFlowPreference.isInstallmentsReviewScreenEnabled();
+        return mFlowPreference.isInstallmentsReviewScreenEnabled();
     }
 
     private void retrieveCheckoutPreference() {
@@ -616,7 +616,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
 
     private String getTransactionID() {
         if (!existsTransactionId() || mPaymentMethodEdited) {
-            createNewTransactionId();
+            mCurrentPaymentIdempotencyKey = createNewTransactionId();
         }
         return mCurrentPaymentIdempotencyKey;
     }
@@ -748,6 +748,6 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     public Boolean getShowBankDeals() {
-        return mFlowPreference == null || mFlowPreference.isBankDealsEnabled();
+        return mFlowPreference.isBankDealsEnabled();
     }
 }
