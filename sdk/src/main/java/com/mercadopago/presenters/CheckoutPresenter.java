@@ -348,6 +348,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
     }
 
     private void onPaymentMethodSelected() {
+        mPaymentMethodEditionRequested = false;
         if (isReviewAndConfirmEnabled()) {
             showReviewAndConfirm();
         } else {
@@ -455,6 +456,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
         if (!mPaymentMethodEditionRequested) {
             getView().cancelCheckout(mercadoPagoError);
         } else {
+            mPaymentMethodEditionRequested = false;
             getView().backToReviewAndConfirm();
         }
     }
@@ -463,6 +465,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
         if (!mPaymentMethodEditionRequested) {
             getView().cancelCheckout();
         } else {
+            mPaymentMethodEditionRequested = false;
             getView().backToReviewAndConfirm();
         }
     }
@@ -475,7 +478,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
         if (!isUniquePaymentMethod()) {
             mPaymentMethodEdited = true;
             mPaymentMethodEditionRequested = true;
-            getView().backToPaymentMethodSelection();
+            getView().startPaymentMethodEdition();
         }
     }
 

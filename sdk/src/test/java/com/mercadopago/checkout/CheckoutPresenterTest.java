@@ -1143,6 +1143,44 @@ public class CheckoutPresenterTest {
         assertTrue(view.showingPaymentMethodSelection);
     }
 
+    @Test
+    public void ifPaymentMethodEditionRequestedAndUserPressesBackTwiceCancelCheckout() {
+        MockedProvider provider = new MockedProvider();
+        MockedView view = new MockedView();
+
+        CheckoutPresenter presenter = new CheckoutPresenter();
+        presenter.attachResourcesProvider(provider);
+        presenter.attachView(view);
+
+        //Real preference, without items
+        CheckoutPreference preference = new CheckoutPreference.Builder()
+                .addItem(new Item("id", BigDecimal.TEN))
+                .setSite(Sites.ARGENTINA)
+                .build();
+
+        provider.setCheckoutPreferenceResponse(preference);
+        provider.setPaymentMethodSearchResponse(PaymentMethodSearchs.getCompletePaymentMethodSearchMLA());
+        presenter.setCheckoutPreference(preference);
+
+        presenter.initialize();
+        assertTrue(view.showingPaymentMethodSelection);
+
+        presenter.onPaymentMethodSelectionResponse(PaymentMethods.getPaymentMethodOff(), null, null, null, null);
+        assertTrue(view.showingReviewAndConfirm);
+
+        presenter.changePaymentMethod();
+        assertTrue(view.showingPaymentMethodSelection);
+
+        presenter.onPaymentMethodSelectionCancel();
+        assertTrue(view.showingReviewAndConfirm);
+
+        presenter.onReviewAndConfirmCancel();
+        assertTrue(view.showingPaymentMethodSelection);
+
+        presenter.onPaymentMethodSelectionCancel();
+        assertTrue(view.checkoutCanceled);
+    }
+
     //Payment tests
     @Test
     public void whenPaymentCreationRequestedThenGenerateTransactionId() {
@@ -1247,6 +1285,14 @@ public class CheckoutPresenterTest {
 
         @Override
         public void showPaymentMethodSelection() {
+            showingPaymentMethodSelection = true;
+            showingReviewAndConfirm = false;
+            showingPaymentResult = false;
+            showingPaymentRecoveryFlow = false;
+        }
+
+        @Override
+        public void startPaymentMethodEdition() {
             showingPaymentMethodSelection = true;
             showingReviewAndConfirm = false;
             showingPaymentResult = false;

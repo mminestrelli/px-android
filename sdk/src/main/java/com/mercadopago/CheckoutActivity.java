@@ -419,6 +419,12 @@ public class CheckoutActivity extends MercadoPagoBaseActivity implements Checkou
         animatePaymentMethodSelection();
     }
 
+    @Override
+    public void startPaymentMethodEdition() {
+        showPaymentMethodSelection();
+        animatePaymentMethodSelection();
+    }
+
     private void animatePaymentMethodSelection() {
         overridePendingTransition(R.anim.mpsdk_slide_right_to_left_in, R.anim.mpsdk_slide_right_to_left_out);
     }
