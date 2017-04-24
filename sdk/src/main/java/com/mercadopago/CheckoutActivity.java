@@ -198,7 +198,7 @@ public class CheckoutActivity extends MercadoPagoBaseActivity implements Checkou
 
             mCheckoutPresenter.onCardFlowResponse(paymentMethod, issuer, payerCost, token, discount);
         } else {
-            MercadoPagoError mercadoPagoError = data.getStringExtra("mercadoPagoError") == null ? null :
+            MercadoPagoError mercadoPagoError = (data == null || data.getStringExtra("mercadoPagoError") == null) ? null :
                     JsonUtil.getInstance().fromJson(data.getStringExtra("mercadoPagoError"), MercadoPagoError.class);
             if (mercadoPagoError == null) {
                 mCheckoutPresenter.onCardFlowCancel();

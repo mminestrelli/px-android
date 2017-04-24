@@ -535,7 +535,7 @@ public class CheckoutPresenter extends MvpPresenter<CheckoutView, CheckoutProvid
 
     public void onCardFlowCancel() {
         mPaymentMethodEdited = true;
-        getView().showPaymentMethodSelection();
+        getView().backToPaymentMethodSelection();
     }
 
     public void onCustomReviewAndConfirmResponse(Integer customResultCode, PaymentData paymentData) {
