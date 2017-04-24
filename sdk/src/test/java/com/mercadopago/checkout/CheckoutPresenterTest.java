@@ -860,10 +860,13 @@ public class CheckoutPresenterTest {
         //User changes paymentMethod
         presenter.changePaymentMethod();
 
+        //Starts payment method selection
+        assertTrue(view.showingPaymentMethodSelection);
+
         String dummyId = "anotherId";
         PaymentMethod paymentMethod = new PaymentMethod();
-        paymentMethod.setId(dummyId);;
-        presenter.onPaymentMethodSelectionResponse(paymentData.getPaymentMethod(), null, null, null, null);
+        paymentMethod.setId(dummyId);
+        presenter.onPaymentMethodSelectionResponse(paymentMethod, null, null, null, null);
 
         //Presenter skips RyC, responds payment data
         assertTrue(view.paymentDataFinalResponse.getPaymentMethod().getId().equals(dummyId));
