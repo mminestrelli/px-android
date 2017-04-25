@@ -2,15 +2,18 @@ package com.mercadopago;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -86,7 +89,8 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
     protected String mMerchantDiscountBaseURL;
     protected String mMerchantGetDiscountURI;
     protected Map<String, String> mDiscountAdditionalInfo;
-    private MPTextView mNoInstallmentsRate;
+    private MPTextView mNoInstallmentsRateTextView;
+    private LinearLayout mNoInstallmentsRate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -254,6 +258,8 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
             }
 
             mLowResToolbar.setVisibility(View.VISIBLE);
+            showNoInstallmentRate();
+
         } else {
             mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.mpsdkCollapsingToolbar);
             mAppBar = (AppBarLayout) findViewById(R.id.mpsdkInstallmentesAppBar);
@@ -261,19 +267,23 @@ public class InstallmentsActivity extends MercadoPagoBaseActivity implements Ins
             mNormalToolbar = (Toolbar) findViewById(R.id.mpsdkRegularToolbar);
             mNormalToolbar.setVisibility(View.VISIBLE);
 
-            if (InstallmentsUtil.showNoInstallmentRate(mPresenter.getSite())) {
-                mNoInstallmentsRate = (MPTextView) findViewById(R.id.mpsdkNoInstallmentsRateTextView);
-                mNoInstallmentsRate.setVisibility(View.VISIBLE);
-                mNoInstallmentsRate.setText(R.string.mpsdk_interest_label);
-            }
-
-
+            showNoInstallmentRate();
         }
 
         mDiscountFrameLayout = (FrameLayout) findViewById(R.id.mpsdkDiscount);
         mDiscountFrameLayout.setVisibility(View.VISIBLE);
 
         mInstallmentsReview = (FrameLayout) findViewById(R.id.mpsdkInstallmentsReview);
+    }
+
+    private void showNoInstallmentRate() {
+        if (InstallmentsUtil.showNoInstallmentRate(mPresenter.getSite())) {
+            mNoInstallmentsRate = (LinearLayout) findViewById(R.id.mpsdkNoInstallmentsRate);
+            mNoInstallmentsRate.setVisibility(View.VISIBLE);
+            mNoInstallmentsRateTextView = (MPTextView) findViewById(R.id.mpsdkNoInstallmentsRateTextView);
+            mNoInstallmentsRateTextView.setVisibility(View.VISIBLE);
+            mNoInstallmentsRateTextView.setText(R.string.mpsdk_interest_label);
+        }
     }
 
     public void loadLowResViews() {

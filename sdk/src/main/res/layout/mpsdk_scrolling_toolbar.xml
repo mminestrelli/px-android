@@ -10,7 +10,7 @@
     app:contentScrim="?attr/colorPrimary"
     android:minHeight="@dimen/mpsdk_toolbar_height"
     app:expandedTitleTextAppearance="@style/CollapsedAppBar"
-    app:expandedTitleMarginTop="35dp"
+    app:expandedTitleMarginTop="45dp"
     app:expandedTitleMarginBottom="25dp"
     app:expandedTitleGravity="top|center_horizontal"
     app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -20,10 +20,11 @@
         android:id="@+id/mpsdkActivityCardContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:layout_collapseMode="parallax" />
+        app:layout_collapseMode="parallax"
+        />
 
     <android.support.v7.widget.Toolbar
         android:visibility="gone"
@@ -35,7 +36,7 @@
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:layout_collapseMode="pin" >
+        app:layout_collapseMode="pin">
 
 
         <com.mercadopago.customviews.MPTextView
@@ -61,16 +62,4 @@
 
 
     </android.support.v7.widget.Toolbar>
-
-    <com.mercadopago.customviews.MPTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:visibility="gone"
-        android:layout_marginBottom="10dp"
-        app:fontStyle="light"
-        android:textSize="14dp"
-        android:textColor="@color/mpsdk_white"
-        android:id="@+id/mpsdkNoInstallmentsRateTextView"
-        />
 </android.support.design.widget.CollapsingToolbarLayout>
