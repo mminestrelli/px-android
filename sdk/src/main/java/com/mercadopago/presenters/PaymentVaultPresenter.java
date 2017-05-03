@@ -23,13 +23,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by mreverter on 6/9/16.
- */
 public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, PaymentVaultProvider> {
 
     private static final String ACCOUNT_MONEY_ID = "account_money";
-    private static final String MISSMATCHING_PAYMENT_METHOD_ERROR = "Payment method in search not found";
+    private static final String MISMATCHING_PAYMENT_METHOD_ERROR = "Payment method in search not found";
 
     private Site mSite;
     private Discount mDiscount;
@@ -45,6 +42,7 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
     private Integer mMaxSavedCards;
 
     private boolean mSelectAutomatically;
+    private FailureRecovery failureRecovery;
 
     public void initialize(boolean selectAutomatically) {
         try {
@@ -96,13 +94,13 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
         }
     }
 
-    public void initializeDiscountActivity() {
-        getView().startDiscountActivity(mAmount);
+    public void onDiscountOptionSelected() {
+        getView().startDiscountFlow(mAmount);
     }
 
     public void initializeDiscountRow() {
-        if(viewAttached()) {
-            getView().showDiscountRow(mAmount);
+        if (isViewAttached()) {
+            getView().showDiscount(mAmount);
         }
     }
 
@@ -128,11 +126,14 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
 
     public void onDiscountReceived(Discount discount) {
         setDiscount(discount);
-
-        getView().cleanPaymentMethodOptions();
-
+        clearPaymentMethodOptions();
         initializeDiscountRow();
         initPaymentVaultFlow();
+    }
+
+    private void clearPaymentMethodOptions() {
+        getView().cleanPaymentMethodOptions();
+        mPaymentMethodSearch = null;
     }
 
     private void validateParameters() throws IllegalStateException {
@@ -187,36 +188,38 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
 
     private void getPaymentMethodSearchAsync() {
 
-        getView().showProgress();
-        Payer payer = new Payer();
-        payer.setAccessToken(mPayerAccessToken);
+        if (isViewAttached()) {
+            getView().showProgress();
+            Payer payer = new Payer();
+            payer.setAccessToken(mPayerAccessToken);
 
-        getResourcesProvider().getPaymentMethodSearch(mAmount, mPaymentPreference, payer, mSite, new OnResourcesRetrievedCallback<PaymentMethodSearch>() {
+            getResourcesProvider().getPaymentMethodSearch(mAmount, mPaymentPreference, payer, mSite, new OnResourcesRetrievedCallback<PaymentMethodSearch>() {
 
-            @Override
-            public void onSuccess(PaymentMethodSearch paymentMethodSearch) {
-                mPaymentMethodSearch = paymentMethodSearch;
-                resolveAvailablePaymentMethods();
-            }
-
-            @Override
-            public void onFailure(MercadoPagoError error) {
-                if (viewAttached()) {
-                    getView().showError(error);
-
-                    getView().setFailureRecovery(new FailureRecovery() {
-                        @Override
-                        public void recover() {
-                            getPaymentMethodSearchAsync();
-                        }
-                    });
+                @Override
+                public void onSuccess(PaymentMethodSearch paymentMethodSearch) {
+                    mPaymentMethodSearch = paymentMethodSearch;
+                    resolveAvailablePaymentMethods();
                 }
-            }
-        });
+
+                @Override
+                public void onFailure(MercadoPagoError error) {
+                    if (isViewAttached()) {
+                        getView().showError(error);
+
+                        setFailureRecovery(new FailureRecovery() {
+                            @Override
+                            public void recover() {
+                                getPaymentMethodSearchAsync();
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
-    private boolean viewAttached() {
-        return getView() != null;
+    private void setFailureRecovery(FailureRecovery failureRecovery) {
+        this.failureRecovery = failureRecovery;
     }
 
     private void showSelectedItemChildren() {
@@ -226,12 +229,12 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
 
     private void resolveAvailablePaymentMethods() {
 
-        if (viewAttached()) {
+        if (isViewAttached()) {
 
             if (noPaymentMethodsAvailable()) {
                 showEmptyPaymentMethodsError();
             } else if (isOnlyUniqueSearchSelectionAvailable() && mSelectAutomatically) {
-                selectItem(mPaymentMethodSearch.getGroups().get(0));
+                selectItem(mPaymentMethodSearch.getGroups().get(0), true);
             } else if (isOnlyAccountMoneyEnabled() && mSelectAutomatically) {
                 selectAccountMoney(mPaymentMethodSearch.getCustomSearchItems().get(0));
             } else {
@@ -249,10 +252,15 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
     }
 
     private void selectItem(PaymentMethodSearchItem item) {
+        selectItem(item, false);
+    }
+
+    private void selectItem(PaymentMethodSearchItem item, Boolean automaticSelection) {
+
         if (item.hasChildren()) {
-            getView().restartWithSelectedItem(item);
+            getView().showSelectedItem(item);
         } else if (item.isPaymentType()) {
-            startNextStepForPaymentType(item);
+            startNextStepForPaymentType(item, automaticSelection);
         } else if (item.isPaymentMethod()) {
             resolvePaymentMethodSelection(item);
         }
@@ -335,15 +343,19 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
     }
 
     private void startNextStepForPaymentType(PaymentMethodSearchItem item) {
+        startNextStepForPaymentType(item, false);
+    }
+
+    private void startNextStepForPaymentType(PaymentMethodSearchItem item, Boolean automaticSelection) {
 
         if (mPaymentPreference == null) {
             mPaymentPreference = new PaymentPreference();
         }
 
         if (MercadoPagoUtil.isCard(item.getId())) {
-            getView().startCardFlow(item.getId(), mAmount);
+            getView().startCardFlow(item.getId(), mAmount, automaticSelection);
         } else {
-            getView().startPaymentMethodsActivity();
+            getView().startPaymentMethodsSelection();
         }
     }
 
@@ -376,7 +388,7 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
 
     private void showMismatchingPaymentMethodError() {
         String errorMessage = getResourcesProvider().getStandardErrorMessage();
-        getView().showError(new MercadoPagoError(errorMessage, MISSMATCHING_PAYMENT_METHOD_ERROR, false));
+        getView().showError(new MercadoPagoError(errorMessage, MISMATCHING_PAYMENT_METHOD_ERROR, false));
     }
 
     public Site getSite() {
@@ -463,16 +475,10 @@ public class PaymentVaultPresenter extends MvpPresenter<PaymentVaultView, Paymen
         this.mMaxSavedCards = maxSavedCards;
     }
 
-    public BigDecimal getAmount() {
-        BigDecimal amount;
-
-        if (mDiscount == null) {
-            amount = mAmount;
-        } else {
-            amount = mDiscount.getAmountWithDiscount(mAmount);
+    public void recoverFromFailure() {
+        if (failureRecovery != null) {
+            failureRecovery.recover();
         }
-
-        return amount;
     }
 
     private List<CustomSearchItem> getLimitedCustomOptions(List<CustomSearchItem> customSearchItems, Integer maxSavedCards) {

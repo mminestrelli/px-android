@@ -22,7 +22,7 @@ import java.util.List;
 public interface ReviewAndConfirmProvider extends ResourcesProvider {
     Reviewable getSummaryReviewable(PaymentMethod paymentMethod, PayerCost payerCost, BigDecimal amount, Discount discount, Site site, Issuer issuer, DecorationPreference decorationPreference, OnConfirmPaymentCallback onConfirmPaymentCallback);
 
-    Reviewable getItemsReviewable(String currency, List<Item> items);
+    Reviewable getItemsReviewable(String currency, List<Item> items, DecorationPreference decorationPreference);
 
     Reviewable getPaymentMethodOnReviewable(PaymentMethod paymentMethod, PayerCost payerCost, CardInfo cardInfo, Site site, DecorationPreference decorationPreference, Boolean editionEnabled, OnReviewChange reviewChange);
 

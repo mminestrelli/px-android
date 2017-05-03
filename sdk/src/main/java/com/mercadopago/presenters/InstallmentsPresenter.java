@@ -17,6 +17,7 @@ import com.mercadopago.model.Issuer;
 import com.mercadopago.model.PayerCost;
 import com.mercadopago.model.PaymentMethod;
 import com.mercadopago.model.Site;
+import com.mercadopago.util.CurrenciesUtil;
 import com.mercadopago.util.TextUtil;
 import com.mercadopago.preferences.PaymentPreference;
 import com.mercadopago.views.InstallmentsActivityView;
@@ -147,7 +148,11 @@ public class InstallmentsPresenter {
     }
 
     private Boolean isDiscountValid() {
-        return isAmountValid(mDiscount.getCouponAmount()) && isCampaignIdValid();
+        return isAmountValid(mDiscount.getCouponAmount()) && isCampaignIdValid() && isDiscountCurrencyIdValid();
+    }
+
+    private Boolean isDiscountCurrencyIdValid() {
+        return mDiscount != null && mDiscount.getCurrencyId() != null && CurrenciesUtil.isValidCurrency(mDiscount.getCurrencyId());
     }
 
     private Boolean isAmountValid(BigDecimal amount) {
@@ -210,8 +215,6 @@ public class InstallmentsPresenter {
     }
 
     private void loadDiscount() {
-        mView.showLoadingView();
-
         if (mDirectDiscountEnabled && mDiscount == null) {
             if (isAmountValid()) {
                 getDirectDiscount();
@@ -385,7 +388,6 @@ public class InstallmentsPresenter {
                 new Callback<List<Installment>>() {
                     @Override
                     public void success(List<Installment> installments) {
-                        mView.stopLoadingView();
                         if (installments.size() == 0) {
                             mView.startErrorView(mContext.getString(R.string.mpsdk_standard_error_message),
                                     "no installments found for an issuer at InstallmentsActivity");
@@ -425,6 +427,7 @@ public class InstallmentsPresenter {
         } else {
             mView.showHeader();
             mView.initializeInstallments(mPayerCosts);
+            mView.stopLoadingView();
         }
     }
 

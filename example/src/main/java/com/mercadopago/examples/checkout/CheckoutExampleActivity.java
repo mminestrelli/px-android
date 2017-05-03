@@ -104,7 +104,7 @@ public class CheckoutExampleActivity extends AppCompatActivity {
                 .setReviewScreenPreference(reviewScreenPreference)
                 .setPublicKey(mPublicKey)
                 .setCheckoutPreference(getCheckoutPreference())
-//              .setServicePreference(servicePreference)
+//                .setServicePreference(servicePreference)
                 .setFlowPreference(flowPreference)
                 .setPaymentData(paymentData)
                 .startForPaymentData();

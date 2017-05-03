@@ -144,6 +144,7 @@ public class ReviewAndConfirmActivity extends MercadoPagoBaseActivity implements
         PaymentMethod paymentMethod = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("paymentMethod"), PaymentMethod.class);
         String paymentMethodCommentInfo = getIntent().getStringExtra("paymentMethodCommentInfo");
         String paymentMethodDescriptionInfo = getIntent().getStringExtra("paymentMethodDescriptionInfo");
+        Site site = JsonUtil.getInstance().fromJson(getIntent().getStringExtra("site"), Site.class);
         List<Item> items;
 
         try {

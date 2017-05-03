@@ -99,7 +99,7 @@
 
     <!-- Rejection -->
     <string name="mpsdk_text_other_payment_method_button_rejection">Use another payment method</string>
-    <string name="mpsdk_text_pay_with_other_method">Pay with other method</string>
+    <string name="mpsdk_text_pay_with_other_method">Change payment method</string>
     <string name="mpsdk_text_enter_again">Enter again</string>
     <string name="mpsdk_subtitle_rejection_insufficient_amount_credit_card">Don\'t worry! You can choose another payment method.</string>
     <string name="mpsdk_title_other_reason_rejection">%1$s did not process the payment</string>
@@ -201,6 +201,8 @@
     <string name="mpsdk_review_off_text_2">You will pay %1$s in\n%2$s</string>
     <string name="mpsdk_review_off_text_3">You will pay %1$s in your\n%2$s</string>
     <string name="mpsdk_review_off_text_4">You will pay %1$s with\n%2$s</string>
+    <string name="mpsdk_review_off_text_5">You will pay %1$s through\n%2$s</string>
+    <string name="mpsdk_review_off_text_6">You will pay %1$s at\n%2$s</string>
     <string name="mpsdk_homebanking">Home Banking of</string>
     <string name="mpsdk_review_summary_total">Total</string>
     <string name="mpsdk_review_product_quantity">Quantity: %1$s</string>

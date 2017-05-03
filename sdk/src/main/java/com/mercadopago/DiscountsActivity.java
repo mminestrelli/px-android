@@ -3,7 +3,9 @@ package com.mercadopago;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -11,6 +13,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,6 +39,7 @@ import com.mercadopago.util.CurrenciesUtil;
 import com.mercadopago.util.ErrorUtil;
 import com.mercadopago.util.JsonUtil;
 import com.mercadopago.util.LayoutUtil;
+import com.mercadopago.util.TextUtils;
 import com.mercadopago.views.DiscountsActivityView;
 
 import java.math.BigDecimal;
@@ -58,11 +62,13 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
     protected FrameLayout mBackButton;
     protected FrameLayout mErrorContainer;
     protected FrameLayout mDiscountBackground;
+    protected FrameLayout mCloseImageFrameLayout;
     protected LinearLayout mDiscountCodeContainer;
     protected LinearLayout mDiscountLinearLayout;
     protected MPTextView mReviewSummaryTitle;
     protected MPTextView mReviewSummaryProductAmount;
     protected MPTextView mReviewSummaryDiscountAmount;
+    protected MPTextView mReviewSummaryDiscountLabel;
     protected MPTextView mReviewSummaryTotalAmount;
     protected MPTextView mErrorTextView;
     protected TextView mNextButtonText;
@@ -141,6 +147,7 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
         //Review discount summary
         mReviewSummaryTitle = (MPTextView) findViewById(R.id.mpsdkReviewSummaryTitle);
         mReviewSummaryProductAmount = (MPTextView) findViewById(R.id.mpsdkReviewSummaryProductsAmount);
+        mReviewSummaryDiscountLabel = (MPTextView) findViewById(R.id.mpsdkReviewSummaryDiscountLabel);
         mReviewSummaryDiscountAmount = (MPTextView) findViewById(R.id.mpsdkReviewSummaryDiscountsAmount);
         mReviewSummaryTotalAmount = (MPTextView) findViewById(R.id.mpsdkReviewSummaryTotalAmount);
 
@@ -153,7 +160,9 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
         mNextButtonText = (MPTextView) findViewById(R.id.mpsdkNextButtonText);
         mBackButtonText = (MPTextView) findViewById(R.id.mpsdkBackButtonText);
 
+        mCloseImageFrameLayout = (FrameLayout) findViewById(R.id.mpsdkCloseImageFrameLayout);
         mCloseImage = (ImageView) findViewById(R.id.mpsdkCloseImage);
+
         mErrorContainer = (FrameLayout) findViewById(R.id.mpsdkErrorContainer);
         mErrorTextView = (MPTextView) findViewById(R.id.mpsdkErrorTextView);
         mProgressBar = (ProgressBar) findViewById(R.id.mpsdkProgressBar);
@@ -181,7 +190,7 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
             }
         });
 
-        mCloseImage.setOnClickListener(new View.OnClickListener() {
+        mCloseImageFrameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finishWithResult();
@@ -280,11 +289,20 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
         mDiscountCodeContainer.setVisibility(View.GONE);
         mReviewDiscountSummaryContainer.setVisibility(View.VISIBLE);
 
+        setDiscountSummaryStatusBarColor();
         showSummaryTitle();
         showTransactionRow();
         showDiscountRow();
         showTotalRow();
         decorateSummary();
+    }
+
+    private void setDiscountSummaryStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.mpsdk_discounts_summary_background_color));
+        }
     }
 
     private void decorateSummary() {
@@ -309,11 +327,15 @@ public class DiscountsActivity extends AppCompatActivity implements DiscountsAct
         Spanned discountAmount;
 
         if (isAmountValid(mPresenter.getCouponAmount()) && isDiscountCurrencyIdValid()) {
+
             discountAmountBuilder.append("-");
             discountAmountBuilder.append(CurrenciesUtil.formatNumber(mPresenter.getCouponAmount(), mPresenter.getCurrencyId()));
             discountAmount = CurrenciesUtil.formatCurrencyInText(mPresenter.getCouponAmount(), mPresenter.getCurrencyId(), discountAmountBuilder.toString(), false, true);
 
             mReviewSummaryDiscountAmount.setText(discountAmount);
+            if(!TextUtils.isEmpty(mPresenter.getDiscount().getConcept())) {
+                mReviewSummaryDiscountLabel.setText(mPresenter.getDiscount().getConcept());
+            }
         } else {
             finishWithCancelResult();
         }

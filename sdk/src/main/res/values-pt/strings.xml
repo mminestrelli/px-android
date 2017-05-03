@@ -98,7 +98,7 @@
 
     <!-- Rejection -->
     <string name="mpsdk_text_other_payment_method_button_rejection">Usar outro meio de pagamento</string>
-    <string name="mpsdk_text_pay_with_other_method">Pagar com outro meio</string>
+    <string name="mpsdk_text_pay_with_other_method">Alterar o meio de pagamento</string>
     <string name="mpsdk_text_enter_again">Digite novamente</string>
     <string name="mpsdk_subtitle_rejection_insufficient_amount_credit_card">Não se preocupe! Você pode escolher outros meios de pagamento.</string>
     <string name="mpsdk_title_other_reason_rejection">%1$s não processou o pagamento</string>
@@ -198,6 +198,8 @@
     <string name="mpsdk_review_off_text_2">Você pagará %1$s no\n%2$s</string>
     <string name="mpsdk_review_off_text_3">Você pagará %1$s no\n%2$s</string>
     <string name="mpsdk_review_off_text_4">Você pagará %1$s com\n%2$s</string>
+    <string name="mpsdk_review_off_text_5">Você pagará %1$s por\n%2$s</string>
+    <string name="mpsdk_review_off_text_6">Você pagará %1$s em\n%2$s</string>
     <string name="mpsdk_homebanking">Internet Banking de</string>
     <string name="mpsdk_your_atm">caixa eletrônico de</string>
     <string name="mpsdk_review_product_quantity">Quantidade: %1$s</string>

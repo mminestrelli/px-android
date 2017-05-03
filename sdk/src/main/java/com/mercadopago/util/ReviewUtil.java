@@ -59,9 +59,9 @@ public class ReviewUtil {
         } else if (key.startsWith("viabaloto")) {
             resource = R.string.mpsdk_review_off_text;
         } else if (key.startsWith("servipag")) {
-            resource = R.string.mpsdk_review_off_text;
+            resource = R.string.mpsdk_review_off_text_6;
         } else if (key.startsWith("webpay")) {
-            resource = R.string.mpsdk_review_off_text;
+            resource = R.string.mpsdk_review_off_text_5;
         } else if (key.startsWith("mercantil_atm")) {
             resource = R.string.mpsdk_review_off_text;
         } else if (key.startsWith("mercantil_bank_transfer")) {
@@ -132,11 +132,11 @@ public class ReviewUtil {
                 break;
             case "pagoefectivo_atm":
                 string = context.getResources().getString(R.string.mpsdk_your_atm) + " ";
-                string += (description == null ? paymentMethod.getName() : description);
+                string += TextUtils.isEmpty(description) ? paymentMethod.getName() : description;
                 break;
             case "pagoefectivo_atm_bank_transfer":
                 string = context.getResources().getString(R.string.mpsdk_homebanking) + " ";
-                string += (description == null ? paymentMethod.getName() : description);
+                string += TextUtils.isEmpty(description) ? paymentMethod.getName() : description;
                 break;
             case "davivienda":
                 string = paymentMethod.getName();
@@ -150,25 +150,26 @@ public class ReviewUtil {
             case "viabaloto":
                 string = paymentMethod.getName();
                 break;
-            case "servipag":
-                string = paymentMethod.getName();
-                break;
-            case "webpay":
-                string = context.getResources().getString(R.string.mpsdk_debit) + " " + paymentMethod.getName();
-                break;
             case "mercantil_atm":
                 string = context.getResources().getString(R.string.mpsdk_your_atm) + " ";
-                string += (description == null ? paymentMethod.getName() : description);
+                string += TextUtils.isEmpty(description) ? paymentMethod.getName() : description;
                 break;
             case "mercantil_bank_transfer":
                 string = context.getResources().getString(R.string.mpsdk_homebanking) + " ";
-                string += (description == null ? paymentMethod.getName() : description);
+                string += TextUtils.isEmpty(description) ? paymentMethod.getName() : description;
                 break;
             case "provincial":
                 string = paymentMethod.getName();
                 break;
+            case "servipag_ticket":
+                string = paymentMethod.getName();
+                break;
+            case "webpay_bank_transfer":
+                string = paymentMethod.getName();
+                break;
             case "account_money_account_money":
                 string = context.getString(R.string.mpsdk_ryc_account_money_description);
+                string += TextUtils.isEmpty(description) ? paymentMethod.getName() : description;
                 break;
             default:
                 string = paymentMethod.getName();

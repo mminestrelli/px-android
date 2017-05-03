@@ -11,7 +11,7 @@
         },
         {
             "id":"ticket",
-            "type":"group",
+            "type":"payment_type",
             "description":"Cash payment",
             "comment":null,
             "children":[
