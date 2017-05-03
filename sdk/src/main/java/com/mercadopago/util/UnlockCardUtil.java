@@ -1,7 +1,5 @@
 package com.mercadopago.util;
 
-import com.mercadopago.model.Site;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,22 +13,23 @@ public class UnlockCardUtil {
 
 
     public static String getCardUnlockingLink(String mSiteId, Long mIssuerId) {
-        if (!consistentUnlockingLinkParameters(mSiteId, mIssuerId)) {
+        if (!hasUnlockingLinkParameters(mSiteId, mIssuerId)) {
             return null;
         }
         loadCardUnlockingLinks();
         String key = getCardUnlockingLinkKey(mSiteId, mIssuerId);
+
         return mCardUnlockingLinks.get(key);
     }
 
-    public static boolean consistentUnlockingLinkParameters(String mSiteId, Long mIssuerId) {
-        return isSite(mSiteId) && isIssuer(mIssuerId);
+    public static boolean hasUnlockingLinkParameters(String mSiteId, Long mIssuerId) {
+        return hasSite(mSiteId) && hasIssuer(mIssuerId);
     }
 
 
     private static String getCardUnlockingLinkKey(String mSiteId, Long mIssuerId) {
 
-        if (!consistentUnlockingLinkParameters(mSiteId, mIssuerId)) {
+        if (!hasUnlockingLinkParameters(mSiteId, mIssuerId)) {
             return null;
         }
 
@@ -43,14 +42,13 @@ public class UnlockCardUtil {
             mCardUnlockingLinks = new HashMap<>();
             mCardUnlockingLinks.put("MLV_1050", "https://www.provincial.com");
         }
-
     }
 
-    public static boolean isSite(String siteId) {
+    public static boolean hasSite(String siteId) {
         return siteId != null && !siteId.trim().isEmpty();
     }
 
-    private static boolean isIssuer(Long mIssuerId) {
+    private static boolean hasIssuer(Long mIssuerId) {
         return mIssuerId != null;
     }
 

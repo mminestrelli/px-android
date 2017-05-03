@@ -28,6 +28,7 @@ import com.mercadopago.uicontrollers.payercosts.PayerCostColumn;
 import com.mercadopago.util.CurrenciesUtil;
 import com.mercadopago.util.JsonUtil;
 import com.mercadopago.util.MercadoPagoUtil;
+import com.mercadopago.util.TextUtil;
 import com.mercadopago.util.UnlockCardUtil;
 
 import java.math.BigDecimal;
@@ -104,10 +105,6 @@ public class ReviewSummaryView extends Reviewable {
         this.mDecorationPreference = decorationPreference;
         this.mIssuer = issuer;
         this.mSite = site;
-
-        this.mUnlockLink = getCardUnlockingLink();
-
-
     }
 
     @Override
@@ -142,31 +139,32 @@ public class ReviewSummaryView extends Reviewable {
 
             }
         });
-
-
     }
 
-    private void startUnlockCardActivity(String link) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+    private void startUnlockCardActivity() {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUnlockLink));
         mContext.startActivity(browserIntent);
     }
 
     public void showUnlockCard() {
 
-
-        if (isCardUnlockingNeeded())
-            mUnlockCard.setVisibility(View.VISIBLE);
+        mUnlockCard.setVisibility(View.VISIBLE);
 
         mUnlockCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startUnlockCardActivity(mUnlockLink);
+                startUnlockCardActivity();
             }
         });
     }
 
     private boolean isCardUnlockingNeeded() {
-        return mUnlockLink != null && !mUnlockLink.trim().isEmpty();
+        String link = getCardUnlockingLink();
+        if (!TextUtil.isEmpty(link)) {
+            mUnlockLink = link;
+            return true;
+        }
+        return false;
     }
 
     private String getCardUnlockingLink() {
@@ -233,7 +231,11 @@ public class ReviewSummaryView extends Reviewable {
             mTotalText.setText(CurrenciesUtil.getFormattedAmount(getSubtotal(), mCurrencyId));
 
         }
-        showUnlockCard();
+
+        if (isCardUnlockingNeeded()) {
+            showUnlockCard();
+        }
+
     }
 
     private void hideTotalRow() {
