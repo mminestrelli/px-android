@@ -2,6 +2,7 @@ package com.mercadopago.presenters;
 
 import android.content.Context;
 
+import com.mercadopago.R;
 import com.mercadopago.callbacks.Callback;
 import com.mercadopago.callbacks.FailureRecovery;
 import com.mercadopago.controllers.PaymentMethodGuessingController;
@@ -155,20 +156,23 @@ public class SecurityCodePresenter {
     public void initializeSecurityCodeSettings() {
         if (mCardInfo != null) {
             Setting setting = PaymentMethodGuessingController.getSettingByPaymentMethodAndBin(mPaymentMethod, mCardInfo.getFirstSixDigits());
-            if (setting != null) {
+            if (setting == null) {
+                mView.startErrorView(mContext.getString(R.string.mpsdk_standard_error_message),
+                        "Settings are missing from card's payment method");
+            } else {
                 SecurityCode securityCode = setting.getSecurityCode();
-                if (securityCode != null) {
-                    mSecurityCodeLength = securityCode.getLength();
-                    mSecurityCodeLocation = securityCode.getCardLocation();
-                } else {
+                if (securityCode == null) {
                     mSecurityCodeLength = CARD_DEFAULT_SECURITY_CODE_LENGTH;
                     mSecurityCodeLocation = CardView.CARD_SIDE_BACK;
-                }
-                if (setting.getCardNumber() != null) {
-                    mCardNumberLength = setting.getCardNumber().getLength();
                 } else {
-                    mCardNumberLength = CARD_NUMBER_MAX_LENGTH;
+                    mSecurityCodeLength = securityCode.getLength();
+                    mSecurityCodeLocation = securityCode.getCardLocation();
+                }
 
+                if (setting.getCardNumber() == null) {
+                    mCardNumberLength = CARD_NUMBER_MAX_LENGTH;
+                } else {
+                    mCardNumberLength = setting.getCardNumber().getLength();
                 }
             }
             mView.setSecurityCodeInputMaxLength(mSecurityCodeLength);

@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 
 import com.mercadopago.callbacks.card.CardSecurityCodeEditTextCallback;
 import com.mercadopago.controllers.CheckoutTimer;
+import com.mercadopago.core.MercadoPago;
 import com.mercadopago.customviews.MPEditText;
 import com.mercadopago.customviews.MPTextView;
 import com.mercadopago.listeners.card.CardSecurityCodeTextWatcher;
@@ -30,6 +31,7 @@ import com.mercadopago.uicontrollers.card.CardRepresentationModes;
 import com.mercadopago.uicontrollers.card.CardView;
 import com.mercadopago.util.ApiUtil;
 import com.mercadopago.util.ColorsUtil;
+import com.mercadopago.util.ErrorUtil;
 import com.mercadopago.util.JsonUtil;
 import com.mercadopago.util.ScaleUtil;
 import com.mercadopago.views.SecurityCodeActivityView;
@@ -149,7 +151,7 @@ public class SecurityCodeActivity extends MercadoPagoBaseActivity implements Sec
         mCardView.setSecurityCodeLocation(mPresenter.getSecurityCodeLocation());
         mCardView.setCardNumberLength(mPresenter.getCardNumberLength());
         mCardView.setLastFourDigits(mPresenter.getCardInfo().getLastFourDigits());
-        if (mPresenter.getSecurityCodeLocation().equals(CardView.CARD_SIDE_BACK)) {
+        if (mPresenter.getSecurityCodeLocation() == null || mPresenter.getSecurityCodeLocation().equals(CardView.CARD_SIDE_BACK)) {
             mCardView.draw(CardView.CARD_SIDE_BACK);
         } else {
             mCardView.draw(CardView.CARD_SIDE_FRONT);
@@ -197,6 +199,11 @@ public class SecurityCodeActivity extends MercadoPagoBaseActivity implements Sec
         Intent returnIntent = new Intent();
         setResult(RESULT_CANCELED, returnIntent);
         finish();
+    }
+
+    @Override
+    public void startErrorView(String message, String errorDetail) {
+        ErrorUtil.startErrorActivity(mActivity, message, errorDetail, false);
     }
 
     @Override
@@ -301,5 +308,21 @@ public class SecurityCodeActivity extends MercadoPagoBaseActivity implements Sec
     @Override
     public void onFinish() {
         this.finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ErrorUtil.ERROR_REQUEST_CODE) {
+            resolveErrorRequest(resultCode, data);
+        }
+    }
+
+    private void resolveErrorRequest(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            mPresenter.recoverFromFailure();
+        } else {
+            setResult(resultCode, data);
+            finish();
+        }
     }
 }
