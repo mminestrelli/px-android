@@ -45,7 +45,7 @@ public class InstallmentsPresenterTest {
         List<Installment> installments = Installments.getInstallmentsList();
         provider.setResponse(installments);
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -75,7 +75,7 @@ public class InstallmentsPresenterTest {
         List<Installment> installments = new ArrayList<Installment>();
         provider.setResponse(installments);
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -104,7 +104,7 @@ public class InstallmentsPresenterTest {
         List<Installment> installments = getThreeInstallmentList();
         provider.setResponse(installments);
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -132,7 +132,7 @@ public class InstallmentsPresenterTest {
 
         List<PayerCost> payerCosts = PayerCosts.getPayerCostsWithCFT();
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -162,7 +162,7 @@ public class InstallmentsPresenterTest {
 
         List<PayerCost> payerCosts = PayerCosts.getPayerCostsWithCFT();
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -196,7 +196,7 @@ public class InstallmentsPresenterTest {
 
         List<PayerCost> payerCosts = PayerCosts.getPayerCostList();
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -228,7 +228,7 @@ public class InstallmentsPresenterTest {
 
         List<PayerCost> payerCosts = PayerCosts.getPayerCostsWithCFT();
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -261,7 +261,7 @@ public class InstallmentsPresenterTest {
         List<Installment> installments = Installments.getInstallmentsList();
         provider.setResponse(installments);
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -294,7 +294,7 @@ public class InstallmentsPresenterTest {
         MercadoPagoError mercadoPagoError = new MercadoPagoError("Error", true);
         provider.setResponse(mercadoPagoError);
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -322,7 +322,7 @@ public class InstallmentsPresenterTest {
         MercadoPagoError mercadoPagoError = new MercadoPagoError("Error", true);
         provider.setResponse(mercadoPagoError);
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -363,7 +363,7 @@ public class InstallmentsPresenterTest {
         MockedView mockedView = new MockedView();
         MockedProvider provider = new MockedProvider();
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
         List<PayerCost> payerCosts = PayerCosts.getOnePayerCostList();
@@ -393,7 +393,7 @@ public class InstallmentsPresenterTest {
         List<Installment> installments = Installments.getInstallmentsListWithoutPayerCosts();
         provider.setResponse(installments);
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
 
@@ -420,7 +420,7 @@ public class InstallmentsPresenterTest {
 
         List<PayerCost> payerCosts = PayerCosts.getPayerCostsWithCFT();
 
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
         Issuer issuer = Issuers.getIssuerMLA();
         PaymentPreference paymentPreference = new PaymentPreference();
         paymentPreference.setDefaultInstallments(1);
@@ -445,7 +445,7 @@ public class InstallmentsPresenterTest {
     @Test
     public void whenIsCardInfoAndPaymentMethodAvailableThenIsNotRequiredCardDrawn() {
         CardInfo cardInfo = getCardInfo();
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
 
         InstallmentsPresenter presenter = new InstallmentsPresenter();
         presenter.setCardInfo(cardInfo);
@@ -466,7 +466,7 @@ public class InstallmentsPresenterTest {
 
     @Test
     public void whenIsNotCardInfoAvailableThenIsNotRequiredCardDrawn() {
-        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
+        PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOnVisa();
 
         InstallmentsPresenter presenter = new InstallmentsPresenter();
         presenter.setPaymentMethod(paymentMethod);
