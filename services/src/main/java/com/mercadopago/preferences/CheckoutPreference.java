@@ -71,7 +71,7 @@ public class CheckoutPreference {
     }
 
     private boolean hasEmail() {
-        return this.payer != null && !isEmpty(this.payer.getEmail());
+        return this.payer != null && !TextUtils.isEmpty(this.payer.getEmail());
     }
 
     public boolean validPaymentTypeExclusion() {
@@ -88,7 +88,7 @@ public class CheckoutPreference {
 
         if (this.items == null || this.items.isEmpty() || items.get(0) == null) {
             valid = false;
-        } else if (isEmpty(items.get(0).getCurrencyId())) {
+        } else if (TextUtils.isEmpty(items.get(0).getCurrencyId())) {
             valid = false;
         } else {
             String firstCurrencyId = items.get(0).getCurrencyId();

@@ -1,4 +1,4 @@
-package com.mercadopago.model;
+package com.mercadopago.uicontrollers;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

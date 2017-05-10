@@ -1,4 +1,4 @@
-package com.mercadopago.model;
+package com.mercadopago.uicontrollers;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.mercadopago.callbacks.PaymentResultReviewableCallback;
 import com.mercadopago.callbacks.ReviewableCallback;
 import com.mercadopago.constants.ReviewKeys;
+import com.mercadopago.model.ReviewSubscriber;
 import com.mercadopago.uicontrollers.CustomViewController;
 
 /**

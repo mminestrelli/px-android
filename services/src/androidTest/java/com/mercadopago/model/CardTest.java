@@ -1,14 +1,15 @@
 package com.mercadopago.model;
 
+import android.support.test.runner.AndroidJUnit4;
+
 import com.mercadopago.CheckoutActivity;
 import com.mercadopago.test.BaseTest;
 import com.mercadopago.test.StaticMock;
 
-public class CardTest extends BaseTest<CheckoutActivity> {
+import org.junit.runner.RunWith;
 
-    public CardTest() {
-        super(CheckoutActivity.class);
-    }
+@RunWith(AndroidJUnit4.class)
+public class CardTest {
 
     public void testIsSecurityCodeRequired() {
 

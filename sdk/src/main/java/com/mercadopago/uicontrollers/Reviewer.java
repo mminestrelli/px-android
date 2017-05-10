@@ -1,4 +1,4 @@
-package com.mercadopago.model;
+package com.mercadopago.uicontrollers;
 
 /**
  * Created by mreverter on 2/2/17.
