@@ -449,7 +449,7 @@ public class CardVaultPresenterTest {
         Boolean directDiscountEnabled = false;
 
         //Response from GuessingCardActivity, without an issuer selected
-        presenter.resolveNewCardRequest(mockedPaymentMethod, mockedToken, directDiscountEnabled, mockedPayerCost, mockedIssuer, mockedPayerCostList, mockedIssuerList, mockedDiscount);
+        presenter.resolveNewCardRequest(mockedPaymentMethod, mockedToken, cardToken, directDiscountEnabled, mockedPayerCost, mockedIssuer, mockedPayerCostList, mockedIssuerList, mockedDiscount);
 
         assertTrue(mockedView.issuerFlowStarted);
     }
@@ -479,7 +479,7 @@ public class CardVaultPresenterTest {
         Boolean directDiscountEnabled = false;
 
         //Response from GuessingCardActivity, with an issuer selected
-        presenter.resolveNewCardRequest(mockedPaymentMethod, mockedToken, directDiscountEnabled, mockedPayerCost, mockedIssuer, mockedPayerCostList, mockedIssuerList, mockedDiscount);
+        presenter.resolveNewCardRequest(mockedPaymentMethod, mockedToken, cardToken, directDiscountEnabled, mockedPayerCost, mockedIssuer, mockedPayerCostList, mockedIssuerList, mockedDiscount);
 
         assertFalse(mockedView.issuerFlowStarted);
         assertTrue(mockedView.installmentsFlowStarted);
@@ -510,7 +510,7 @@ public class CardVaultPresenterTest {
         Boolean directDiscountEnabled = false;
 
         //Response from GuessingCardActivity, with an issuer selected
-        presenter.resolveNewCardRequest(mockedPaymentMethod, mockedToken, directDiscountEnabled, mockedPayerCost, mockedIssuer, mockedPayerCostList, mockedIssuerList, mockedDiscount);
+        presenter.resolveNewCardRequest(mockedPaymentMethod, mockedToken, cardToken, directDiscountEnabled, mockedPayerCost, mockedIssuer, mockedPayerCostList, mockedIssuerList, mockedDiscount);
 
         assertFalse(mockedView.issuerFlowStarted);
         assertFalse(mockedView.installmentsFlowStarted);
@@ -844,7 +844,7 @@ public class CardVaultPresenterTest {
         }
 
         @Override
-        public void startIssuersActivity() {
+        public void showIssuersSelection() {
             issuerFlowStarted = true;
         }
 

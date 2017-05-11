@@ -3,6 +3,7 @@ package com.mercadopago.views;
 import com.mercadopago.callbacks.FailureRecovery;
 import com.mercadopago.exceptions.MercadoPagoError;
 import com.mercadopago.model.ApiException;
+import com.mercadopago.model.CardToken;
 import com.mercadopago.model.PayerCost;
 import com.mercadopago.mvp.MvpView;
 
@@ -22,7 +23,7 @@ public interface CardVaultView extends MvpView {
 
     void askForInstallments();
 
-    void startIssuersActivity();
+    void showIssuersSelection();
 
     void showProgressLayout();
 
@@ -38,8 +39,9 @@ public interface CardVaultView extends MvpView {
 
     void askForInstallmentsFromNewCard();
 
-//    void setFailureRecovery(FailureRecovery failureRecovery);
-
     void cancelCardVault();
 
+    void backToCardForm();
+
+    void backToIssuersSelection();
 }

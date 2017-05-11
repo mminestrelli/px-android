@@ -31,6 +31,7 @@ import com.mercadopago.SecurityCodeActivity;
 import com.mercadopago.model.BankDeal;
 import com.mercadopago.model.Card;
 import com.mercadopago.model.CardInfo;
+import com.mercadopago.model.CardToken;
 import com.mercadopago.model.Discount;
 import com.mercadopago.model.Item;
 import com.mercadopago.model.PaymentResult;
@@ -688,6 +689,7 @@ public class MercadoPagoComponents {
             private DecorationPreference decorationPreference;
             private List<PaymentMethod> paymentMethodList;
             private Card card;
+            private CardToken cardToken;
             private PaymentRecovery paymentRecovery;
             private Boolean requireSecurityCode;
             private Boolean requireIssuer;
@@ -716,6 +718,11 @@ public class MercadoPagoComponents {
 
             public GuessingCardActivityBuilder setCard(Card card) {
                 this.card = card;
+                return this;
+            }
+
+            public GuessingCardActivityBuilder setCardToken(CardToken cardToken) {
+                this.cardToken = cardToken;
                 return this;
             }
 
@@ -818,6 +825,8 @@ public class MercadoPagoComponents {
                 guessingCardIntent.putExtra("paymentRecovery", JsonUtil.getInstance().toJson(paymentRecovery));
 
                 guessingCardIntent.putExtra("card", JsonUtil.getInstance().toJson(card));
+
+                guessingCardIntent.putExtra("cardToken", JsonUtil.getInstance().toJson(cardToken));
 
                 if (amount != null) {
                     guessingCardIntent.putExtra("amount", amount.toString());

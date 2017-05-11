@@ -1011,7 +1011,7 @@ public class GuessingCardPresenter {
                     mIssuer = issuers.get(0);
                     getInstallments(onInstallmentsRetrieved());
                 } else {
-                    mView.finishCardFlow(mPaymentMethod, mToken, mDiscount, mDirectDiscountEnabled, issuers);
+                    mView.finishCardFlow(mPaymentMethod, mToken, mCardToken, mDiscount, mDirectDiscountEnabled, issuers);
                 }
             }
 
@@ -1063,14 +1063,14 @@ public class GuessingCardPresenter {
     private void resolvePayerCosts(List<PayerCost> payerCosts) {
         PayerCost defaultPayerCost = mPaymentPreference.getDefaultInstallments(payerCosts);
         if (defaultPayerCost != null) {
-            mView.finishCardFlow(mPaymentMethod, mToken, mDiscount, mDirectDiscountEnabled, mIssuer, defaultPayerCost);
+            mView.finishCardFlow(mPaymentMethod, mToken, mCardToken, mDiscount, mDirectDiscountEnabled, mIssuer, defaultPayerCost);
         } else if (payerCosts.isEmpty()) {
             mView.startErrorView(mContext.getString(R.string.mpsdk_standard_error_message),
                     NO_PAYER_COSTS_FOUND);
         } else if (payerCosts.size() == 1) {
-            mView.finishCardFlow(mPaymentMethod, mToken, mDiscount, mDirectDiscountEnabled, mIssuer, payerCosts.get(0));
+            mView.finishCardFlow(mPaymentMethod, mToken, mCardToken, mDiscount, mDirectDiscountEnabled, mIssuer, payerCosts.get(0));
         } else {
-            mView.finishCardFlow(mPaymentMethod, mToken, mDiscount, mDirectDiscountEnabled, mIssuer, payerCosts);
+            mView.finishCardFlow(mPaymentMethod, mToken, mCardToken, mDiscount, mDirectDiscountEnabled, mIssuer, payerCosts);
         }
     }
 }

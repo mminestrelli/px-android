@@ -2,6 +2,7 @@ package com.mercadopago.views;
 
 import com.mercadopago.controllers.PaymentMethodGuessingController;
 import com.mercadopago.model.ApiException;
+import com.mercadopago.model.CardToken;
 import com.mercadopago.model.Discount;
 import com.mercadopago.model.IdentificationType;
 import com.mercadopago.model.Issuer;
@@ -91,11 +92,11 @@ public interface GuessingCardActivityView {
 
     void showDiscountRow(BigDecimal transactionAmount);
 
-    void finishCardFlow(PaymentMethod paymentMethod, Token token, Discount discount, Boolean directDiscountEnabled, List<Issuer> issuers);
+    void finishCardFlow(PaymentMethod paymentMethod, Token token, CardToken cardToken, Discount discount, Boolean directDiscountEnabled, List<Issuer> issuers);
 
-    void finishCardFlow(PaymentMethod paymentMethod, Token token, Discount discount, Boolean directDiscountEnabled, Issuer issuer, List<PayerCost> payerCosts);
+    void finishCardFlow(PaymentMethod paymentMethod, Token token, CardToken cardToken, Discount discount, Boolean directDiscountEnabled, Issuer issuer, List<PayerCost> payerCosts);
 
-    void finishCardFlow(PaymentMethod paymentMethod, Token token, Discount discount, Boolean directDiscountEnabled, Issuer issuer, PayerCost payerCost);
+    void finishCardFlow(PaymentMethod paymentMethod, Token token, CardToken cardToken, Discount discount, Boolean directDiscountEnabled, Issuer issuer, PayerCost payerCost);
 
     void startDiscountActivity(BigDecimal transactionAmount);
 }

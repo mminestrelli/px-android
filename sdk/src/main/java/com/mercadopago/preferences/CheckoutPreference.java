@@ -340,7 +340,6 @@ public class CheckoutPreference {
             return this;
         }
 
-        //TODO borrar
         public Builder setId(String id) {
             this.id = id;
             return this;

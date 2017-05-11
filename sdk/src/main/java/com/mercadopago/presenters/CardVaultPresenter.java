@@ -5,6 +5,7 @@ import com.mercadopago.controllers.PaymentMethodGuessingController;
 import com.mercadopago.exceptions.MercadoPagoError;
 import com.mercadopago.model.Card;
 import com.mercadopago.model.CardInfo;
+import com.mercadopago.model.CardToken;
 import com.mercadopago.model.Discount;
 import com.mercadopago.model.Installment;
 import com.mercadopago.model.Issuer;
@@ -58,6 +59,7 @@ public class CardVaultPresenter extends MvpPresenter<CardVaultView, CardVaultPro
     //Card Info
     protected CardInfo mCardInfo;
     protected Token mToken;
+    protected CardToken mCardToken;
     protected Card mCard;
 
     //Discount
@@ -138,6 +140,10 @@ public class CardVaultPresenter extends MvpPresenter<CardVaultView, CardVaultPro
 
     public void setToken(Token mToken) {
         this.mToken = mToken;
+    }
+
+    private void setCardToken(CardToken cardToken) {
+        this.mCardToken = cardToken;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -319,7 +325,7 @@ public class CardVaultPresenter extends MvpPresenter<CardVaultView, CardVaultPro
     private void checkStartIssuersActivity() {
         if (mIssuer == null) {
             mIssuersListShown = true;
-            getView().startIssuersActivity();
+            getView().showIssuersSelection();
         } else {
             checkStartInstallmentsActivity();
         }
@@ -452,11 +458,12 @@ public class CardVaultPresenter extends MvpPresenter<CardVaultView, CardVaultPro
         getView().finishWithResult();
     }
 
-    public void resolveNewCardRequest(PaymentMethod paymentMethod, Token token, Boolean directDiscountEnabled, PayerCost payerCost,
+    public void resolveNewCardRequest(PaymentMethod paymentMethod, Token token, CardToken cardToken, Boolean directDiscountEnabled, PayerCost payerCost,
                                       Issuer issuer, List<PayerCost> payerCosts, List<Issuer> issuers, Discount discount) {
 
             setPaymentMethod(paymentMethod);
             setToken(token);
+            setCardToken(cardToken);
             setCardInfo(new CardInfo(token));
             setDirectDiscountEnabled(directDiscountEnabled);
             setPayerCost(payerCost);
@@ -530,5 +537,21 @@ public class CardVaultPresenter extends MvpPresenter<CardVaultView, CardVaultPro
 
     public List<Issuer> getIssuersList() {
         return mIssuersList;
+    }
+
+    public void onIssuerSelectionCanceled() {
+        getView().backToCardForm();
+    }
+
+    public void onInstallmentsCanceled() {
+        if(mIssuersListShown) {
+            getView().backToIssuersSelection();
+        } else {
+            getView().backToCardForm();
+        }
+    }
+
+    public CardToken getCardToken() {
+        return mCardToken;
     }
 }
