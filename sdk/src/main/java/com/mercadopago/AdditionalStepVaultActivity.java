@@ -241,7 +241,7 @@ public class AdditionalStepVaultActivity extends MercadoPagoBaseActivity impleme
 
         if (mSelectedEntityType != null) {
             String entityTypeId = mSelectedEntityType.getId();
-            returnIntent.putExtra("entityType", JsonUtil.getInstance().toJson(entityTypeId));
+            returnIntent.putExtra("entityType", entityTypeId);
         }
 
         setResult(RESULT_OK, returnIntent);

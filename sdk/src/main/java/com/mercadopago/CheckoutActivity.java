@@ -601,7 +601,7 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
                 mPayer.setIdentification(identification);
             }
             if (!TextUtils.isEmpty(entityType)) {
-                mPayer.setEntityTypeId(entityType);
+                mPayer.setEntityType(entityType);
             }
             if (financialInstitution != null) {
                 mTransactionDetails = new TransactionDetails();
@@ -1081,7 +1081,7 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
         paymentIntent.setPaymentMethodId(paymentData.getPaymentMethod().getId());
         paymentIntent.setBinaryMode(mBinaryModeEnabled);
 
-        Payer payer = mPayer;
+        Payer payer = paymentData.getPayer();
         if (!TextUtils.isEmpty(mCustomerId) && MercadoPagoUtil.isCard(paymentData.getPaymentMethod().getPaymentTypeId())) {
             payer.setId(mCustomerId);
         }

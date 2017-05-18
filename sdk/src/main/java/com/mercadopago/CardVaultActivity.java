@@ -133,6 +133,8 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultVie
         mCardVaultPresenter.setPaymentRecovery(JsonUtil.getInstance().fromJson(savedInstanceState.getString("paymentRecovery"), PaymentRecovery.class));
         mCardVaultPresenter.setCard(JsonUtil.getInstance().fromJson(savedInstanceState.getString("card"), Card.class));
         mCardVaultPresenter.setPublicKey(savedInstanceState.getString("merchantPublicKey"));
+        mPrivateKey = savedInstanceState.getString("privateKey");
+        mPublicKey = savedInstanceState.getString("merchantPublicKey");
         mCardVaultPresenter.setSite(JsonUtil.getInstance().fromJson(savedInstanceState.getString("site"), Site.class));
         mCardVaultPresenter.setPaymentMethod(JsonUtil.getInstance().fromJson(savedInstanceState.getString("paymentMethod"), PaymentMethod.class));
         mCardVaultPresenter.setIssuer(JsonUtil.getInstance().fromJson(savedInstanceState.getString("issuer"), Issuer.class));

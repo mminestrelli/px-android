@@ -20,6 +20,7 @@ import com.mercadopago.model.Item;
 import com.mercadopago.model.Payment;
 import com.mercadopago.model.PaymentData;
 import com.mercadopago.model.PaymentResult;
+import com.mercadopago.model.Site;
 import com.mercadopago.preferences.CheckoutPreference;
 import com.mercadopago.preferences.FlowPreference;
 import com.mercadopago.preferences.PaymentResultScreenPreference;
@@ -29,6 +30,8 @@ import com.mercadopago.util.JsonUtil;
 import com.mercadopago.util.LayoutUtil;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CheckoutExampleActivity extends AppCompatActivity {
     private static final int RESULT_CUSTOM_EXIT = 1321;
@@ -67,9 +70,9 @@ public class CheckoutExampleActivity extends AppCompatActivity {
                 .setActivity(this)
                 .setPublicKey(mPublicKey)
                 .setCheckoutPreference(getCheckoutPreference())
-                .setFlowPreference(flowPreference)
+//                .setFlowPreference(flowPreference)
 //                .startForPayment();
-                .startForPaymentData();
+//                .startForPaymentData();
     }
 
     private void startRyC(PaymentData paymentData) {
@@ -111,7 +114,9 @@ public class CheckoutExampleActivity extends AppCompatActivity {
     private CheckoutPreference getCheckoutPreference() {
         return new CheckoutPreference.Builder()
                 .addItem(new Item("Item", BigDecimal.TEN.multiply(BigDecimal.TEN)))
-                .setSite(Sites.ARGENTINA)
+//                .setSite(Sites.ARGENTINA)
+                .setSite(Sites.COLOMBIA)
+//                .setId("242624092-e0d12cfe-779b-4b85-b3b5-2243b45334c3")
 //                .addExcludedPaymentType(PaymentTypes.ATM)
 //                .addExcludedPaymentType(PaymentTypes.BANK_TRANSFER)
 //                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
