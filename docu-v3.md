@@ -807,11 +807,11 @@ Como se observa en el ejemplo, puedes ocultar el botón de "Promociones" con el 
 
 ----------
 
-#**Personalizar Revisa y Confirma**
+# **Personalizar Revisa y Confirma**
 
 Si deseas agregar una fila customizada en nuestra pantalla de Revisa y Confirma puedes hacerlo siguiendo los siguientes pasos:
 
-##1. Crea un Layout con tu vista customizada:
+## 1. Crea un Layout con tu vista customizada:
 
 Para ésto debes crear un layout con la vista deseada, que esté contenido en un FrameLayout con layout_height=”wrap_content” y layout_width=”match_parent”. Además deberá tener una línea separadora abajo de todo, para diferenciarlo de otras filas. Se recomienda que el layout siga el estilo de las demás filas del revisa y confirma de la SDK, para eso damos un ejemplo a continuación de una custom view de un integrador que permite recargar celulares y desea agregar una fila con el número.
 
@@ -884,7 +884,7 @@ Para ésto debes crear un layout con la vista deseada, que esté contenido en un
 **[Imagen aquí]**
 Figura x.x: Ejemplo de fila que un integrador que permite recargar celulares desea agregar a la pantalla de Revisa y Confirma.
 
-##2. Crear una clase que represente tu vista customizada:
+## 2. Crear una clase que represente tu vista customizada:
 
 Crear una clase que representará la vista customizada. Será una clase que extienda de Reviewable, y deberá implementar los métodos inflateInParent, initializeControls, getView y draw. 
 
@@ -936,7 +936,7 @@ public class CellphoneReview extends Reviewable {
 
 ```
 
-##3. Inicia el Checkout 
+## 3. Inicia el Checkout 
 
 Para iniciar el Checkout con la pantalla de Revisa y Confirma personalizada debes crear una ReviewScreenPreference agregándole tu [implementación de Reviewable](#2.-crear-una-clase-que-represente-tu-vista-customizada:).
 
@@ -962,7 +962,7 @@ new MercadoPagoCheckout.Builder()
  
 ```
 
-###Setear más de una vista Custom
+### Setear más de una vista Custom
 
 Puedes setear más de una vista custom en Revisa y Confirma simplemente agregando las implementaciones de Reviewable a la ReviewScreenPreference antes de iniciar el Checkout con dicha preferencia. 
 
@@ -1060,11 +1060,11 @@ List<String> order = new ArrayList<String>() {{
 
 ```
 
-##5. Agrega la posibilidad de que el usuario cambie su elección:
+## 5. Agrega la posibilidad de que el usuario cambie su elección:
 
 Si quieres que el usuario pueda realizar un cambio en su elección sobre la vista customizada, debes seguir los siguientes pasos para completar el pago:
 
-###a. Agrega la opción a la vista
+### a. Agrega la opción a la vista
 
 Agrega un Button o TextView a la vista customizada que permita al usuario modificar sus datos. 
 Aquí agregamos un TextView al [ejemplo de Layout anterior](#1.-crea-un-layout-con-tu-vista-customizada:) para que puedas probarlo:
@@ -1147,7 +1147,7 @@ Aquí agregamos un TextView al [ejemplo de Layout anterior](#1.-crea-un-layout-c
 </FrameLayout>
 ```
 
-###b. Configura un listener en tu implementación de Reviewable:
+### b. Configura un listener en tu implementación de Reviewable:
 
 Debes configurar un listener de la View creada en el paso anterior y en él llamar al método notifyChangeRequired(REQUEST_CODE) de Reviewable. Tienes que seatearle un REQUEST_CODE para que puedas escuchar este cambio en tu aplicación y actuar en consecuencia.
 Puedes copiar el siguiente ejemplo para probarlo, donde el usuario desea recargar otro número telefónico:
@@ -1205,7 +1205,7 @@ public class CellphoneReview extends Reviewable {
 
 ```
 
-###c. Recibe el REQUEST_CODE
+### c. Recibe el REQUEST_CODE
 
 Escucha el REQUEST_CODE en tu aplicación y realiza el cambio solicitado por el usuario:
 
@@ -1223,7 +1223,7 @@ Escucha el REQUEST_CODE en tu aplicación y realiza el cambio solicitado por el 
 
 ```
 
-###d. Vuelve a iniciar el checkout conservando los datos de pago:
+### d. Vuelve a iniciar el checkout conservando los datos de pago:
 
 Luego del cambio del usuario, puedes reiniciar el checkout con el PaymentData recibido al escuchar el MercadoPagoCheckout.CHECKOUT_REQUEST_CODE. Dicho objeto contiene los datos de pago obtenidos hasta el momento, de ésta forma el usuario no tendrá que volver a ingresarlos al realizar modificaciones en la pantalla de Revisa y Confirma. 
 
@@ -1266,7 +1266,7 @@ private void restartCheckout(PaymentData paymentData) {
 
 ```
  
-#6. Personaliza los títulos de la pantalla Revisa y Confirma:
+## 6. Personaliza los títulos de la pantalla Revisa y Confirma:
  
 Puedes cambiar títulos y nombres de botones agregando dichas preferencias al crear la ReviewScreenPreference:
  
