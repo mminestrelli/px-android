@@ -41,9 +41,9 @@ Sino puedes [descargar el SDK](https://github.com/mercadopago/px-ios/releases) y
 **Recibiendo Pagos**
 ============
 
-##Crea un botón de pago
+## Crea un botón de pago
 
-####A modo de ejemplo proponemos que inicies el flujo de MercadoPago desde un botón.
+#### A modo de ejemplo proponemos que inicies el flujo de MercadoPago desde un botón.
 
 [Android]
 > 1. Crea un Activity para insertar el botón (**MainActivity**, por ejemplo).  
@@ -144,15 +144,15 @@ Una [Preferencia de Pago](https://www.mercadopago.com.ar/developers/en/api-docs/
 > 3. Medios de pago que aceptas.
 > 4. ID de referencia en tu sistema.
 
-###¿Como crear una Preferencia de Pago?
+### ¿Como crear una Preferencia de Pago?
 
-####Primero:
+#### Primero:
 
 > 1. [Registra la cuenta de MercadoPago](https://registration.mercadopago.com.ar/registration-mp?mode=mp) dónde recibirás el dinero.
 > 2. [Crea una aplicación.](https://applications.mercadopago.com.ar/list?platform=mp)
 > 3. [Configura tus credenciales.](https://www.mercadopago.com/mla/account/credentials?type=basic)
 
-####Luego, en tu Servidor:
+#### Luego, en tu Servidor:
 
 [Crea una preferencia de pago](https://www.mercadopago.com.ar/developers/es/solutions/payments/basic-checkout/receive-payments/) y retorna la respuesta que te dan nuestros servicios. Hazlo desde tu servidor, porque tendrás que firmarla con tu clave privada. De esta forma nos aseguramos proteger tanto al comprador, como a tu propio usuario vendedor. 
 
@@ -268,7 +268,7 @@ Una vez creada la Preferencia de Pago estás en condiciones de iniciar nuestro C
     [self.mpCheckout start];
 	}
 
-###¡Obtén la respuesta!
+### ¡Obtén la respuesta!
 
 El SDK devolverá siempre un resultado del pago.
 
@@ -377,9 +377,9 @@ Puedes cambiar los colores de la interfaz gráfica de nuestro Checkout, como as�
 
 ----------
 
-#**Personalización**
+# **Personalización**
 
-##Paga en tu Servidor
+## Paga en tu Servidor
 
 El SDK permite que configures tu propio servicio de pagos. De esta manera no tendrás que crear una preferencia en los servidores de MercadoPago. 
 
@@ -454,11 +454,11 @@ Una vez creada la ServicePreference, debes iniciar el Checkout de MercadoPago, t
     [self.mpCheckout start];
 	}
 
-##Personalización de cobro
+## Personalización de cobro
 
 Una alternativa a crear Checkout Preferences en los servidores de Mercado Pago es recolectar la información necesaria para realizar el pago y luego finalizarlo en tus servidores.
 
-###Crear una instancia local de una Checkout Preference
+### Crear una instancia local de una Checkout Preference
 
 Para iniciar nuestro Checkout debes crear una instancia local de la Checkout Preference que incluya como mínimo un item y el país desde el cual se quiere realizar el pago.  A su vez, el Item debe recibir una descripción y el monto, o una descripción, cantidad y precio unitario.
 
@@ -495,7 +495,7 @@ build();
 
 De ser necesario, puedes especificar restricciones dentro del objeto CheckoutPreference como exclusiones de medios o tipos de pago específicos y establecer la cantidad de cuotas máximas o por default.
 
-####Excluir Medios de Pago
+#### Excluir Medios de Pago
 
 Puedes especificar los tipos de medio de pago que no quieras soportar (Efectivo, Tarjetas de Crédito o Débito) excluyéndolos en la creación de la Checkout Preference.
 
@@ -753,7 +753,7 @@ PaymentPreference *paymentExclusions = [[PaymentPreference alloc] init];
 
 ----------
 
-###Preferencia de Flujo
+### Preferencia de Flujo
 
 La Preferencia de Flujo permite personalizar y configurar el flujo para que puedas lograr la mejor experiencia de pago. 
 
@@ -806,7 +806,7 @@ Como se observa en el ejemplo, puedes ocultar el botón de "Promociones" con el 
 
 ----------
 
-###¡Limita el tiempo de pago!
+### ¡Limita el tiempo de pago!
 
 El SDK permite añadir un temporizador en el checkout con el fin de limitar el tiempo que el usuario tiene para realizar el pago. Dicho temporizador se configura en la Preferencia de Flujo de la siguiente manera:
 
