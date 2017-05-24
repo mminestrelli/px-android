@@ -817,6 +817,7 @@ Para ésto debes crear un layout con la vista deseada, que esté contenido en un
 
  **Excepto el LinearLayout, el resto debería respetarse para que la vista guarde coherencia con las demás filas de la pantalla de Revisa y Confirma. **
 
+[Android]
 ```
 <?xml version="1.0" encoding="utf-8"?>
 
@@ -896,6 +897,7 @@ Crear una clase que representará la vista customizada. Será una clase que exti
 En el constructor de esta clase se podrán pasar todos los parámetros necesarios para dibujar la vista.
 Prueba el siguiente ejemplo: 
 
+[Android]
 ```
 public class CellphoneReview extends Reviewable {
 
@@ -942,6 +944,7 @@ Para iniciar el Checkout con la pantalla de Revisa y Confirma personalizada debe
 
 Pruébalo con el siguiente ejemplo:
 
+[Android]
 ```        
         ReviewScreenPreference reviewScreenPreference = new ReviewScreenPreference.Builder()
                 .addReviewable(new CellphoneReview(this, "1522333333"))
@@ -952,6 +955,7 @@ Pruébalo con el siguiente ejemplo:
 Y luego inicia el Checkout como venías haciéndolo agregando dicha preferencia. 
 Es este caso, presentamos un ejemplo con el tipo de integración que requiere [tener la preferencia  de checkout en nuestros servidores](#REFERENCIA AL DOCU DE MATI):
 
+[Android]
 ```
 new MercadoPagoCheckout.Builder()
                 .setActivity(this)
@@ -968,6 +972,7 @@ Puedes setear más de una vista custom en Revisa y Confirma simplemente agregand
 
 Prueba con el siguiente ejemplo:
 
+[Android]
 ```
         ReviewScreenPreference reviewScreenPreference = new ReviewScreenPreference.Builder()
         //Primera vista custom
@@ -991,6 +996,7 @@ Y luego puedes agregar ReviewKeys.DEFAULT en el orden que desees, ya que ésta k
 
 Por ejemplo, si deseas setearla luego de los items puedes seguir el siguiente ejemplo:
 
+[Android]
 ```
         List<String> order = new ArrayList<String>() {{
             add(ReviewKeys.SUMMARY);
@@ -1001,6 +1007,7 @@ Por ejemplo, si deseas setearla luego de los items puedes seguir el siguiente ej
 ```
 Y luego agrega dicha lista con el orden deseado a la ReviewScreenPreference que agregas al [iniciar el Checkout](#3.-inicia-el-checkout):
 
+[Android]
 ```
        ReviewScreenPreference reviewScreenPreference = new ReviewScreenPreference.Builder()
                 .addReviewable(new CellphoneReview(this, "1522333333"))
@@ -1015,6 +1022,7 @@ Puedes hacerlo de la siguiente manera en todas las Reviewable que quieras ordena
 
 Primera implementación de Reviewable:
 
+[Android]
 ```
 public class CellphoneReview extends Reviewable {
     
@@ -1031,6 +1039,7 @@ public class CellphoneReview extends Reviewable {
 ```
 Segunda implementación de Reviewable:
 
+[Android]
 ```
 public class FunderReview extends Reviewable {
     
@@ -1047,6 +1056,7 @@ public class FunderReview extends Reviewable {
 ```
 Y luego utilizar dichas keys para ordenar las vistas en lugar de ReviewKeys.DEFAULT (aun que puedes seguir usandolo para una de ellas, si no sobreescribes getKey ):
 
+[Android]
 ```
 List<String> order = new ArrayList<String>() {{
             add(ReviewKeys.SUMMARY);
@@ -1069,6 +1079,7 @@ Si quieres que el usuario pueda realizar un cambio en su elección sobre la vist
 Agrega un Button o TextView a la vista customizada que permita al usuario modificar sus datos. 
 Aquí agregamos un TextView al [ejemplo de Layout anterior](#1.-crea-un-layout-con-tu-vista-customizada:) para que puedas probarlo:
 
+[Android]
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -1152,6 +1163,7 @@ Aquí agregamos un TextView al [ejemplo de Layout anterior](#1.-crea-un-layout-c
 Debes configurar un listener de la View creada en el paso anterior y en él llamar al método notifyChangeRequired(REQUEST_CODE) de Reviewable. Tienes que seatearle un REQUEST_CODE para que puedas escuchar este cambio en tu aplicación y actuar en consecuencia.
 Puedes copiar el siguiente ejemplo para probarlo, donde el usuario desea recargar otro número telefónico:
 
+[Android]
 ```
 public class CellphoneReview extends Reviewable {
 
@@ -1209,6 +1221,7 @@ public class CellphoneReview extends Reviewable {
 
 Escucha el REQUEST_CODE en tu aplicación y realiza el cambio solicitado por el usuario:
 
+[Android]
 ```
 @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1229,6 +1242,7 @@ Luego del cambio del usuario, puedes reiniciar el checkout con el PaymentData re
 
 Puedes obtener el PaymentData de la siguiente forma:
 
+[Android]
 ```
 @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1246,6 +1260,7 @@ Puedes obtener el PaymentData de la siguiente forma:
 
 Y de ésta manera reinicias el Checkout con el PaymentData:
 
+[Android]
 ```
 
 private void restartCheckout(PaymentData paymentData) {
@@ -1277,6 +1292,7 @@ Puedes cambiar títulos y nombres de botones agregando dichas preferencias al cr
  
 Prueba con el siguiente ejemplo:
  
+[Android]
 ```
 ReviewScreenPreference reviewScreenPreference = new ReviewScreenPreference.Builder()
                .addReviewable(new CellphoneReview(this, "1522333333"))
