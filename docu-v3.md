@@ -9,7 +9,6 @@ Utiliza nuestra SDK e instantáneamente ofrecerás a tus usuarios:
  - Pagos con tarjeta en una o más cuotas, efectivo o transferencia bancaria. 
  - Comunicación de descuentos y promociones.
  - Comunicación del resultado de su pago.
- - Guardado de sus tarjetas más usadas.
 
 
 Añade la dependencia a tu proyecto
