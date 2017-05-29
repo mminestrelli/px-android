@@ -14,7 +14,9 @@ Utiliza nuestra SDK e instantáneamente ofrecerás a tus usuarios:
 
 Añade la dependencia a tu proyecto
 ----------------------------------
+
 [Android]
+
 Añade la dependencia en el archivo **build.gradle** del módulo donde nos integres con el siguiente código: 
 
     dependencies {
@@ -163,7 +165,7 @@ Las preferencias completas funcionan mucho mejor. Envíanos toda la información
 > **Tip:** Puedes probar [nuestras SDKs](https://www.mercadopago.com.ar/developers/es/tools/) del lado Servidor.
 
 #### Por último, en tu Aplicación:
-En el SDK te ofrecemos una clase llamada **CustomServer** que se conecta con tu servidor. El método createPreference hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Indícanos tu URL base (https://api.tunombre.com) y la URI (/create_preference) donde esperas los datos para crear la preferencia.
+En el SDK te ofrecemos una clase llamada **CustomServer** para que la conexión con tu servidor sea más sencilla. El método createPreference hace un POST y envía como cuerpo del mensaje el mapa que hayas definido (preferenceMap). Indícanos tu URL base (https://api.tunombre.com) y la URI (/create_preference) donde esperas los datos para crear la preferencia.
 
 CustomServer se encargará de transformar la respuesta de tu servicio (la misma que los servicios de Mercado Pago) en un objeto **CheckoutPreference**, que cuyo ID es el punto de entrada a nuestro checkout.
 
@@ -455,7 +457,7 @@ Una vez creada la ServicePreference, debes iniciar el Checkout de MercadoPago, t
     [self.mpCheckout start];
 	}
 
-## Personalización de cobro
+## Crea una Checkout Preference Local
 
 Una alternativa a crear Checkout Preferences en los servidores de Mercado Pago es recolectar la información necesaria para realizar el pago y luego finalizarlo en tus servidores.
 
@@ -804,30 +806,6 @@ Para incorporar en el Checkout las opciones configuradas en la clase FlowPrefere
 	}
 
 Como se observa en el ejemplo, puedes ocultar el botón de "Promociones" con el método disableBankDeals para aquellos casos en lo que solo solicites pagos en una cuota.
-
-----------
-
-# **Personalizar Revisa y Confirma**
-
-----------
-
-### ¡Limita el tiempo de pago!
-
-El SDK permite añadir un temporizador en el checkout con el fin de limitar el tiempo que el usuario tiene para realizar el pago. Dicho temporizador se configura en la Preferencia de Flujo de la siguiente manera:
-
-[Android]
-
-	CheckoutTimer.FinishListener timerFinishListener = new CheckoutTimer.FinishListener() {
-            @Override
-            public void onFinish() {
-                //Do something
-                CheckoutTimer.getInstance().finishCheckout();
-            }
-        };
-        
-        FlowPreference flowPreference = new FlowPreference.Builder()
-                .setCheckoutTimer(30, timerFinishListener)
-                .build();
 
 ----------
 # Probando la integración
