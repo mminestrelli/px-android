@@ -1,9 +1,9 @@
-#**Personalizar Revisa y Confirma**
+# **Personalizar Revisa y Confirma**
 
 Si deseas agregar una fila customizada en nuestra pantalla de Revisa y Confirma puedes hacerlo siguiendo los siguientes pasos:
 
 
-##1. Crea tu vista customizada
+## 1. Crea tu vista customizada
  
 [Android]
  
@@ -202,7 +202,7 @@ class CellphoneTableViewCell: UITableViewCell, MPCellContentProvider {
 ```
 
  
-##2. Crea una ReviewScreenPreference 
+## 2. Crea una ReviewScreenPreference 
 
 
 [Android]
@@ -251,7 +251,7 @@ var reviewScreenPreference = ReviewScreenPreference()
 reviewScreenPreference.setAddionalInfoCells(customCells: [mpCellphoneCell])
 ```
  
-###Setear más de una vista Custom
+### Setear más de una vista Custom
 
 [Android]
 
@@ -306,7 +306,7 @@ reviewScreenPreference.setAddionalInfoCells(customCells: [mpCellphoneCell,mpFund
 ```
 
  
-##3. Inicia el Checkout con la Preferencia
+## 3. Inicia el Checkout con la Preferencia
  
 Inicia el Checkout agregando la preferencia [ReviewScreenPreference creada](#2.-crea-una-reviewscreenpreference).
 Es este caso, presentamos un ejemplo con el tipo de integración que requiere [tener la preferencia de checkout en nuestros servidores](#REFERENCIA AL DOCU DE MATI):
@@ -340,11 +340,11 @@ checkout.setReviewScreenPreference(reviewScreenPreference)
 
 ``` 
 
-##4. Agrega la posibilidad de que el usuario cambie su elección:
+## 4. Agrega la posibilidad de que el usuario cambie su elección:
 
 Si quieres que el usuario pueda realizar un cambio en su elección sobre la vista customizada, debes seguir los siguientes pasos para completar el pago:
 
-###a. Agrega la opción a la vista
+### a. Agrega la opción a la vista
 
 [Android]
  
@@ -503,7 +503,7 @@ cellphoneCell.button.text = "Cambiar"
        
 ```
 
-###b. Responde a los cambios del usuario
+### b. Responde a los cambios del usuario
  
  
 [Android]
@@ -663,7 +663,7 @@ func cambiarNumero(){
  
 ```
 
-#5. Personaliza los títulos de la pantalla Revisa y Confirma:
+# 5. Personaliza los títulos de la pantalla Revisa y Confirma:
  
 Puedes cambiar títulos y nombres de botones agregando dichas preferencias al crear la ReviewScreenPreference:
  
