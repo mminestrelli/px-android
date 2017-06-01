@@ -727,8 +727,338 @@ reviewScreenPreference.setTitle(title: "Confirma Tu Recarga")
 ```
  
  
-
-
+ ----------
  
+ # **Personalización de pantallas de resultados**
+
+Puedes customizar las pantallas de resultados, agregando filas personalizadas, cambiando títulos, subtítulos y botones a través de la preferencia **PaymentResultScreenPreference**. 
+Hazlo en dos simples pasos:
+
+### 1. Crea la preferencia PaymentResultScreenPreference
+
+Debes crear la preferencia agregando los cambios que deseas aplicar a las pantallas de resultados. Puedes [cambiar títulos](#cambiar-títulos-en-las-pantallas-de-resultados) y/o agregar [filas personalizadas](#AGREGAR-LINK) a las mismas.
+ 
+Prueba con el siguiente ejemplo:
+ 
+[Android]
+```
+PaymentResultScreenPreference paymentResultScreenPreference = new PaymentResultScreenPreference.Builder()
+       .setApprovedTitle("¡Listo, recargaste el celular!")
+       .build();
+
+```
+ 
+[Objective-C]
+```
+PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
+[resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular!"];
+```
+ 
+[Swift] 
+```
+var paymentResultScreenPreference = PaymentResultScreenPreference()
+paymentResultScreenPreference.setApprovedTitle(title: "¡Listo, recargaste el celular!")
+ 
+```
+ 
+### 2. Inicia el Checkout con la PaymentResultScreenPreference
+ 
+Inicia el Checkout agregando la preferencia [PaymentResultScreenPreference creada](#2.-crea-una-reviewscreenpreference).
+Es este caso, presentamos un ejemplo con el tipo de integración que requiere [tener la preferencia de checkout en nuestros servidores](#REFERENCIA AL DOCU):
+ 
+[Android]
+```
+new MercadoPagoCheckout.Builder()
+	.setActivity(this)
+.setId(mCheckoutPreferenceId)
+.setPaymentResultScreenPreference(paymentResultScreenPreference)
+	.setPublicKey(mPublicKey)
+	.startForPayment();
+ 
+```
+ 
+[Objective - C]
+ 
+```
+MercadoPagoCheckout *mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: nil checkoutPreference:self.pref paymentData:nil discount:nil navigationController:self.navigationController paymentResult: nil];
+    // Aquí creas la PaymentResultScreenPreference
+[mpCheckout setPaymentResultScreenPreference:resultPreference];
+	[mpCheckout start];
+ 
+```
+ 
+[Swift]
+ 
+```
+var mpCheckout = MercadoPagoCheckout(publicKey: TEST_PUBLIC_KEY, accessToken: nil, checkoutPreference: self.pref, navigationController: self.navigationController)
+        mpCheckout.setPaymentResultScreenPreference(paymentResultScreenPreference)
+ 
+```
+
+## **Cambiar títulos en la pantalla de resultados**
+
+### Pantalla de Pago Aprobado
+
+La misma se muestra si el resultado del pago fue aprobado y no se necesita ninguna acción por parte del usuario para finalizarlo, (como acercarse a algún atm, realizar una transferencia desde la web de un banco). Este es el caso de los pagos con tarjetas de crédito o débito. 
+
+#### Crea la preferencia con los cambios
+
+[Android]
+
+Puedes realizar los siguientes cambios sobre la misma:
+
+- **setApprovedTitle:** Para cambiar el título de la pantalla de pago aprobado. Si no se setea, se muestra el título default de la SDK
+- **setApprovedSubtitle:** Para cambiar el subtítulo de la pantalla de pago aprobado. Si no se setea, no se muestra nada.
+
+
+Prueba el siguiente ejemplo:
+
+```
+PaymentResultScreenPreference paymentResultScreenPreference = new PaymentResultScreenPreference.Builder()
+       .setApprovedTitle("Recargaste tu celular!")
+       .setApprovedSubtitle("Número 12234324 - Movistar")
+       .build();
+```
+
+El ejemplo se ve así: [IMAGEN](https://drive.google.com/open?id=0B6eJRTzx7kk7bVJsV29YZjZnM1U)
+ 
+[Objective-C]
+ 
+Puedes realizar los siguientes cambios sobre la misma:
+
+- **setApprovedTitleWithTitle:** Para cambiar el título de la pantalla de pago aprobado. Si no se setea, se muestra el título default de la SDK.
+- **setApprovedSubtitleWithSubtitle:** Para cambiar el subtítulo de la pantalla de pago aprobado. Si no se setea, no se muestra nada.
+
+
+Prueba el siguiente ejemplo:
+ 
+```
+PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
+[resultPreference setApprovedTitleWithTitle:@"¡Listo, recargaste el celular"];
+[resultPreference setApprovedSubtitleWithSubtitle:@"Número 12234324 - Movistar"];
+ 
+```
+[Swift]
+ 
+Puedes realizar los siguientes cambios sobre la misma:
+
+- **setApprovedTitle:** Para cambiar el título de la pantalla de pago aprobado. Si no se setea, se muestra el título default de la SDK.
+- **setApprovedSubtitle:** Para cambiar el subtítulo de la pantalla de pago aprobado. Si no se setea, no se muestra nada.
+ 
+```
+   var resultPreference = PaymentResultScreenPreference()
+        resultPreference.setApprovedTitle(title: "¡Listo, recargaste el celular!")
+        resultPreference.setApprovedSubtitle(subtitle: "Número 12234324 - Movistar")
+        
+```
+
+## **Agregar fila personalizada a la Pantalla de Resultados**
+ 
+## 1. Crea tu vista customizada
+
+[Android]
+
+Crea un layout con la vista deseada, que esté contenido en un FrameLayout con layout_height=”wrap_content” y layout_width=”match_parent”. Además deberá tener una línea separadora abajo de todo, para diferenciarlo de otras filas. Se recomienda que el layout siga el estilo de las demás filas del revisa y confirma de la SDK.
+ 
+Prueba con el siguiente ejemplo:
+ 
+```
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content"
+   android:background="@color/mpsdk_review_gray_background">
+ 
+   <com.mercadopago.customviews.MPTextView
+       android:id="@+id/textView"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center_horizontal"
+       android:layout_margin="20dp"
+       android:gravity="center_horizontal"
+       android:paddingEnd="15dp"
+       android:paddingLeft="15dp"
+       android:paddingRight="15dp"
+       android:paddingStart="15dp"
+       android:textColor="@color/mpsdk_review_payment_text"
+       android:textSize="18dp" />
+ 
+   <View
+       android:id="@+id/mpsdkSeparator"
+       android:layout_width="match_parent"
+       android:layout_height="1dp"
+       android:layout_gravity="bottom"
+       android:background="@color/mpsdk_separator" />
+ 
+</FrameLayout>
+ 
+```
+ 
+Luego crea una clase que representará la vista customizada. Será una clase que extienda de Reviewable, y deberá implementar los métodos inflateInParent, initializeControls, getView y draw. 
+
+ - **inflateInParent:** Recibe el ViewGroup padre de la sdk en el cual se inflará la vista customizada. En este método se indica el layout de la vista customizada.
+ - **initializeControls:** Se deben inicializar los elementos de la vista que se quieran modificar dinámicamente.
+ - **getView:**  Devuelve una instancia de la View que se infló en inflateInParent.
+ - **draw:** Se setean los valores a los elementos de la vista, así como también listeners que se deseen tener.
+
+En el constructor de esta clase se podrán pasar todos los parámetros necesarios para dibujar la vista.
+Prueba el siguiente ejemplo: 
+ 
+```
+public class CongratsReview extends Reviewable {
+ 
+   protected View mView;
+   protected TextView mTextView;
+ 
+   private Context mContext;
+   private String mText;
+ 
+   public CongratsReview(Context context, String text) {
+       this.mContext = context;
+       this.mText = text;
+   }
+ 
+   @Override
+   public View getView() {
+       return mView;
+   }
+ 
+   @Override
+   public View inflateInParent(ViewGroup parent, boolean attachToRoot) {
+       mView = LayoutInflater.from(mContext)
+               .inflate(R.layout.congrats_review, parent, attachToRoot);
+       return mView;
+   }
+ 
+   @Override
+   public void initializeControls() {
+       mTextView = (TextView) mView.findViewById(R.id.textView);
+   }
+ 
+   @Override
+   public void draw() {
+       mTextView.setText(mText);
+   }
+}
+ 
+```
+
+[Objective-C]
+
+Crea una celda que extienda de UITableViewCell (también crea el xib). Dicha celda deberá implementar la interfaz MPCellContentProvider, cuyo único método (getHeight()) debería devolver la altura que necesitamos reservar para tu celda.
+
+Podes copiar el siguiente ejemplo, que representa una celda con dos labels (titleLabel y subtitleLabel): 
+
+**Recordá linkear los labels desde el xib a los IBOutlets** 
+ 
+```
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+ 
+@import MercadoPagoSDK;
+ 
+@interface CongratsTableViewCell : UITableViewCell<MPCellContentProvider>
+ 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+ 
+@end
+ 
+``` 
+
+```
+ 
+ #import "CongratsTableViewCell.h"
+@import MercadoPagoSDK;
+ 
+@implementation CongratsTableViewCell
+ 
+ 
+-(CGFloat)getHeight {
+    return (CGFloat)180;
+}
+ 
+@end
+
+```
+ 
+[Swift]
+
+Crea una celda que extienda de UITableViewCell (también crea el xib). Dicha celda deberá implementar la interfaz MPCellContentProvider, cuyo único método (getHeight()) debería devolver la altura que necesitamos reservar para tu celda.
+
+Podes copiar el siguiente ejemplo, que representa una celda con dos labels (titleLabel y subtitleLabel): 
+
+**Recordá linkear los labels desde el xib a los IBOutlets** 
+
+```
+import UIKit
+import MercadoPagoSDK
+
+class CongratsTableViewCell: UITableViewCell, MPCellContentProvider {
+
+    @IBOutlet weak var titleLabel: UILabel!
+   
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    
+    func getHeight() -> CGFloat{
+        return 150.0
+    }
+}
+```
+
+## 2. Agrega la vista customizada a la preferencia PaymentResultScreenPreference:
+ 
+[Android]
+ 
+```
+CongratsReview congratsReview = new CongratsReview(this, "También programaste esta recarga para el 15 de cada mes");
+ 
+PaymentResultScreenPreference paymentResultScreenPreference = new PaymentResultScreenPreference.Builder()
+	.addCongratsReviewable(congratsReview)
+.build();
+ 
+```
+ 
+[Objective-C]
+
+Para agregar una fila a la pantalla de Resultados debes crear una ReviewScreenPreference agregándole tu [implementación de MPCellContentProvider](#1.-crea-tu-vista-customizada) a través de una MPCustomCell.
+
+```
+ 
+CongratsTableViewCell *congratsCell = [[[NSBundle mainBundle] loadNibNamed:@"CongratsTableViewCell" owner:self options:nil] firstObject];
+congratsCell.titlelabel.text = @"También programaste esta recarga para el 15 de cada mes";
+
+MPCustomCell *congratsCustomCell = [[MPCustomCell alloc] congratsCell];
+
+PaymentResultScreenPreference *resultPreference = [[PaymentResultScreenPreference alloc]init];
+
+[resultPreference setCustomsApprovedCellWithCustomCells:[NSArray arrayWithObjects:congratsCustomCell, nil]];
+ 
+```
+
+
+[Swift]
+
+Para agregar una fila a la pantalla de Resultados debes crear una ReviewScreenPreference agregándole tu [implementación de MPCellContentProvider](#1.-crea-tu-vista-customizada) a través de una MPCustomCell.
+
+
+```
+let congratsCell = Bundle.main.loadNibNamed("CongratsTableViewCell", owner: self, options: nil)?.first as! CongratsTableViewCell
+
+let congratsCustomCell = MPCustomCell(cell: congratsCell)
+var resultPreference = PaymentResultScreenPreference()     
+resultPreference.setCustomsApprovedCell(customCells: [congratsCustomCell])
+ 
+```
+ 
+
  
 
