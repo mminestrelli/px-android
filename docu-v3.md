@@ -392,6 +392,8 @@ El SDK permite setear el color en el formato hexadecimal,es decir por ejemplo **
 
 El SDK permite que configures tu propio servicio de pagos. De esta manera no tendrás que crear una preferencia en los servidores de MercadoPago. 
 
+Primero, debes crear una preferencia local como se muestra en el código. Si deseas personalizar ésta preferencia local ve a la siguiente sección **Personaliza tu preferencia local**. 
+
 En la clase ServicePreference puedes configurar la URL y la URI de tu servicio junto con un Map para que puedas enviar la información que desees.
 Al momento de postear el pago, el SDK lo hará a tu servicio y esperará recibir un pago, tal como responde el servicio de MercadoPago.
 
@@ -463,7 +465,7 @@ Una vez creada la ServicePreference, debes iniciar el Checkout de MercadoPago, t
     [self.mpCheckout start];
 	}
 
-## Crea una Checkout Preference Local
+## Personaliza tu preferencia local
 
 Una alternativa a crear Checkout Preferences en los servidores de Mercado Pago es recolectar la información necesaria para realizar el pago y luego finalizarlo en tus servidores.
 
