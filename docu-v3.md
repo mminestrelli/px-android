@@ -254,6 +254,9 @@ Una vez creada la Preferencia de Pago estás en condiciones de iniciar nuestro C
 
 [iOS - Swift]
 
+El flujo de nuestro checkout esta basado en **NavigationController**, para iniciar el mismo necesitamos hacerlo sobre un navigation controller. Si tu aplicación esta basada también en NavigationControllers podes iniciar el flujo de Checkout utilizando el NavigationController de tu aplicación, sino puedes crear un nuevo NavigationController, iniciar el Checkout con él y luego presentarlo.
+
+
     public func startMercadoPagoCheckout(_ checkoutPreference CheckoutPreference) {
 	   let publicKey = "TEST-ad365c37-8012-4014-84f5-6c895b3f8e0a"
 
@@ -264,6 +267,8 @@ Una vez creada la Preferencia de Pago estás en condiciones de iniciar nuestro C
  }
 
 [iOS - Objective-C]
+
+El flujo de nuestro checkout esta basado en **NavigationController**, para iniciar el mismo necesitamos hacerlo sobre un navigation controller. Si tu aplicación esta basada también en NavigationControllers podes iniciar el flujo de Checkout utilizando el NavigationController de tu aplicación, sino puedes crear un nuevo NavigationController, iniciar el Checkout con él y luego presentarlo.
 
 	    -(void)startMercadoPagoCheckout:(CheckoutPreference *)checkoutPreference {
 		    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: nil checkoutPreference:checkoutPreference paymentData:nil discount:nil navigationController:self.navigationController paymentResult: nil];
@@ -376,6 +381,8 @@ Puedes cambiar los colores de la interfaz gráfica de nuestro Checkout, como as�
 		    self.mpCheckout = [[MercadoPagoCheckout alloc] initWithPublicKey: TEST_PUBLIC_KEY accessToken: nil checkoutPreference:checkoutPreference paymentData:nil discount:nil navigationController:self.navigationController paymentResult: nil];
     [self.mpCheckout start];
 	}
+
+El SDK permite setear el color en el formato hexadecimal,es decir por ejemplo **setBaseColor("#13123");**.
 
 ----------
 
