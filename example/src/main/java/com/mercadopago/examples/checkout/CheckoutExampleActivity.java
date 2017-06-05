@@ -57,7 +57,7 @@ public class CheckoutExampleActivity extends AppCompatActivity {
     }
 
     private void startMercadoPagoCheckout() {
-
+    mPublicKey = "TEST-0baa73db-70a3-4e8a-8f1b-f8f922cf3ae3";
         FlowPreference flowPreference = new FlowPreference.Builder()
                 .disableReviewAndConfirmScreen()
                 .disableDiscount()
@@ -69,9 +69,9 @@ public class CheckoutExampleActivity extends AppCompatActivity {
                 .setActivity(this)
                 .setPublicKey(mPublicKey)
                 .setCheckoutPreference(getCheckoutPreference())
-                .setFlowPreference(flowPreference)
-//                .startForPayment();
-                .startForPaymentData();
+//                .setFlowPreference(flowPreference)
+                .startForPayment();
+//                .startForPaymentData();
     }
 
     private void startRyC(PaymentData paymentData) {
@@ -113,7 +113,8 @@ public class CheckoutExampleActivity extends AppCompatActivity {
     private CheckoutPreference getCheckoutPreference() {
         return new CheckoutPreference.Builder()
                 .addItem(new Item("Item", BigDecimal.TEN.multiply(BigDecimal.TEN)))
-                .setSite(Sites.ARGENTINA)
+                .setSite(Sites.CHILE)
+                .setId("242625384-e8fcf02c-e137-4c7f-a7ac-1315c59c721c")
 //                .addExcludedPaymentType(PaymentTypes.ATM)
 //                .addExcludedPaymentType(PaymentTypes.BANK_TRANSFER)
 //                .addExcludedPaymentType(PaymentTypes.DEBIT_CARD)
@@ -139,8 +140,8 @@ public class CheckoutExampleActivity extends AppCompatActivity {
 
         PaymentResult paymentResult = new PaymentResult.Builder()
                 .setPaymentData(paymentData)
-                .setPaymentStatus(Payment.StatusCodes.STATUS_APPROVED)
-//                .setPaymentStatus(Payment.StatusCodes.STATUS_PENDING)
+//                .setPaymentStatus(Payment.StatusCodes.STATUS_APPROVED)
+                .setPaymentStatus(Payment.StatusCodes.STATUS_PENDING)
 //                .setPaymentStatus(Payment.StatusCodes.STATUS_REJECTED)
 //                .setPaymentStatusDetail(Payment.StatusCodes.STATUS_DETAIL_CC_REJECTED_BAD_FILLED_CARD_NUMBER)
                 .build();
@@ -150,6 +151,8 @@ public class CheckoutExampleActivity extends AppCompatActivity {
                 .setApprovedSecondaryExitButton("Intentar nuevamente", RESULT_CUSTOM_EXIT)
                 .addCongratsReviewable(congratsReview)
                 .setExitButtonTitle("Ir a Actividad")
+                .setPendingHeaderIcon(getResources().getIdentifier("mpsdk_banamex", "drawable",
+                        getPackageName()))
                 .build();
 
 
