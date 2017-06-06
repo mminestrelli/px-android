@@ -30,8 +30,8 @@ import com.mercadopago.model.Instructions;
 import com.mercadopago.model.PaymentData;
 import com.mercadopago.model.PaymentResult;
 import com.mercadopago.model.Site;
-import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.preferences.PaymentResultScreenPreference;
+import com.mercadopago.px_tracking.MPTracker;
 import com.mercadopago.util.ApiUtil;
 import com.mercadopago.util.CurrenciesUtil;
 import com.mercadopago.util.ErrorUtil;
@@ -242,7 +242,8 @@ public class InstructionsActivity extends MercadoPagoBaseActivity {
     }
 
     protected void showInstructions(Instruction instruction) {
-        MPTracker.getInstance().trackScreen("INSTRUCTIONS", "2", mMerchantPublicKey, BuildConfig.VERSION_NAME, this);
+        String siteId = mSite == null ? "" : mSite.getId();
+        MPTracker.getInstance().trackScreen("INSTRUCTIONS", "2", mMerchantPublicKey, siteId, BuildConfig.VERSION_NAME, this);
 
         setTitle(instruction.getTitle());
         setReferencesInformation(instruction);
@@ -386,7 +387,8 @@ public class InstructionsActivity extends MercadoPagoBaseActivity {
 
     @Override
     public void onBackPressed() {
-        MPTracker.getInstance().trackScreen("INSTRUCTIONS", "2", mMerchantPublicKey, BuildConfig.VERSION_NAME, this);
+        String siteId = mSite == null ? "" : mSite.getId();
+        MPTracker.getInstance().trackScreen("INSTRUCTIONS", "2", mMerchantPublicKey, siteId, BuildConfig.VERSION_NAME, this);
 
         if (mBackPressedOnce) {
             super.onBackPressed();

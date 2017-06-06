@@ -23,11 +23,11 @@ import com.mercadopago.model.PaymentMethod;
 import com.mercadopago.model.PaymentRecovery;
 import com.mercadopago.model.Site;
 import com.mercadopago.model.Token;
-import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.preferences.PaymentPreference;
 import com.mercadopago.presenters.CardVaultPresenter;
 import com.mercadopago.providers.CardVaultProviderImpl;
+import com.mercadopago.px_tracking.MPTracker;
 import com.mercadopago.util.ApiUtil;
 import com.mercadopago.util.ErrorUtil;
 import com.mercadopago.util.JsonUtil;
@@ -212,7 +212,8 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultVie
     }
 
     protected void initialize() {
-        MPTracker.getInstance().trackScreen("CARD_VAULT", "2", mCardVaultPresenter.getPublicKey(), BuildConfig.VERSION_NAME, this);
+        String siteId = mCardVaultPresenter.getSite() == null ? "" : mCardVaultPresenter.getSite().getId();
+        MPTracker.getInstance().trackScreen("CARD_VAULT", "2", mCardVaultPresenter.getPublicKey(), siteId, BuildConfig.VERSION_NAME, this);
         mCardVaultPresenter.initialize();
     }
 
@@ -372,8 +373,9 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultVie
             mCardVaultPresenter.resolveIssuersRequest(issuer);
 
         } else if (resultCode == RESULT_CANCELED) {
-            MPTracker.getInstance().trackEvent("INSTALLMENTS", "CANCELED", "2", mCardVaultPresenter.getPublicKey(),
-                    mCardVaultPresenter.getSite().getId(), BuildConfig.VERSION_NAME, this);
+//            String siteId = mCardVaultPresenter.getSite() == null ? "" : mCardVaultPresenter.getSite().getId();
+//            MPTracker.getInstance().trackEvent("INSTALLMENTS", "CANCELED", "", "2", mCardVaultPresenter.getPublicKey(),
+//                    siteId, BuildConfig.VERSION_NAME, this);
             mCardVaultPresenter.onResultCancel();
         }
     }
@@ -387,8 +389,9 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultVie
             mCardVaultPresenter.resolveInstallmentsRequest(payerCost, discount);
 
         } else if (resultCode == RESULT_CANCELED) {
-            MPTracker.getInstance().trackEvent("INSTALLMENTS", "CANCELED", "2", mCardVaultPresenter.getPublicKey(),
-                    mCardVaultPresenter.getSite().getId(), BuildConfig.VERSION_NAME, this);
+//            String siteId = mCardVaultPresenter.getSite() == null ? "" : mCardVaultPresenter.getSite().getId();
+//            MPTracker.getInstance().trackEvent("INSTALLMENTS", "CANCELED", "", "2", mCardVaultPresenter.getPublicKey(),
+//                    siteId, BuildConfig.VERSION_NAME, this);
             mCardVaultPresenter.onResultCancel();
         }
     }
@@ -424,13 +427,9 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultVie
             mCardVaultPresenter.resolveNewCardRequest(paymentMethod, token, directDiscountEnabled, payerCost, issuer, payerCosts, issuers, discount);
 
         } else if (resultCode == RESULT_CANCELED) {
-            if (mCardVaultPresenter.getSite() == null) {
-                MPTracker.getInstance().trackEvent("GUESSING_CARD", "CANCELED", "2", mCardVaultPresenter.getPublicKey(),
-                        BuildConfig.VERSION_NAME, this);
-            } else {
-                MPTracker.getInstance().trackEvent("GUESSING_CARD", "CANCELED", "2", mCardVaultPresenter.getPublicKey(),
-                        mCardVaultPresenter.getSite().getId(), BuildConfig.VERSION_NAME, this);
-            }
+//            String siteId = mCardVaultPresenter.getSite() == null ? "" : mCardVaultPresenter.getSite().getId();
+//            MPTracker.getInstance().trackEvent("GUESSING_CARD", "CANCELED", "", "2", mCardVaultPresenter.getPublicKey(),
+//                    siteId, BuildConfig.VERSION_NAME, this);
             mCardVaultPresenter.onResultCancel();
         }
     }
@@ -442,13 +441,9 @@ public class CardVaultActivity extends AppCompatActivity implements CardVaultVie
             mCardVaultPresenter.resolveSecurityCodeRequest(token);
 
         } else if (resultCode == RESULT_CANCELED) {
-            if (mCardVaultPresenter.getSite() == null) {
-                MPTracker.getInstance().trackEvent("SECURITY_CODE_CARD", "CANCELED", "2", mCardVaultPresenter.getPublicKey(),
-                        BuildConfig.VERSION_NAME, this);
-            } else {
-                MPTracker.getInstance().trackEvent("SECURITY_CODE_CARD", "CANCELED", "2", mCardVaultPresenter.getPublicKey(),
-                        mCardVaultPresenter.getSite().getId(), BuildConfig.VERSION_NAME, this);
-            }
+//            String siteId = mCardVaultPresenter.getSite() == null ? "" : mCardVaultPresenter.getSite().getId();
+//            MPTracker.getInstance().trackEvent("SECURITY_CODE_CARD", "CANCELED", "", "2", mCardVaultPresenter.getPublicKey(),
+//                    siteId, BuildConfig.VERSION_NAME, this);
             mCardVaultPresenter.onResultCancel();
         }
     }

@@ -22,10 +22,10 @@ import com.mercadopago.model.ApiException;
 import com.mercadopago.model.CardInfo;
 import com.mercadopago.model.PaymentMethod;
 import com.mercadopago.model.PaymentType;
-import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.observers.TimerObserver;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.presenters.PaymentTypesPresenter;
+import com.mercadopago.px_tracking.MPTracker;
 import com.mercadopago.uicontrollers.FontCache;
 import com.mercadopago.uicontrollers.card.CardRepresentationModes;
 import com.mercadopago.uicontrollers.card.FrontCardView;
@@ -125,8 +125,7 @@ public class PaymentTypesActivity extends MercadoPagoBaseActivity implements Pay
     }
 
     public void setContentView() {
-        MPTracker.getInstance().trackScreen("CARD_PAYMENT_TYPES", "2", mPresenter.getPublicKey(),
-                BuildConfig.VERSION_NAME, this);
+        MPTracker.getInstance().trackScreen("CARD_PAYMENT_TYPES", "2", mPresenter.getPublicKey(), "", BuildConfig.VERSION_NAME, this);
         if (mLowResActive) {
             setContentViewLowRes();
         } else {
@@ -338,8 +337,8 @@ public class PaymentTypesActivity extends MercadoPagoBaseActivity implements Pay
 
     @Override
     public void onBackPressed() {
-        MPTracker.getInstance().trackEvent("CARD_PAYMENT_TYPES", "BACK_PRESSED", "2", mPresenter.getPublicKey(),
-                BuildConfig.VERSION_NAME, this);
+//        MPTracker.getInstance().trackEvent("CARD_PAYMENT_TYPES", "BACK_PRESSED", "", "2", mPresenter.getPublicKey(),
+//                "", BuildConfig.VERSION_NAME, this);
         Intent returnIntent = new Intent();
         returnIntent.putExtra("backButtonPressed", true);
         setResult(RESULT_CANCELED, returnIntent);

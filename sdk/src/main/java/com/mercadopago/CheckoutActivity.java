@@ -41,7 +41,6 @@ import com.mercadopago.model.PaymentRecovery;
 import com.mercadopago.model.PaymentResult;
 import com.mercadopago.model.PaymentResultAction;
 import com.mercadopago.model.Token;
-import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.preferences.CheckoutPreference;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.preferences.FlowPreference;
@@ -49,6 +48,7 @@ import com.mercadopago.preferences.PaymentPreference;
 import com.mercadopago.preferences.PaymentResultScreenPreference;
 import com.mercadopago.preferences.ReviewScreenPreference;
 import com.mercadopago.preferences.ServicePreference;
+import com.mercadopago.px_tracking.MPTracker;
 import com.mercadopago.util.ApiUtil;
 import com.mercadopago.util.CurrenciesUtil;
 import com.mercadopago.util.ErrorUtil;
@@ -642,7 +642,8 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
             }
         } else {
             if (data != null && data.getStringExtra("mercadoPagoError") != null) {
-                MPTracker.getInstance().trackEvent("CARD_VAULT", "CANCELED", "3", mMerchantPublicKey, mCheckoutPreference.getSite().getId(), BuildConfig.VERSION_NAME, this);
+//                String siteId = mCheckoutPreference.getSite() == null ? "" : mCheckoutPreference.getSite().getId();
+//                MPTracker.getInstance().trackEvent("CARD_VAULT", "CANCELED", "", "3", mMerchantPublicKey, siteId, BuildConfig.VERSION_NAME, this);
                 cancelCheckout(data);
             } else {
                 mPaymentMethodEdited = true;

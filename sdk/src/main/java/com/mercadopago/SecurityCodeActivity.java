@@ -22,10 +22,10 @@ import com.mercadopago.model.Card;
 import com.mercadopago.model.CardInfo;
 import com.mercadopago.model.PaymentMethod;
 import com.mercadopago.model.Token;
-import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.observers.TimerObserver;
 import com.mercadopago.preferences.DecorationPreference;
 import com.mercadopago.presenters.SecurityCodePresenter;
+import com.mercadopago.px_tracking.MPTracker;
 import com.mercadopago.uicontrollers.card.CardRepresentationModes;
 import com.mercadopago.uicontrollers.card.CardView;
 import com.mercadopago.util.ApiUtil;
@@ -103,8 +103,7 @@ public class SecurityCodeActivity extends MercadoPagoBaseActivity implements Sec
     }
 
     public void setContentView() {
-        MPTracker.getInstance().trackScreen("SECURITY_CODE_CARD", "2", mPresenter.getPublicKey(),
-                BuildConfig.VERSION_NAME, this);
+        MPTracker.getInstance().trackScreen("SECURITY_CODE_CARD", "2", mPresenter.getPublicKey(), "", BuildConfig.VERSION_NAME, this);
         setContentViewNormal();
     }
 

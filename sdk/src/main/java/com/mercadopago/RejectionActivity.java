@@ -17,9 +17,9 @@ import com.mercadopago.model.Payment;
 import com.mercadopago.model.PaymentData;
 import com.mercadopago.model.PaymentResult;
 import com.mercadopago.model.PaymentResultAction;
-import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.observers.TimerObserver;
 import com.mercadopago.preferences.PaymentResultScreenPreference;
+import com.mercadopago.px_tracking.MPTracker;
 import com.mercadopago.util.ErrorUtil;
 import com.mercadopago.util.JsonUtil;
 
@@ -101,7 +101,7 @@ public class RejectionActivity extends MercadoPagoBaseActivity implements TimerO
     }
 
     protected void setContentView() {
-        MPTracker.getInstance().trackScreen("RESULT", "2", mMerchantPublicKey, BuildConfig.VERSION_NAME, this);
+        MPTracker.getInstance().trackScreen("RESULT", "2", mMerchantPublicKey, "", BuildConfig.VERSION_NAME, this);
         setContentView(R.layout.mpsdk_activity_rejection);
     }
 
@@ -387,7 +387,7 @@ public class RejectionActivity extends MercadoPagoBaseActivity implements TimerO
 
     @Override
     public void onBackPressed() {
-        MPTracker.getInstance().trackEvent("REJECTION", "BACK_PRESSED", "2", mMerchantPublicKey, BuildConfig.VERSION_NAME, this);
+//        MPTracker.getInstance().trackEvent("REJECTION", "BACK_PRESSED", "", "2", mMerchantPublicKey, "", BuildConfig.VERSION_NAME, this);
 
         if (mBackPressedOnce) {
             finishWithOkResult(true);
@@ -419,7 +419,7 @@ public class RejectionActivity extends MercadoPagoBaseActivity implements TimerO
 
     public void onClickRejectionOptionButton() {
         if (isPaymentStatusDetailRecoverable()) {
-            MPTracker.getInstance().trackEvent("REJECTION", "RECOVER_PAYMENT", "2", mMerchantPublicKey, BuildConfig.VERSION_NAME, this);
+//            MPTracker.getInstance().trackEvent("REJECTION", "RECOVER_PAYMENT", "", "2", mMerchantPublicKey, "", BuildConfig.VERSION_NAME, this);
 
             Intent returnIntent = new Intent();
             mNextAction = PaymentResultAction.RECOVER_PAYMENT;
@@ -427,7 +427,7 @@ public class RejectionActivity extends MercadoPagoBaseActivity implements TimerO
             setResult(RESULT_CANCELED, returnIntent);
             finish();
         } else {
-            MPTracker.getInstance().trackEvent("REJECTION", "SELECT_OTHER_PAYMENT_METHOD", "2", mMerchantPublicKey, BuildConfig.VERSION_NAME, this);
+//            MPTracker.getInstance().trackEvent("REJECTION", "SELECT_OTHER_PAYMENT_METHOD", "", "2", mMerchantPublicKey, "", BuildConfig.VERSION_NAME, this);
 
             Intent returnIntent = new Intent();
             mNextAction = PaymentResultAction.SELECT_OTHER_PAYMENT_METHOD;
