@@ -248,17 +248,17 @@ public class MercadoPagoComponents {
                 if (this.merchantPublicKey == null && this.payerAccessToken == null)
                     throw new IllegalStateException("key is null");
 
-                //TODO testing tracker
-                MPTrackingProvider mpTrackingProvider = new MPTrackingProvider.Builder()
-                        .setContext(activity.getApplicationContext())
-                        .setCheckoutVersion(BuildConfig.VERSION_NAME)
-                        .setPublicKey(merchantPublicKey)
-                        .build();
-                ScreenViewEvent event = new ScreenViewEvent.Builder()
-                        .setScreenId(TrackingUtil.SCREEN_ID_PAYMENT_METHODS)
-                        .setScreenName(TrackingUtil.SCREEN_NAME_PAYMENT_METHODS)
-                        .build();
-                mpTrackingProvider.addTrackEvent(event);
+                //TODO sacar: testing tracker
+//                MPTrackingProvider mpTrackingProvider = new MPTrackingProvider.Builder()
+//                        .setContext(activity.getApplicationContext())
+//                        .setCheckoutVersion(BuildConfig.VERSION_NAME)
+//                        .setPublicKey(merchantPublicKey)
+//                        .build();
+//                ScreenViewEvent event = new ScreenViewEvent.Builder()
+//                        .setScreenId(TrackingUtil.SCREEN_ID_PAYMENT_METHODS)
+//                        .setScreenName(TrackingUtil.SCREEN_NAME_PAYMENT_METHODS)
+//                        .build();
+//                mpTrackingProvider.addTrackEvent(event);
 
                 startPaymentVaultActivity();
             }
@@ -410,17 +410,17 @@ public class MercadoPagoComponents {
                     if (this.token == null) throw new IllegalStateException("token is null");
                 }
 
-                //TODO testing tracker
-                MPTrackingProvider mpTrackingProvider = new MPTrackingProvider.Builder()
-                        .setContext(activity.getApplicationContext())
-                        .setCheckoutVersion(BuildConfig.VERSION_NAME)
-                        .setPublicKey(merchantPublicKey)
-                        .build();
-                ScreenViewEvent event = new ScreenViewEvent.Builder()
-                        .setScreenId(TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM)
-                        .setScreenName(TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM)
-                        .build();
-                mpTrackingProvider.addTrackEvent(event);
+                //TODO sacar: testing tracker
+//                MPTrackingProvider mpTrackingProvider = new MPTrackingProvider.Builder()
+//                        .setContext(activity.getApplicationContext())
+//                        .setCheckoutVersion(BuildConfig.VERSION_NAME)
+//                        .setPublicKey(merchantPublicKey)
+//                        .build();
+//                ScreenViewEvent event = new ScreenViewEvent.Builder()
+//                        .setScreenId(TrackingUtil.SCREEN_ID_REVIEW_AND_CONFIRM)
+//                        .setScreenName(TrackingUtil.SCREEN_NAME_REVIEW_AND_CONFIRM)
+//                        .build();
+//                mpTrackingProvider.addTrackEvent(event);
 
 
                 startReviewAndConfirmActivity();
@@ -821,17 +821,17 @@ public class MercadoPagoComponents {
                 if (this.merchantPublicKey == null && this.payerAccessToken == null)
                     throw new IllegalStateException("key is null");
 
-                //TODO testing tracker
-                MPTrackingProvider mpTrackingProvider = new MPTrackingProvider.Builder()
-                        .setContext(activity.getApplicationContext())
-                        .setCheckoutVersion(BuildConfig.VERSION_NAME)
-                        .setPublicKey(merchantPublicKey)
-                        .build();
-                ScreenViewEvent event = new ScreenViewEvent.Builder()
-                        .setScreenId(TrackingUtil.SCREEN_ID_CARD_FORM)
-                        .setScreenName(TrackingUtil.SCREEN_NAME_CARD_FORM)
-                        .build();
-                mpTrackingProvider.addTrackEvent(event);
+                //TODO sacar: testing tracker
+//                MPTrackingProvider mpTrackingProvider = new MPTrackingProvider.Builder()
+//                        .setContext(activity.getApplicationContext())
+//                        .setCheckoutVersion(BuildConfig.VERSION_NAME)
+//                        .setPublicKey(merchantPublicKey)
+//                        .build();
+//                ScreenViewEvent event = new ScreenViewEvent.Builder()
+//                        .setScreenId(TrackingUtil.SCREEN_ID_CARD_FORM)
+//                        .setScreenName(TrackingUtil.SCREEN_NAME_CARD_FORM)
+//                        .build();
+//                mpTrackingProvider.addTrackEvent(event);
 
 
                 startGuessingCardActivity();
@@ -1413,17 +1413,17 @@ public class MercadoPagoComponents {
                 if (this.merchantPublicKey == null)
                     throw new IllegalStateException("public key is null");
 
-                //TODO testing tracker
-                MPTrackingProvider mpTrackingProvider = new MPTrackingProvider.Builder()
-                        .setContext(activity.getApplicationContext())
-                        .setCheckoutVersion(BuildConfig.VERSION_NAME)
-                        .setPublicKey(merchantPublicKey)
-                        .build();
-                ScreenViewEvent event = new ScreenViewEvent.Builder()
-                        .setScreenId(TrackingUtil.SCREEN_ID_CONGRATS)
-                        .setScreenName(TrackingUtil.SCREEN_NAME_CONGRATS)
-                        .build();
-                mpTrackingProvider.addTrackEvent(event);
+                //TODO sacar: testing tracker
+//                MPTrackingProvider mpTrackingProvider = new MPTrackingProvider.Builder()
+//                        .setContext(activity.getApplicationContext())
+//                        .setCheckoutVersion(BuildConfig.VERSION_NAME)
+//                        .setPublicKey(merchantPublicKey)
+//                        .build();
+//                ScreenViewEvent event = new ScreenViewEvent.Builder()
+//                        .setScreenId(TrackingUtil.SCREEN_ID_CONGRATS)
+//                        .setScreenName(TrackingUtil.SCREEN_NAME_CONGRATS)
+//                        .build();
+//                mpTrackingProvider.addTrackEvent(event);
 
 
                 startPaymentResultActivity();
