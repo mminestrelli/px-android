@@ -115,6 +115,13 @@ public class MercadoPagoCheckout {
         if (hasTwoDiscountsSet()) {
             throw new IllegalStateException("payment data discount and discount set");
         }
+        if (isCheckoutTimerAvailable(resultCode)) {
+            throw new IllegalStateException("CheckoutTimer is not available with PaymentData integration");
+        }
+    }
+
+    private boolean isCheckoutTimerAvailable(int resultCode) {
+        return resultCode == MercadoPagoCheckout.PAYMENT_DATA_RESULT_CODE && flowPreference != null && flowPreference.isCheckoutTimerEnabled();
     }
 
     private Boolean hasTwoDiscountsSet() {
@@ -184,6 +191,8 @@ public class MercadoPagoCheckout {
         } else {
             activity.startActivityForResult(checkoutIntent, MercadoPagoCheckout.CHECKOUT_REQUEST_CODE);
         }
+
+
     }
 
     private void attachCheckoutCallback(PaymentCallback paymentCallback) {
@@ -289,7 +298,6 @@ public class MercadoPagoCheckout {
         public void start(PaymentCallback paymentCallback) {
             MercadoPagoCheckout mercadoPagoCheckout = new MercadoPagoCheckout(this);
             mercadoPagoCheckout.start(paymentCallback);
-
         }
 
         @Deprecated

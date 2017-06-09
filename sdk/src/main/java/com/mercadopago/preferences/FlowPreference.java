@@ -17,8 +17,7 @@ public class FlowPreference {
     private boolean installmentsReviewScreenEnabled;
     private boolean discountEnabled;
     private int congratsDisplayTime;
-    private int checkoutTimer;
-    private CheckoutTimer.FinishListener checkoutTimerFinishListener;
+    private Long checkoutTimer;
 
     private FlowPreference(Builder builder) {
         this.paymentSearchScreenEnabled = builder.paymentSearchScreenEnabled;
@@ -32,19 +31,15 @@ public class FlowPreference {
         this.discountEnabled = builder.discountEnabled;
         this.congratsDisplayTime = builder.congratsDisplayTime;
         this.checkoutTimer = builder.checkoutTimer;
-        this.checkoutTimerFinishListener = builder.checkoutTimerFinishListener;
+
     }
 
     public int getCongratsDisplayTime() {
         return this.congratsDisplayTime;
     }
 
-    public int getCheckoutTimerInitialTime() {
+    public Long getCheckoutTimerInitialTime() {
         return this.checkoutTimer;
-    }
-
-    public CheckoutTimer.FinishListener getCheckoutTimerFinishListener() {
-        return this.checkoutTimerFinishListener;
     }
 
     public boolean isPaymentSearchScreenEnabled() {
@@ -87,6 +82,10 @@ public class FlowPreference {
         this.discountEnabled = false;
     }
 
+    public boolean isCheckoutTimerEnabled() {
+        return checkoutTimer != null;
+    }
+
     public static class Builder {
 
         private boolean bankDealsEnabled = true;
@@ -99,8 +98,7 @@ public class FlowPreference {
         private boolean installmentsReviewScreenEnabled = true;
         private boolean discountEnabled = true;
         private int congratsDisplayTime;
-        private int checkoutTimer;
-        private CheckoutTimer.FinishListener checkoutTimerFinishListener;
+        private Long checkoutTimer;
 
         public Builder enablePaymentSearchScreen() {
             this.paymentSearchScreenEnabled = true;
@@ -152,9 +150,8 @@ public class FlowPreference {
             return this;
         }
 
-        public Builder setCheckoutTimer(int seconds, CheckoutTimer.FinishListener onFinishListener) {
+        public Builder setCheckoutTimer(Long seconds) {
             this.checkoutTimer = seconds;
-            this.checkoutTimerFinishListener = onFinishListener;
             return this;
         }
 

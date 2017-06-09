@@ -95,8 +95,8 @@ public class ReviewAndConfirmActivity extends MercadoPagoBaseActivity implements
             setTheme(R.style.Theme_MercadoPagoTheme_NoActionBar);
         }
         setContentView(R.layout.mpsdk_activity_review_confirm);
-        showTimer();
         initializeControls();
+        showTimer();
         setListeners();
         initializeReviewablesRecyclerView();
         mPresenter.initialize();

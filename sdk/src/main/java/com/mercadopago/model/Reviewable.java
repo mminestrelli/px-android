@@ -53,19 +53,19 @@ public abstract class Reviewable implements CustomViewController {
 
     @Deprecated
     public void notifyChangeRequired() {
-        if(this.reviewSubscriber != null) {
+        if (this.reviewSubscriber != null) {
             reviewSubscriber.changeRequired(this);
         }
     }
 
     public void notifyChangeRequired(@NonNull Integer resultCode) {
-        if(this.reviewSubscriber != null) {
+        if (this.reviewSubscriber != null) {
             reviewSubscriber.changeRequired(resultCode, null);
         }
     }
 
     public void notifyChangeRequired(@NonNull Integer resultCode, Bundle resultData) {
-        if(this.reviewSubscriber != null) {
+        if (this.reviewSubscriber != null) {
             reviewSubscriber.changeRequired(resultCode, resultData);
         }
     }

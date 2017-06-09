@@ -15,6 +15,7 @@ import com.mercadopago.callbacks.PaymentCallback;
 import com.mercadopago.callbacks.PaymentDataCallback;
 import com.mercadopago.constants.PaymentMethods;
 import com.mercadopago.constants.PaymentTypes;
+import com.mercadopago.controllers.CheckoutTimer;
 import com.mercadopago.core.CustomServer;
 import com.mercadopago.core.MercadoPagoCheckout;
 import com.mercadopago.core.MercadoPagoComponents;
@@ -231,6 +232,20 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
         }
     }
 
+    private void setTimer() {
+        if (mFlowPreference != null) {
+            if (mFlowPreference.isCheckoutTimerEnabled()) {
+                CheckoutTimer.getInstance().start(mFlowPreference.getCheckoutTimerInitialTime());
+                CheckoutTimer.getInstance().setOnFinishListener(new CheckoutTimer.FinishListener() {
+                    @Override
+                    public void onFinish() {
+                        CheckoutTimer.getInstance().finishCheckout();
+                    }
+                });
+            }
+        }
+    }
+
     private void setDiscount() {
         if (mDiscount == null && hasPaymentDataDiscount()) {
             mDiscount = mPaymentDataInput.getDiscount();
@@ -417,6 +432,7 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
     }
 
     private void startFlow() {
+        setTimer();
         if (mPaymentDataInput != null) {
             mSelectedIssuer = mPaymentDataInput.getIssuer();
             mSelectedPayerCost = mPaymentDataInput.getPayerCost();
@@ -752,11 +768,11 @@ public class CheckoutActivity extends MercadoPagoBaseActivity {
     }
 
     private void finishWithPaymentResult() {
-        if(mPaymentResultInput != null) {
+        if (mPaymentResultInput != null) {
             setResult(RESULT_OK);
         } else {
             Intent data = new Intent();
-            if(mCreatedPayment != null) {
+            if (mCreatedPayment != null) {
                 data.putExtra("payment", JsonUtil.getInstance().toJson(mCreatedPayment));
             }
             setResult(MercadoPagoCheckout.PAYMENT_RESULT_CODE, data);
