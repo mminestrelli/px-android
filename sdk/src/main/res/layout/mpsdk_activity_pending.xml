@@ -54,9 +54,8 @@
 
                     <ImageView
                         android:id="@+id/mpsdkHeaderIcon"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:tint="@color/mpsdk_white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/mpsdk_icon_pending"
                         android:layout_gravity="center_horizontal" />
 

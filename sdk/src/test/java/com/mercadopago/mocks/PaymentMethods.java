@@ -1,13 +1,8 @@
 package com.mercadopago.mocks;
 
 import com.mercadopago.model.PaymentMethod;
-import com.mercadopago.model.PaymentMethodSearch;
 import com.mercadopago.util.JsonUtil;
 import com.mercadopago.utils.ResourcesUtil;
-
-/**
- * Created by mreverter on 4/20/17.
- */
 
 public class PaymentMethods {
     private PaymentMethods() {}

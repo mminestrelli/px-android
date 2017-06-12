@@ -9,6 +9,7 @@ import com.mercadopago.mocks.Customers;
 import com.mercadopago.mocks.Discounts;
 import com.mercadopago.mocks.Installments;
 import com.mercadopago.mocks.Issuers;
+import com.mercadopago.mocks.PaymentMethodSearchs;
 import com.mercadopago.mocks.PaymentMethods;
 import com.mercadopago.mocks.Payments;
 import com.mercadopago.mocks.Tokens;
@@ -34,7 +35,6 @@ import com.mercadopago.preferences.FlowPreference;
 import com.mercadopago.presenters.CheckoutPresenter;
 import com.mercadopago.providers.CheckoutProvider;
 import com.mercadopago.util.TextUtils;
-import com.mercadopago.utils.PaymentMethodSearchs;
 import com.mercadopago.views.CheckoutView;
 
 import org.junit.Test;
@@ -373,7 +373,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         presenter.onPaymentMethodSelectionResponse(paymentMethod, issuer, payerCost, token, null);
@@ -410,7 +410,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         //Response from payment method selection
@@ -446,7 +446,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         //Response from payment method selection
@@ -484,7 +484,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         //Response from payment method selection
@@ -532,7 +532,7 @@ public class CheckoutPresenterTest {
         PaymentMethod editedPaymentMethod = PaymentMethods.getPaymentMethodOn();
         presenter.onPaymentMethodSelectionResponse(editedPaymentMethod,
                 Issuers.getIssuers().get(0),
-                Installments.getInstallment().getPayerCosts().get(0),
+                Installments.getInstallments().getPayerCosts().get(0),
                 Tokens.getVisaToken(), null);
 
         assertTrue(view.showingReviewAndConfirm);
@@ -609,7 +609,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         //Response from payment method selection
@@ -652,7 +652,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         //Response from payment method selection
@@ -696,7 +696,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         //Response from payment method selection
@@ -739,7 +739,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         //Response from payment method selection
@@ -782,7 +782,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         //Response from payment method selection
@@ -970,7 +970,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         presenter.onPaymentMethodSelectionResponse(paymentMethod, issuer, payerCost, token, null);
@@ -1008,7 +1008,7 @@ public class CheckoutPresenterTest {
 
         PaymentMethod paymentMethod = PaymentMethods.getPaymentMethodOn();
         Issuer issuer = Issuers.getIssuers().get(0);
-        PayerCost payerCost = Installments.getInstallment().getPayerCosts().get(0);
+        PayerCost payerCost = Installments.getInstallments().getPayerCosts().get(0);
         Token token = Tokens.getVisaToken();
 
         presenter.onPaymentMethodSelectionResponse(paymentMethod, issuer, payerCost, token, null);
@@ -1133,7 +1133,7 @@ public class CheckoutPresenterTest {
         assertTrue(view.showingPaymentMethodSelection);
         presenter.onPaymentMethodSelectionResponse(PaymentMethods.getPaymentMethodOn(),
                 Issuers.getIssuers().get(0),
-                Installments.getInstallment().getPayerCosts().get(0), Tokens.getVisaToken(), null);
+                Installments.getInstallments().getPayerCosts().get(0), Tokens.getVisaToken(), null);
         assertTrue(view.showingReviewAndConfirm);
         presenter.onPaymentConfirmation();
         assertTrue(view.showingPaymentResult);
