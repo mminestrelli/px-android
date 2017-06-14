@@ -7,6 +7,9 @@ import com.mercadopago.controllers.CheckoutTimer;
  */
 public class FlowPreference {
 
+    public static final int DEFAULT_MAX_SAVED_CARDS_TO_SHOW = 3;
+    public static final String SHOW_ALL_SAVED_CARDS_CODE = "all";
+
     private boolean paymentSearchScreenEnabled;
     private boolean reviewAndConfirmScreenEnabled;
     private boolean paymentResultScreenEnabled;
@@ -16,6 +19,8 @@ public class FlowPreference {
     private boolean bankDealsEnabled;
     private boolean installmentsReviewScreenEnabled;
     private boolean discountEnabled;
+    private boolean showAllSavedCardsEnabled;
+    private int maxSavedCardsToShow;
     private int congratsDisplayTime;
     private Long checkoutTimer;
 
@@ -29,6 +34,8 @@ public class FlowPreference {
         this.bankDealsEnabled = builder.bankDealsEnabled;
         this.installmentsReviewScreenEnabled = builder.installmentsReviewScreenEnabled;
         this.discountEnabled = builder.discountEnabled;
+        this.showAllSavedCardsEnabled = builder.showAllSavedCardsEnabled;
+        this.maxSavedCardsToShow = builder.maxSavedCardsToShow;
         this.congratsDisplayTime = builder.congratsDisplayTime;
         this.checkoutTimer = builder.checkoutTimer;
 
@@ -86,6 +93,14 @@ public class FlowPreference {
         return checkoutTimer != null;
     }
 
+    public int getMaxSavedCardsToShow() {
+        return maxSavedCardsToShow;
+    }
+
+    public boolean isShowAllSavedCardsEnabled() {
+        return showAllSavedCardsEnabled;
+    }
+
     public static class Builder {
 
         private boolean bankDealsEnabled = true;
@@ -97,6 +112,8 @@ public class FlowPreference {
         private boolean paymentPendingScreenEnabled = true;
         private boolean installmentsReviewScreenEnabled = true;
         private boolean discountEnabled = true;
+        private boolean showAllSavedCardsEnabled = false;
+        private int maxSavedCardsToShow = DEFAULT_MAX_SAVED_CARDS_TO_SHOW;
         private int congratsDisplayTime;
         private Long checkoutTimer;
 
@@ -147,6 +164,25 @@ public class FlowPreference {
 
         public Builder setCongratsDisplayTime(int seconds) {
             this.congratsDisplayTime = seconds;
+            return this;
+        }
+
+        public Builder setMaxSavedCardsToShow(int count) {
+            if (count > 0) {
+                this.maxSavedCardsToShow = count;
+            } else {
+                this.maxSavedCardsToShow = DEFAULT_MAX_SAVED_CARDS_TO_SHOW;
+            }
+            return this;
+        }
+
+        public Builder setMaxSavedCardsToShow(String count) {
+            if (count != null && count.equals(SHOW_ALL_SAVED_CARDS_CODE)) {
+                this.showAllSavedCardsEnabled = true;
+            } else {
+                this.showAllSavedCardsEnabled = false;
+                this.maxSavedCardsToShow = DEFAULT_MAX_SAVED_CARDS_TO_SHOW;
+            }
             return this;
         }
 

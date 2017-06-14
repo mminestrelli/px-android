@@ -39,6 +39,7 @@ import com.mercadopago.model.Token;
 import com.mercadopago.mptracker.MPTracker;
 import com.mercadopago.observers.TimerObserver;
 import com.mercadopago.preferences.DecorationPreference;
+import com.mercadopago.preferences.FlowPreference;
 import com.mercadopago.preferences.PaymentPreference;
 import com.mercadopago.preferences.ServicePreference;
 import com.mercadopago.presenters.PaymentVaultPresenter;
@@ -94,6 +95,9 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
     protected MPTextView mTimerTextView;
     protected Boolean mShowBankDeals;
     protected FrameLayout mDiscountFrameLayout;
+
+    protected View mContentLayout;
+    protected View mProgressLayout;
 
     protected String mPublicKey;
     protected String mPrivateKey;
@@ -165,7 +169,8 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
         mPaymentVaultPresenter.setDiscountEnabled(this.getIntent().getBooleanExtra("discountEnabled", true));
         mPaymentVaultPresenter.setDirectDiscountEnabled(this.getIntent().getBooleanExtra("directDiscountEnabled", true));
         mPaymentVaultPresenter.setInstallmentsReviewEnabled(this.getIntent().getBooleanExtra("installmentsReviewEnabled", true));
-        mPaymentVaultPresenter.setMaxSavedCards(this.getIntent().getIntExtra("maxSavedCards", 0));
+        mPaymentVaultPresenter.setMaxSavedCards(this.getIntent().getIntExtra("maxSavedCards", FlowPreference.DEFAULT_MAX_SAVED_CARDS_TO_SHOW));
+        mPaymentVaultPresenter.setShowAllSavedCardsEnabled(this.getIntent().getBooleanExtra("showAllSavedCardsEnabled", false));
         mShowBankDeals = getIntent().getBooleanExtra("showBankDeals", true);
 
         if (getIntent().getStringExtra("paymentPreference") != null) {
@@ -206,6 +211,8 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
         mTimerTextView = (MPTextView) findViewById(R.id.mpsdkTimerTextView);
 
         mDiscountFrameLayout = (FrameLayout) findViewById(R.id.mpsdkDiscount);
+        mContentLayout = findViewById(R.id.mpsdkContentLayout);
+        mProgressLayout = findViewById(R.id.mpsdkProgressLayout);
 
         initializePaymentOptionsRecyclerView();
         mAppBar = (AppBarLayout) findViewById(R.id.mpsdkAppBar);
@@ -518,14 +525,16 @@ public class PaymentVaultActivity extends MercadoPagoBaseActivity implements Pay
 
     @Override
     public void showProgress() {
-        mAppBar.setVisibility(View.INVISIBLE);
-        LayoutUtil.showProgressLayout(this);
+        mProgressLayout.setVisibility(View.VISIBLE);
+        mAppBar.setVisibility(View.GONE);
+        mContentLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void hideProgress() {
-        LayoutUtil.showRegularLayout(this);
+        mProgressLayout.setVisibility(View.GONE);
         mAppBar.setVisibility(View.VISIBLE);
+        mContentLayout.setVisibility(View.VISIBLE);
     }
 
     @Override

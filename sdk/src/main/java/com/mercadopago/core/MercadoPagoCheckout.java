@@ -47,7 +47,6 @@ public class MercadoPagoCheckout {
     private PaymentData paymentData;
     private PaymentResult paymentResult;
     private Boolean binaryMode;
-    private Integer maxSavedCards;
     private Discount discount;
 
     private MercadoPagoCheckout(Builder builder) {
@@ -63,7 +62,6 @@ public class MercadoPagoCheckout {
         this.paymentResult = builder.paymentResult;
         this.reviewScreenPreference = builder.reviewScreenPreference;
         this.binaryMode = builder.binaryMode;
-        this.maxSavedCards = builder.maxSavedCards;
         this.discount = builder.discount;
 
         customizeServices(servicePreference);
@@ -183,7 +181,6 @@ public class MercadoPagoCheckout {
         checkoutIntent.putExtra("reviewScreenPreference", JsonUtil.getInstance().toJson(reviewScreenPreference));
         checkoutIntent.putExtra("discount", JsonUtil.getInstance().toJson(discount));
         checkoutIntent.putExtra("binaryMode", binaryMode);
-        checkoutIntent.putExtra("maxSavedCards", maxSavedCards);
         checkoutIntent.putExtra("resultCode", resultCode);
 
         if (context != null) {
@@ -212,7 +209,6 @@ public class MercadoPagoCheckout {
         private Activity activity;
         private String publicKey;
         private Boolean binaryMode = false;
-        private Integer maxSavedCards;
         private CheckoutPreference checkoutPreference;
         private DecorationPreference decorationPreference;
         private ServicePreference servicePreference;
@@ -271,11 +267,6 @@ public class MercadoPagoCheckout {
 
         public Builder setPaymentData(PaymentData paymentData) {
             this.paymentData = paymentData;
-            return this;
-        }
-
-        public Builder setMaxSavedCards(Integer maxSavedCards) {
-            this.maxSavedCards = maxSavedCards;
             return this;
         }
 
